@@ -1,0 +1,118 @@
+"use client"
+import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { CircleX, Menu } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+
+const Header = () => {
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const router= useRouter()
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const offset = window.scrollY;
+            setScrolled(offset > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen);
+    };
+
+    return (
+        <header className='fixed top-0 left-0 right-0 z-30'>
+              <div className={`
+                flex h-[90px] items-center justify-between px-4 lg:px-10
+                transition-all duration-300 ease-in-out
+                ${scrolled 
+                    ? 'bg-black/90 backdrop-blur-md shadow-lg' 
+                    : 'bg-black/90'}
+            `}>  <div className='flex items-center'>
+                    <Image
+                    onClick={()=> router.push("/") }
+                        src={"/images/gpay_logo_transaparent.png"}
+                        height={150}
+                        width={150}
+                        alt='Geepay Logo'
+                        className='mr-4 cursor-pointer'
+                    />
+                    <h1
+                    onClick={()=> router.push("/")}
+                    className='cursor-pointer text-sm md:text-2xl font-bold text-white'>
+                     <strong>SandBox</strong>
+                    </h1>
+                </div>
+
+                {/* Desktop Navigation */}
+                {/* <nav className="hidden lg:flex gap-6 text-white/60 items-center">
+                    {navLinks.map((link) => (
+                        <Link
+                            key={link.label}
+                            href={link.href}
+                            className='hover:text-yellow-500 transition-colors hover:border-b-4 hover:border-b-yellow-500'
+                        >
+                            {link.label}
+                        </Link>
+                    ))}
+                </nav> */}
+
+                {/* Mobile Menu Toggle */}
+                <div className='flex items-center space-x-4'>
+                    <Button
+                        className='lg:hidden bg-transparent text-white'
+                        onClick={toggleMobileMenu}
+                    >
+                        <Menu />
+                    </Button>
+
+                    <Button 
+                    onClick={()=>router.push("/auth/signin")}
+                    variant="secondary" 
+                    className='hidden lg:block rounded-full'>
+                        Login
+                    </Button>
+                </div>
+            </div>
+
+            {/* Mobile Menu Overlay */}
+            {mobileMenuOpen && (
+                <div className='fixed inset-0 bg-black/80 z-30 lg:hidden'>
+                    <Button
+
+                        className='absolute top-4 right-4 bg-transparent text-white'
+                        onClick={toggleMobileMenu}
+                    >
+                        <CircleX />
+                    </Button>
+                    {/* <div className='flex flex-col items-center justify-center h-full space-y-6'>
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.label}
+                                href={link.href}
+                                className='text-white text-2xl hover:text-gray-300'
+                                onClick={toggleMobileMenu}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+                        <Button
+                         onClick={()=>router.push("/auth/signin")}
+                        variant="secondary"
+                        className='mt-6 rounded-full'>
+                            Login
+                        </Button>
+                    </div> */}
+                </div>
+            )}
+        </header>
+    )
+}
+
+export default Header
