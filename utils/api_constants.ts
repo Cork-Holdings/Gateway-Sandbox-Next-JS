@@ -10,11 +10,8 @@ export const api_endpoints = {
     // Auth-related Endpoints
     auth: {
         login: `${base_url}/auth/login`,
-        adminRegister: `${base_url}/auth/admin/register`,
-        userRegister: `${base_url}/auth/user/register`,
-        merchantRegister: `${base_url}/auth/merchant/register`,
-        refreshToken: `${base_url}/refresh-token`,
-    },
+        Register: `${base_url}/auth/register`,
+      },
 
     backoffice: {
     
@@ -33,5 +30,9 @@ export const api_endpoints = {
         getApiHeaders: `${base_url}/api/headers/get`,
         getApiDetails :`${base_url}/api/get`,
         getProjectDetails :`${base_url}/project/get`,
+        generateSignature: `${base_url}/signature/generate`,
+        generateSecret: `${base_url}/secret/generate`,
+        updatePin: `${base_url}/pin/create`,
+        getAPIcredentials : `${base_url}/user/credentials/get`
     },
 };

@@ -1,8 +1,13 @@
 import React from 'react'
+import CollectionDocumentation from '../documentation/collection_documentation'
 
 const CollectionContainer = () => {
   return (
-    <div>CollectionContainer</div>
+<main className='flex'>
+<CollectionDocumentation/>
+
+  <CollectionDocumentation/>
+</main>
   )
 }
 

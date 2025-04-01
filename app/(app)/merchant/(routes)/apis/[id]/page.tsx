@@ -6,14 +6,19 @@ import { useParams, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { 
-  LayoutDashboard, 
-  CreditCard, 
-  Send, 
+import {
+  LayoutDashboard,
+  CreditCard,
+  Send,
   Key,
   ChevronLeft,
-  ChevronRight 
+  ChevronRight,
+  User,
+  RefreshCcw
 } from 'lucide-react';
+import TransactionStatusContainer from '@/components/custom/containers/transaction-status-container';
+import NameLookupContainer from '@/components/custom/containers/name-lookup-container';
+import CollectionDocumentation from '@/components/custom/documentation/collection_documentation';
 
 const ExecuteAPI = () => {
   const { id } = useParams();
@@ -21,9 +26,12 @@ const ExecuteAPI = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const endpoints = [
-    { id: "1", name: "Collection", icon: CreditCard, component: CollectionContainer },
-    { id: "2", name: "Disbursement", icon: Send, component: DisbursementContainer },
-    { id: "3", name: "Authorization", icon: Key, component: AuthorizeContainer },
+    { id: "1", name: "Collection", icon: CreditCard, component: CollectionContainer, },
+    { id: "2", name: "Disbursement", icon: Send, component: DisbursementContainer, },
+    { id: "3", name: "Authorization", icon: Key, component: AuthorizeContainer,},
+    { id: "4", name: "Transaction Status", icon: RefreshCcw, component: TransactionStatusContainer, },
+    { id: "5", name: "Name Look Up", icon: User, component: NameLookupContainer,  },
+
   ];
 
   const selectedEndpoint = endpoints.find(endpoint => endpoint.id === id);
@@ -46,10 +54,9 @@ const ExecuteAPI = () => {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside 
-          className={`bg-white shadow-md transition-all duration-300 ${
-            isSidebarOpen ? 'w-64' : 'w-16'
-          }`}
+        <aside
+          className={`bg-white shadow-md transition-all duration-300 ${isSidebarOpen ? 'w-64' : 'w-16'
+            }`}
         >
           <div className="p-4 flex justify-end">
             <Button
@@ -61,15 +68,14 @@ const ExecuteAPI = () => {
               {isSidebarOpen ? <ChevronLeft /> : <ChevronRight />}
             </Button>
           </div>
-          
+
           <nav className="space-y-2 p-2">
             {endpoints.map(endpoint => (
               <Button
                 key={endpoint.id}
                 variant={id === endpoint.id ? "default" : "ghost"}
-                className={`w-full justify-start gap-2 ${
-                  !isSidebarOpen && 'justify-center'
-                }`}
+                className={`w-full justify-start gap-2 ${!isSidebarOpen && 'justify-center'
+                  }`}
                 onClick={() => router.push(`/merchant/apis/${endpoint.id}`)}
               >
                 <endpoint.icon className="h-5 w-5" />
@@ -82,7 +88,11 @@ const ExecuteAPI = () => {
         {/* Main Content */}
         <main className="flex-1 p-6 overflow-auto">
           {SelectedComponent ? (
-            <SelectedComponent />
+            <div>
+
+              <SelectedComponent />
+            </div>
+
           ) : (
             <Card className="max-w-2xl mx-auto mt-10">
               <CardContent className="p-6 text-center">

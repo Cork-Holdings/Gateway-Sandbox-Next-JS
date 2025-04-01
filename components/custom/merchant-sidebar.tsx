@@ -11,7 +11,7 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar"
-import { ChevronUp, LucideLayoutDashboard, User2 } from "lucide-react"
+import { ChevronUp, Command,  LucideLayoutDashboard, Settings2, User2 } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { signOut } from "next-auth/react"
 
@@ -27,9 +27,13 @@ const items = [
     {
         title: "APIs",
         url: "/merchant/apis",
-        icon: LucideLayoutDashboard,
+        icon: Command,
     },
-  
+    {
+        title: "Configure",
+        url: "/merchant/profile",
+        icon: Settings2,
+    },
 
 
 ]

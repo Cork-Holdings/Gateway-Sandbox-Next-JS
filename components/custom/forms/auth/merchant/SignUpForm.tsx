@@ -63,7 +63,7 @@ const SignUpForm = () => {
                 "role":"merchant"
           
             }
-            const res = await fetch(api_endpoints.auth.userRegister, {
+            const res = await fetch(api_endpoints.auth.Register, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

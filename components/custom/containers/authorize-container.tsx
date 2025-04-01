@@ -1,13 +1,14 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { api_endpoints } from '@/utils/api_constants'
 import React, { useState } from 'react'
 import { Loader2, Copy, Check } from 'lucide-react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import CollectionDocumentation from '../documentation/collection_documentation'
+import AuthorizationDocumentation from '../documentation/authotization_documentation'
 
 const AuthorizeContainer = () => {
   const [clientId, setClientId] = useState('')
@@ -62,7 +63,8 @@ const AuthorizeContainer = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <main className='flex flex-col lg:flex-row gap-8 bg-gray-100 p-6'>
+      <div className="min-h-screen lg:w-1/2">
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">API Execution Sandbox</CardTitle>
@@ -194,7 +196,10 @@ const AuthorizeContainer = () => {
         </CardContent>
       </Card>
     </div>
-  )
+ 
+      <AuthorizationDocumentation/>
+    </main>
+     )
 }
 
 export default AuthorizeContainer

@@ -91,11 +91,8 @@ const authOptions: AuthOptions = {
                       return {
                             id: user.id,
                             accessToken: user.token,
-                            refreshToken: user.refreshToken,
                             role: user.role,
                             permissions: user.permissions,
-                            isFirstTimeLogin: user.isFirstTimeLogin,
-                            kycStatus: user.kycStatus
                         };
                     } 
                     // else if (!res.ok || user.status === "failure") {
@@ -123,55 +120,27 @@ const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async jwt({ token, user }) {
-          
+           
             if (user) {
                 token.id = user.id;
                 token.accessToken = user.accessToken;
                 token.role = user.role;
                 token.name = user.name;
                 token.email = user.email;
-                token.kycStatus= user.kycStatus
-             }
-        
-        //     const isAccessTokenExpired = token.accessTokenExpiry && Date.now() > token.accessTokenExpiry;
-        //    if (isAccessTokenExpired && token.refreshToken) {
-        //        try {
-        //             const res = await fetch(api_endpoints.auth.refreshToken, {
-        //                 method: "POST",
-        //                 headers: { "Content-Type": "application/json" },
-        //                 body: JSON.stringify({ refresh_token: token.refreshToken }),
-        //             });
-        
-        //             const refreshed = await res.json();
-        //             console.log("Refresh Token Response:", refreshed);
-        
-        //             if (res.ok && refreshed.status === "success") {
-        //                 token.accessToken = refreshed.token;
-        //                 token.accessTokenExpiry = Date.now() + 24 * 60 * 60 * 1000; // Extend expiry
-        //             } else {
-        //                 console.log("Failed to refresh token, clearing session.");
-        //                 return {}; // Reset the session if refresh fails
-        //             }
-        //         } catch (error) {
-        //             console.error("Error refreshing token:", error);
-        //             return {}; // Reset the session in case of error
-        //         }
-        //     }
-        
+                token.kycStatus = user.kycStatus;
+                console.log("Token ID:", token.id); // Log the token
+            }
             return token;
         }
 ,        
 
         async session({ session, token }) {
+       
             session.id = token.id;
             session.accessToken = token.accessToken;
             session.role = token.role;
-            session.kycStatus= token.kycStatus;
-            // session.name = token.name;
-            // session.email = token.email;
-            // session.accountStatus = token.accountStatus;
-         // console.log("Session data after updates:", session);
-            return session;
+            session.kycStatus = token.kycStatus;
+          return session;
         },
     },
 };
