@@ -7,7 +7,6 @@ import React, { useState } from 'react'
 import { Loader2, Copy, Check } from 'lucide-react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import CollectionDocumentation from '../documentation/collection_documentation'
 import AuthorizationDocumentation from '../documentation/authotization_documentation'
 
 const AuthorizeContainer = () => {
@@ -63,8 +62,8 @@ const AuthorizeContainer = () => {
   }
 
   return (
-    <main className='flex flex-col lg:flex-row gap-8 bg-gray-100 p-6'>
-      <div className="min-h-screen lg:w-1/2">
+    <main className='flex flex-col lg:flex-row gap-8  bg-gray-100 p-6'>
+      <div className="lg:w-1/2">
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">API Execution Sandbox</CardTitle>
@@ -84,6 +83,7 @@ const AuthorizeContainer = () => {
                 placeholder="Enter your client ID"
                 disabled={isLoading}
                 className="mt-1"
+                type="text"
               />
             </div>
 
@@ -96,7 +96,7 @@ const AuthorizeContainer = () => {
                 value={clientSecret}
                 onChange={(e) => setClientSecret(e.target.value)}
                 placeholder="Enter your client secret"
-                type="password"
+                type="text"
                 disabled={isLoading}
                 className="mt-1"
               />

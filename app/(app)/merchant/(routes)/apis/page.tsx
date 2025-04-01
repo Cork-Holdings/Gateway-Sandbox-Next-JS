@@ -7,7 +7,9 @@ import {
   Send, 
   Key, 
   ArrowRight,
-  LayoutDashboard 
+  LayoutDashboard, 
+  RefreshCcw,
+  User
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -33,6 +35,21 @@ const apis = [
     icon: Key,
     color: "bg-purple-100 text-purple-600"
   },
+  {
+    id: "4",
+    name: "Transaction Status",
+    description: "Check Transaction Status with the Status API",
+    icon: RefreshCcw,
+    color: "bg-orange-100 text-orange-600"
+  },
+  {
+    id: "5",
+    name: "Name Look Up",
+    description: "Manage KYC with the Name look up API",
+    icon: User,
+    color: "bg-cyan-100 text-cyan-600"
+  },
+  
 ];
 
 const APIPage = () => {

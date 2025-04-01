@@ -14,19 +14,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import { signIn, useSession } from "next-auth/react";
+import {  useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { api_endpoints } from "@/utils/api_constants";
+import { Card, CardContent } from "@/components/ui/card";
 
 const pinConfigSchema = z.object({
   pin: z.string().min(8, { message: "PIN Must be 8 Digits" }),
 });
 
 const PinConfigurationForm = () => {
-  const router = useRouter();
-  const { status, data: session } = useSession();
+  const {  data: session } = useSession();
   const [loading, setLoading] = React.useState(false);
 
   const form = useForm<z.infer<typeof pinConfigSchema>>({
@@ -74,7 +73,8 @@ const PinConfigurationForm = () => {
 
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-6">
+    <Card className="max-w-6xl w-full">
+      <CardContent className="w-full mx-auto space-y-6">
       <div className="text-start space-y-2">
         <h1 className="text-xl font-bold">PIN Configuration</h1>
       </div>
@@ -117,9 +117,8 @@ const PinConfigurationForm = () => {
           </Button>
         </form>
       </Form>
-
-    
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

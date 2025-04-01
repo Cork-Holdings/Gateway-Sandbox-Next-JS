@@ -13,11 +13,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
 import { Loader2, Copy, CheckCircle } from "lucide-react";
-import { signIn, useSession } from "next-auth/react";
+import {  useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { api_endpoints } from "@/utils/api_constants";
+import { Card, CardContent } from "@/components/ui/card";
 
 const oauthSchema = z.object({
   pin: z.string().min(8, { message: "PIN Must be 8 Digits" }),
@@ -26,8 +26,7 @@ const oauthSchema = z.object({
 });
 
 const OAuthSignatureForm = () => {
-  const router = useRouter();
-  const { status, data: session } = useSession();
+  const { data: session } = useSession();
   const [loading, setLoading] = React.useState(false);
   const [output, setOutput] = useState<string>('');
   const [copied, setCopied] = useState(false);
@@ -60,7 +59,6 @@ const OAuthSignatureForm = () => {
       });
 
       const data = await response.json();
-      console.log('data', data);
 
       setLoading(false);
 
@@ -99,7 +97,8 @@ const OAuthSignatureForm = () => {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-6">
+    <Card className="max-w-6xl w-full">
+    <CardContent className="w-full mx-auto space-y-6">
       <div className="text-start space-y-2">
         <h1 className="text-xl font-bold">OAUTH Signature Management</h1>
       </div>
@@ -198,7 +197,8 @@ const OAuthSignatureForm = () => {
           </div>
         </div>
       )}
-    </div>
+    </CardContent>
+    </Card>
   );
 };
 

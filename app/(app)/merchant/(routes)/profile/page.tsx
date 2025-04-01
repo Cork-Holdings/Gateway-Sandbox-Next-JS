@@ -71,7 +71,7 @@ if (loading) {
 }
 
   return (
-   <main className='flex flex-col gap-8'>
+   <main className='flex flex-col items-center gap-8'>
 
     <APICredentialsForm clientID={clientID} clientSecret={clientSecret}/>
 

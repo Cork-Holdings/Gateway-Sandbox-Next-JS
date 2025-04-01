@@ -19,7 +19,8 @@ export const api_endpoints = {
 
     // Company-related Endpoints
     merchant: {
-        makeAuthorizationRequest : `${base_url}/token-generate`
+        makeAuthorizationRequest : `${base_url}/token-generate`,
+        makeCollectionRequest: `${base_url}/make-collection`
     },
 
     common: {
