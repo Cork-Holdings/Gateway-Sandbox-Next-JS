@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 import { Loader2, Copy, Check } from 'lucide-react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import AuthorizationDocumentation from '../documentation/authotization_documentation'
+import AuthorizationDocumentation from '../documentation/authorization_documentation'
 
 const AuthorizeContainer = () => {
   const [clientId, setClientId] = useState('')
@@ -63,7 +63,7 @@ const AuthorizeContainer = () => {
 
   return (
     <main className='flex flex-col lg:flex-row gap-8  bg-gray-100 p-6'>
-      <div className="lg:w-1/2">
+      <div className="max-w-4xl w-full">
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">API Execution Sandbox</CardTitle>

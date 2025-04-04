@@ -20,7 +20,11 @@ export const api_endpoints = {
     // Company-related Endpoints
     merchant: {
         makeAuthorizationRequest : `${base_url}/token-generate`,
-        makeCollectionRequest: `${base_url}/make-collection`
+        makeCollectionRequest: `${base_url}/make-collection`,
+        makeTransactionQueryRequest:`${base_url}/mobile-money/check-status`,
+        makeNameLookupRequest:`${base_url}/mobile-money/name-lookup`,
+        makeDisburseRequest: `${base_url}/mobile-money/disburse`,
+        makeQueryDisbursementRequest: `${base_url}/mobile-money/disburse/status`,
     },
 
     common: {

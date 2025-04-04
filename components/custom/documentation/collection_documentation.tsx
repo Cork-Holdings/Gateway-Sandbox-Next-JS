@@ -4,7 +4,7 @@ import { ArrowRight, CheckCircle, Clock, Code, FileJson, Globe, SendHorizonal } 
 
 const CollectionDocumentationContainer = () => {
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-4xl w-full mx-auto p-6 bg-white rounded-lg shadow-md">
       {/* Header Section */}
       <div className="border-b pb-6 mb-6">
         <div className="flex items-center gap-2 mb-2">
@@ -42,28 +42,34 @@ const CollectionDocumentationContainer = () => {
               <tr>
                 <th className="text-left py-2 px-4 font-semibold text-gray-700">Header</th>
                 <th className="text-left py-2 px-4 font-semibold text-gray-700">Value</th>
+                <th className="text-left py-2 px-4 font-semibold text-gray-700">Required</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               <tr>
                 <td className="py-2 px-4 font-mono">Content-Type</td>
                 <td className="py-2 px-4">application/json</td>
+                <td className="py-2 px-4">true</td>
               </tr>
               <tr>
                 <td className="py-2 px-4 font-mono">Accept</td>
                 <td className="py-2 px-4">application/json</td>
+                <td className="py-2 px-4">true</td>
               </tr>
               <tr>
                 <td className="py-2 px-4 font-mono">X-Client-ID</td>
                 <td className="py-2 px-4">Your Client ID</td>
+                <td className="py-2 px-4">true</td>
               </tr>
               <tr>
                 <td className="py-2 px-4 font-mono">Authorization</td>
                 <td className="py-2 px-4">Your Bearer Token</td>
+                <td className="py-2 px-4">true</td>
               </tr>
               <tr>
                 <td className="py-2 px-4 font-mono">X-Transaction-Ref</td>
-                <td className="py-2 px-4">exapmle-test-reference 4</td>
+                <td className="py-2 px-4">example-test-reference 4</td>
+                <td className="py-2 px-4">true</td>
               </tr>
             </tbody>
           </table>

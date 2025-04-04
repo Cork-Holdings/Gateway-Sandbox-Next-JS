@@ -30,7 +30,7 @@ const items = [
         icon: Command,
     },
     {
-        title: "Configure",
+        title: "Credentials",
         url: "/merchant/profile",
         icon: Settings2,
     },
