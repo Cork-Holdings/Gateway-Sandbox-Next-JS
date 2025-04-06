@@ -9,48 +9,55 @@ import {
   ArrowRight,
   LayoutDashboard, 
   RefreshCcw,
-  User
+  User,
+  ScreenShare
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
 const apis = [
   {
     id: "1",
     name: "Collection",
     description: "Process payments through the Payment Gateway collection endpoint",
     icon: CreditCard,
-    color: "bg-blue-100 text-blue-600"
+    color: "bg-blue-100 text-blue-700"
   },
   {
     id: "2",
     name: "Disbursement",
     description: "Handle payouts using the Payment Gateway disbursement API",
     icon: Send,
-    color: "bg-green-100 text-green-600"
+    color: "bg-emerald-100 text-emerald-700"
   },
   {
     id: "3",
     name: "Authorization",
     description: "Manage authentication with the Authorization API",
     icon: Key,
-    color: "bg-purple-100 text-purple-600"
+    color: "bg-violet-100 text-violet-700"
   },
   {
     id: "4",
     name: "Transaction Status",
     description: "Check Transaction Status with the Status API",
     icon: RefreshCcw,
-    color: "bg-orange-100 text-orange-600"
+    color: "bg-amber-100 text-amber-700"
   },
   {
     id: "5",
     name: "Name Look Up",
     description: "Manage KYC with the Name look up API",
     icon: User,
-    color: "bg-cyan-100 text-cyan-600"
+    color: "bg-teal-100 text-teal-700"
   },
-  
+  {
+    id: "6",
+    name: "Hosted Checkout",
+    description: "Create and Test hosted checkout URLS",
+    icon: ScreenShare,
+    color: "bg-rose-100 text-rose-700"
+  },
 ];
+
 
 const APIPage = () => {
   return (

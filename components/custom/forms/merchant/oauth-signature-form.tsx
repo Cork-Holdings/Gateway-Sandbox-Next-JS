@@ -13,11 +13,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2, Copy, CheckCircle } from "lucide-react";
+import { Loader2, Copy, CheckCircle, EyeOff, Eye } from "lucide-react";
 import {  useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { api_endpoints } from "@/utils/api_constants";
 import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 
 const oauthSchema = z.object({
   pin: z.string().min(8, { message: "PIN Must be 8 Digits" }),
@@ -25,11 +26,13 @@ const oauthSchema = z.object({
   clientID: z.string().min(1, { message: "Client ID is required" }),
 });
 
-const OAuthSignatureForm = () => {
+const OAuthSignatureForm = ({signature}: {signature:string}) => {
   const { data: session } = useSession();
   const [loading, setLoading] = React.useState(false);
   const [output, setOutput] = useState<string>('');
   const [copied, setCopied] = useState(false);
+   const [copiedSignature, setCopiedSignature] = useState(false);
+       const [showSignature, setSignature] = useState(false);
 
   const form = useForm<z.infer<typeof oauthSchema>>({
     resolver: zodResolver(oauthSchema),
@@ -66,6 +69,7 @@ const OAuthSignatureForm = () => {
         toast.success(data.message);
         setOutput(data.signature);
         setCopied(false);
+        setCopiedSignature(false);
       } else if (data.status == "failure") {
         toast.error(`${data.error}\n${data.detail}`);
       }
@@ -96,12 +100,66 @@ const OAuthSignatureForm = () => {
       });
   };
 
+  const copySignature = (text: string) => {
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            
+                setCopiedSignature(true);
+                toast.success("Client Signature copied to clipboard!");
+                setTimeout(() => setCopiedSignature(false), 2000);
+            
+        })
+        .catch(err => {
+            toast.error(`Failed to copy your O-Auth-Signature`);
+            console.error('Failed to copy: ', err);
+        });
+}
+
   return (
     <Card className="max-w-6xl w-full">
     <CardContent className="w-full mx-auto space-y-6">
       <div className="text-start space-y-2">
         <h1 className="text-xl font-bold">OAUTH Signature Management</h1>
       </div>
+
+      <div className="flex flex-col gap-3">
+                <Label>Current Signature</Label>
+                <div className="relative">
+                    <Input
+                        readOnly
+                        type={showSignature ? "text" : "password"}
+                        value={signature}
+                        className="bg-white/10 w-full pr-20 focus:border-transparent focus:ring-2 focus:ring-amber-500"
+                    />
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-10">
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            onClick={() => setSignature(!showSignature)}
+                            className="h-full px-2 py-0"
+                        >
+                            {showSignature ? 
+                                <EyeOff className="h-4 w-4" /> : 
+                                <Eye className="h-4 w-4" />
+                            }
+                        </Button>
+                    </div>
+                    <div className="absolute inset-y-0 right-0 flex items-center">
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            onClick={() => copySignature(signature)}
+                            className="h-full px-2 py-0"
+                        >
+                            {copiedSignature ? 
+                                <CheckCircle className="h-4 w-4 text-green-500" /> : 
+                                <Copy className="h-4 w-4" />
+                            }
+                        </Button>
+                    </div>
+                </div>
+            </div>
+            
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">

@@ -1,12 +1,142 @@
-import React from 'react'
+import React from 'react';
+import { api_endpoints, } from '@/utils/api_constants';
+import { ArrowRight, CheckCircle, Clock, Code, FileJson, Globe, Lock, } from 'lucide-react';
 
 const AuthorizationDocumentation = () => {
   return (
-    <main className='w-1/2'>
-        <p>Authorization API</p>
+    <div className="max-w-4xl w-full mx-auto p-6 bg-white rounded-lg shadow-md">
+      {/* Header Section */}
+      <div className="border-b pb-6 mb-6">
+        <div className="flex items-center gap-2 mb-2">
+          <Lock className="text-indigo-600" size={24} />
+          <h1 className="text-2xl font-bold text-gray-800">Authorization</h1>
+        </div>
+        <p className="text-gray-600">Generate an access token</p>
+      </div>
 
-    </main>
-  )
-}
+      {/* Request Information */}
+      <div className="mb-8">
+        <div className="flex items-center gap-2 mb-4">
+          <Globe className="text-indigo-600" size={20} />
+          <h2 className="text-xl font-semibold text-gray-800">Request</h2>
+        </div>
 
-export default AuthorizationDocumentation
+        <div className="bg-gray-50 rounded-md p-4 mb-6">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="bg-indigo-600 text-white text-xs font-medium px-2 py-1 rounded">POST</span>
+            <code className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">{`${api_endpoints.merchant.makeAuthorizationRequest}`}</code>
+          </div>
+        </div>
+      </div>
+
+      {/* Headers Section */}
+      <div className="mb-8">
+        <div className="flex items-center gap-2 mb-4">
+          <Code className="text-indigo-600" size={20} />
+          <h2 className="text-xl font-semibold text-gray-800">Request Headers</h2>
+        </div>
+
+        <div className="bg-gray-50 rounded-md p-4 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="text-left py-2 px-4 font-semibold text-gray-700">Header</th>
+                <th className="text-left py-2 px-4 font-semibold text-gray-700">Value</th>
+                <th className="text-left py-2 px-4 font-semibold text-gray-700">Required</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {/* <tr>
+                <td className="py-2 px-4 font-mono">Content-Type</td>
+                <td className="py-2 px-4">application/json</td>
+                <td className="py-2 px-4">true</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 font-mono">Accept</td>
+                <td className="py-2 px-4">application/json</td>
+                <td className="py-2 px-4">true</td>
+              </tr> */}
+              <tr>
+                <td className="py-2 px-4 font-mono">X-Client-ID</td>
+                <td className="py-2 px-4">Your Client ID</td>
+                <td className="py-2 px-4">true</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 font-mono">Client Secret</td>
+                <td className="py-2 px-4">Your Client Secret</td>
+                <td className="py-2 px-4">true</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Request Body Section */}
+      <div className="mb-8">
+        <div className="flex items-center gap-2 mb-4">
+          <FileJson className="text-indigo-600" size={20} />
+          <h2 className="text-xl font-semibold text-gray-800">Example Request Body</h2>
+        </div>
+
+        <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
+          <pre>{JSON.stringify({
+            client_id: "test-id",
+            client_secret: "test-secret"
+          }, null, 2)}</pre>
+        </div>
+      </div>
+
+      {/* Response Section */}
+      <div>
+        <div className="flex items-center gap-2 mb-4">
+          <ArrowRight className="text-indigo-600" size={20} />
+          <h2 className="text-xl font-semibold text-gray-800">Expected Responses</h2>
+        </div>
+
+        {/* 200 Success Response */}
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-2">
+            <CheckCircle className="text-green-500" size={16} />
+            <h3 className="text-md font-semibold text-gray-800">200 - Success</h3>
+          </div>
+          <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
+            <pre>
+              {JSON.stringify({
+                code: 200,
+                data: {
+                  "external_id": "8558591377",
+                  "transaction_id": "example-test-reference 4"
+                },
+                message: "Process service request successfully.",
+                status: "successful"
+              }, null, 2)}
+            </pre>
+          </div>
+        </div>
+
+        {/* 202 Pending Response */}
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <Clock className="text-amber-500" size={16} />
+            <h3 className="text-md font-semibold text-gray-800">202 - Pending</h3>
+          </div>
+          <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
+            <pre>
+              {JSON.stringify({
+                code: 202,
+                data: {
+                  "external_id": "6871026019",
+                  "transaction_id": "exapmle-test-reference 4"
+                },
+                message: "Request sent. Awaiting customer action.",
+                status: "pending"
+              }, null, 2)}
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AuthorizationDocumentation;

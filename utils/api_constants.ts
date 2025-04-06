@@ -1,6 +1,7 @@
 // Base URLs
 
 export const base_ip = "localhost:2000";
+export const next_url ="localhost:3000";
 export const base_url = `http://${base_ip}/v1`;
 
 export const sandbox_url = `http://${base_ip}`;
@@ -25,6 +26,9 @@ export const api_endpoints = {
         makeNameLookupRequest:`${base_url}/mobile-money/name-lookup`,
         makeDisburseRequest: `${base_url}/mobile-money/disburse`,
         makeQueryDisbursementRequest: `${base_url}/mobile-money/disburse/status`,
+        makeCheckoutRequest: `${base_url}/checkout/respond`,
+        makeGetCheckoutDetailsRequest: `${base_url}/checkout/get`,
+        makeAddCheckoutRequest: `${base_url}/checkout/session`
     },
 
     common: {
@@ -38,6 +42,7 @@ export const api_endpoints = {
         generateSignature: `${base_url}/signature/generate`,
         generateSecret: `${base_url}/secret/generate`,
         updatePin: `${base_url}/pin/create`,
+        updateFloat:`${base_url}/float/update`,
         getAPIcredentials : `${base_url}/user/credentials/get`
     },
 };

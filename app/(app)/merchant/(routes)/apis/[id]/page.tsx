@@ -14,11 +14,12 @@ import {
   ChevronLeft,
   ChevronRight,
   User,
-  RefreshCcw
+  RefreshCcw,
+  ScreenShare
 } from 'lucide-react';
 import TransactionStatusContainer from '@/components/custom/containers/transaction-status-container';
 import NameLookupContainer from '@/components/custom/containers/name-lookup-container';
-import CollectionDocumentation from '@/components/custom/documentation/collection_documentation';
+import CheckoutSessionContainer from '@/components/custom/containers/checkout_session_container';
 
 const ExecuteAPI = () => {
   const { id } = useParams();
@@ -31,6 +32,7 @@ const ExecuteAPI = () => {
     { id: "3", name: "Authorization", icon: Key, component: AuthorizeContainer,},
     { id: "4", name: "Transaction Status", icon: RefreshCcw, component: TransactionStatusContainer, },
     { id: "5", name: "Name Look Up", icon: User, component: NameLookupContainer,  },
+    { id: "6", name: "Hosted Checkout", icon: ScreenShare, component: CheckoutSessionContainer,  },
 
   ];
 

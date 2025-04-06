@@ -277,8 +277,8 @@ const DisbursementAPIContainer = () => {
                                 </Label>
                                 <Input
                                     id="narration"
-                                    value={amount}
-                                    onChange={(e) => setAmount(e.target.value)}
+                                    value={narration}
+                                    onChange={(e) => setNarration(e.target.value)}
                                     placeholder="Enter your narration"
                                     type="text"
                                     disabled={isLoading}
