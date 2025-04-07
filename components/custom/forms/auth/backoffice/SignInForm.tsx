@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 const SigninSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -142,9 +143,9 @@ const AdminSignInForm = () => {
  
        <p className="text-center text-gray-700 text-sm">
          Forgot password?{" "}
-         <a href="#" className="text-[#1383ec] hover:underline">
+         <Link href="/common/reset" className="text-[#1383ec] hover:underline">
            Reset it
-         </a>
+         </Link>
        </p>
      </div>
    );

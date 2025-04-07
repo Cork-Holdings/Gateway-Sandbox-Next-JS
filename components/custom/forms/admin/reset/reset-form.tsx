@@ -23,7 +23,7 @@ const SubmitTestimonySchema = z.object({
     email: z.string()
 });
 
-const ResetForm = () => {
+const AdminResetForm = () => {
 
     const [loading, setLoading] = useState(false);
 
@@ -63,7 +63,7 @@ const ResetForm = () => {
 
             if (data["status"] == "success") {
                 toast.success("Code sent successfully!");
-                router.push(`/common/reset/${values.email}`)
+                router.push(`/admin/reset/${values.email}`)
             } else {
                 toast.error(data.error || "Failed to send code");
             }
@@ -126,4 +126,4 @@ const ResetForm = () => {
     );
 };
 
-export default ResetForm;
+export default AdminResetForm;

@@ -22,7 +22,7 @@ const UserActions: React.FC<UserActionsProps> = ({ row, onView, onEdit, onDelete
   const router = useRouter()
 
   const resetPassword = () => {
-    router.push(`/common/reset`)
+    router.push(`/admin/reset`)
   }
 
   return (

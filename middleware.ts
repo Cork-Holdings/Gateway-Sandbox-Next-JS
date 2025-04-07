@@ -8,13 +8,26 @@ export default withAuth(
 
     // If no token exists and the user tries to access a protected route
     if (!token && pathname.startsWith("/admin")) {
-      const loginUrl = new URL("/auth/signin", req.url);
+      const loginUrl = new URL("/auth/signin/admin", req.url);
       loginUrl.searchParams.set("callbackUrl", req.url); // Redirect back after login
       return NextResponse.redirect(loginUrl);
     }
 
     // Example: Role-based access control
-    if (pathname.startsWith("/admin") && token?.role !== "Admin") {
+    if (pathname.startsWith("/admin") && token?.role !== "admin") {
+      const unauthorizedUrl = new URL("/403", req.url);
+      return NextResponse.redirect(unauthorizedUrl);
+    }
+
+
+    if (!token && pathname.startsWith("/merchant")) {
+      const loginUrl = new URL("/auth/signin/merchant", req.url);
+      loginUrl.searchParams.set("callbackUrl", req.url); // Redirect back after login
+      return NextResponse.redirect(loginUrl);
+    }
+
+    // Example: Role-based access control
+    if (pathname.startsWith("/merchant") && token?.role !== "merchant") {
       const unauthorizedUrl = new URL("/403", req.url);
       return NextResponse.redirect(unauthorizedUrl);
     }
@@ -33,5 +46,7 @@ export const config = {
   matcher: [
     "/admin/:path*", // Protect all routes under /admin
     "/admin/:path*", // Protect /dashboard as an example
+    "/merchant/:path*", // Protect all routes under /admin
+    "/merchant/:path*", // Protect /dashboard as an example
   ],
 };

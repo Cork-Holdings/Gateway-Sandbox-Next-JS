@@ -21,26 +21,26 @@ import { Card, CardContent } from '@/components/ui/card'
 import { api_endpoints } from '@/utils/api_constants'
 
 
-const NewPasswordSchema = z.object({
+const AdminNewPasswordSchema = z.object({
     confirmPassword: z.string().min(8,{ message: "Password must be at least 8 characters" }),
     password: z.string().min(8, { message: "Password must be at least 8 characters" })
 })
 
 
-interface NewPasswordFormProps {
+interface AdminNewPasswordFormProps {
     email: string
 }
 
 
-const NewPasswordForm: React.FC<NewPasswordFormProps> = ({ email }) => {
+const AdminNewPasswordForm: React.FC<AdminNewPasswordFormProps> = ({ email }) => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
 
     const [toggleHidePassword, setToggleHidePassword] = useState<boolean>(false);
     const [toggleHidePasswordC, setToggleHidePasswordC] = useState<boolean>(false);
 
-    const form = useForm<z.infer<typeof NewPasswordSchema>>({
-        resolver: zodResolver(NewPasswordSchema),
+    const form = useForm<z.infer<typeof AdminNewPasswordSchema>>({
+        resolver: zodResolver(AdminNewPasswordSchema),
         defaultValues: {
             confirmPassword: '',
             password: '',
@@ -48,7 +48,7 @@ const NewPasswordForm: React.FC<NewPasswordFormProps> = ({ email }) => {
         }
     })
 
-    const onSubmit = async (values: z.infer<typeof NewPasswordSchema>) => {
+    const onSubmit = async (values: z.infer<typeof AdminNewPasswordSchema>) => {
 
         const body = {
              email : email,
@@ -76,7 +76,7 @@ const NewPasswordForm: React.FC<NewPasswordFormProps> = ({ email }) => {
 
             if (data.status == "success") {
                 toast.success("Password Reset");
-                router.push("/")
+                router.push("/admin/dashboard")
             }
 
             else if (data.status == "failure") {
@@ -189,4 +189,4 @@ const NewPasswordForm: React.FC<NewPasswordFormProps> = ({ email }) => {
     )
 }
 
-export default NewPasswordForm
+export default AdminNewPasswordForm
