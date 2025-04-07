@@ -69,7 +69,7 @@ const MerchantSignInForm = () => {
 
   useEffect(() => {
     if (status === "authenticated" && session) {
-      router.push("/merchant/dashboard");
+      router.push("/merchant/apis");
     }
   }, [status, session, router]);
 
