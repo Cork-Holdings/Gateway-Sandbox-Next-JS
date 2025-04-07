@@ -10,23 +10,12 @@ import {
 
 } from "@/components/ui/form";
 
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-
 import { Input } from "@/components/ui/input";
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Loader2 } from "lucide-react";
-import Link from "next/link";
 import { api_endpoints } from "@/utils/api_constants";
 import toast from "react-hot-toast";
 import { UserDetails } from "@/utils/types/Users";
@@ -39,11 +28,11 @@ interface EditUserFormProps {
 
 
 
-const signUpSchema = z.object({
-    fullname: z.string().min(1, { message: "Fullname is required" }),
-    email: z.string().min(1, { message: "Email is required" }),
-    phone: z.string().min(1, { message: "Phone is required" }),
-    password: z.string().min(8, { message: "Must be more than 8 characters" }),
+const editUserSchema = z.object({
+    fullname: z.string().optional(),
+    email: z.string().optional(),
+    phone: z.string().optional(),
+    password: z.string().optional(),
 
 })
 
@@ -51,17 +40,16 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
    
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const form = useForm<z.infer<typeof signUpSchema>>({
-        resolver: zodResolver(signUpSchema),
+    const form = useForm<z.infer<typeof editUserSchema>>({
+        resolver: zodResolver(editUserSchema),
         defaultValues: {
-            fullname: "", // Provide an initial empty string
-            email: "",
-            phone: "",
-            password: "",
+            fullname: user?.fullname ||"", // Provide an initial empty string
+            email: user?.email ||"",
+            phone: user?.phone ||"",
         }
     });
 
-    const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
+    const onSubmit = async (values: z.infer<typeof editUserSchema>) => {
         setIsLoading(true)
 
         console.log(values)
@@ -70,11 +58,10 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
             const body = {
                 "fullname": values.fullname,
                 "email": values.email,
-                "password": values.password,
                 "phone": values.phone,
                 "role": "admin",
             }
-            const res = await fetch(api_endpoints.auth.adminRegister, {
+            const res = await fetch(api_endpoints.backoffice.editUser, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -105,10 +92,10 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
         <Form {...form}>
             <form 
                 onSubmit={form.handleSubmit(onSubmit)} 
-                className="bg-white p-6 rounded-xl shadow-lg w-full dark:bg-gray-800 max-w-4xl space-y-8"
+                className="bg-white p-6  w-full dark:bg-gray-800 max-w-4xl space-y-8"
             >
                 <div className="text-center space-y-2">
-                    <h1 className="text-2xl text-gray-900 dark:text-white font-bold">Create A User</h1>
+                    <h1 className="text-2xl text-gray-900 dark:text-white font-bold">Edit A User</h1>
                     <p className="text-gray-600 text-sm dark:text-gray-400">Fill in the following details</p>
                 </div>
 
@@ -159,7 +146,7 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
                                 <FormControl>
                                     <Input 
                                         type="tel"
-                                        placeholder="+1 (555) 123-4567"
+                                        placeholder="260 968 72689"
                                         className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
                                         {...field}
                                     />
@@ -170,32 +157,14 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
                     />
 
                     
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Password</FormLabel>
-                                <FormControl>
-                                    <Input 
-                                        type="password"
-                                        placeholder="••••••••"
-                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage className="text-red-500 text-xs" />
-                            </FormItem>
-                        )}
-                    />
-
+                
                     <Button
                         type="submit"
                         disabled={isLoading}
                         className="bg-blue-600 rounded-md text-white w-full disabled:opacity-50 duration-200 font-medium hover:bg-blue-700 px-4 py-2 transition-colors"
                     >
                         {isLoading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-                        Create User
+                        Update User
                     </Button>
                 </div>
 

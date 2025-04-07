@@ -44,13 +44,18 @@ const AdminSignInForm = () => {
         const signInResponse = await signIn("credentials", {
           email: values.email,
           password: values.password,
+          portal: "admin",
+
           redirect: false,
         });
 
-        if (signInResponse?.error) {
-          toast.error("Invalid credentials");
+        if (signInResponse?.error  && signInResponse?.status === 401) {
+          toast.error("Access to the Admin Portal is not allowed for your account.");
           return;
-        }
+      } else if (signInResponse?.error) {
+          toast.error("Invalid Credentials");
+          return;
+      }
 
         toast.success("Sign in successful");
       } catch (error) {

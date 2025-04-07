@@ -57,7 +57,7 @@ const CreateUserForm = () => {
                 "phone": values.phone,
                 "role": "admin",
             }
-            const res = await fetch(api_endpoints.auth.adminRegister, {
+            const res = await fetch(api_endpoints.auth.Register, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

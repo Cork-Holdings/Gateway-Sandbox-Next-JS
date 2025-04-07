@@ -15,7 +15,10 @@ export const api_endpoints = {
       },
 
     backoffice: {
-    
+        getUsers: `${base_url}/users/get`,
+        deleteUser: `${base_url}/user/delete`,
+        editUser: `${base_url}/user/edit`,
+        getMerchants:`${base_url}/merchants/get`,
     },
 
     // Company-related Endpoints
@@ -43,6 +46,9 @@ export const api_endpoints = {
         generateSecret: `${base_url}/secret/generate`,
         updatePin: `${base_url}/pin/create`,
         updateFloat:`${base_url}/float/update`,
-        getAPIcredentials : `${base_url}/user/credentials/get`
+        getAPIcredentials : `${base_url}/user/credentials/get`,
+        resetPassword:`${base_url}/reset/password`,
+        verifyCode:`${base_url}/verify/code`,
+        requestCode:`${base_url}/request/code`
     },
 };

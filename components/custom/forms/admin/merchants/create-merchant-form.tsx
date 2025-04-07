@@ -1,8 +1,4 @@
 "use client"
-import React, { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -11,310 +7,185 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Upload, Loader2, X } from 'lucide-react';
-import { api_endpoints } from '@/utils/api_constants';
-import { useSession } from 'next-auth/react';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
 
-const createMerchantSchema = z.object({
-    name: z.string().min(1, { message: "Fullname is required" }),
+} from "@/components/ui/form";
+
+import { Input } from "@/components/ui/input";
+import { zodResolver } from '@hookform/resolvers/zod';
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Loader2 } from "lucide-react";
+import { api_endpoints } from "@/utils/api_constants";
+import toast from "react-hot-toast";
+
+
+const signUpSchema = z.object({
+    fullname: z.string().min(1, { message: "Fullname is required" }),
     email: z.string().min(1, { message: "Email is required" }),
     phone: z.string().min(1, { message: "Phone is required" }),
-    address: z.string().min(1, { message: "Address is required" }),
-    tpin: z.string().min(1, { message: "TPIN is required" }),
-
-    legal: z.instanceof(File).optional().refine((file) => {
-        return !file || (file && file.size <= 5 * 1024 * 1024);
-    }, "File must be under 5mb"),
-});
-
+    password: z.string().min(8, { message: "Must be more than 8 characters" }),
+})
 
 const CreateMerchantForm = () => {
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [uploadError, setUploadError] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const { data: session } = useSession();
+   
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const router = useRouter()
-
-    const form = useForm<z.infer<typeof createMerchantSchema>>({
-        resolver: zodResolver(createMerchantSchema),
+    const form = useForm<z.infer<typeof signUpSchema>>({
+        resolver: zodResolver(signUpSchema),
         defaultValues: {
-            name:"",
-            email:"",
-            phone:"",
-            address:"",
-            tpin:"",
-            legal: undefined
+            fullname: "", // Provide an initial empty string
+            email: "",
+            phone: "",
+            password: "",
         }
     });
 
+    const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
+        setIsLoading(true)
 
-
-
-    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>, field: any) => {
-        const file = e.target.files?.[0];
-        setUploadError('');
-
-        if (file) {
-            if (file.size > 5 * 1024 * 1024) {
-                setUploadError('File size must be less than 5MB');
-                setSelectedFile(null);
-                e.target.value = '';
-                return;
-            }
-
-            if (!['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
-                .includes(file.type)) {
-                setUploadError('Please upload a PDF or DOC file');
-                setSelectedFile(null);
-                e.target.value = '';
-                return;
-            }
-
-            setSelectedFile(file);
-            field.onChange(file);
-        }
-    };
-
-    const removeFile = (field: any) => {
-        setSelectedFile(null);
-        setUploadError('');
-        field.onChange(null);
-    };
-
-    const onSubmit = async (values: z.infer<typeof createMerchantSchema>) => {
-        setIsSubmitting(true);
-        const formData = new FormData();
-
-        if (values.legal) {
-            formData.append("file1", values.legal);
-        }
-
-        const body = {
-            "name": values.name,
-            "email": values.email,
-            "location": values.address,
-            "tpin": values.tpin,
-            "phone": values.phone,
-            "user_id": session?.id
-        }
-
-
-        
-        formData.append("merchant", JSON.stringify(body))
-
-   
-
+        console.log(values)
         try {
-            const response = await fetch(api_endpoints.auth.merchantRegister, {
+
+            const body = {
+                "fullname": values.fullname,
+                "email": values.email,
+                "password": values.password,
+                "phone": values.phone,
+                "role": "merchant",
+            }
+            const res = await fetch(api_endpoints.auth.Register, {
                 method: "POST",
-                headers:{
-                    "Authorization":`Bearer ${session?.accessToken}`
+                headers: {
+                    "Content-Type": "application/json"
                 },
-                body: formData
-            });
+                body: JSON.stringify(body)
+            })
 
-            const data = await response.json();
-
-            console.log('data', data)
-       
-            if (data.status =="success") {
-                toast.success("Merchant Created successfully")
+            const responseBody = await res.json()
+            if (responseBody.status === "success") {
+                toast.success("You have successfully created a merchant")
                 window.location.reload()
-                
-            } else if (data.status =="failure") {
-                toast.success("failed Create Merchant")
+            } else if(responseBody.status === "failure") {
+                toast.error(responseBody.error)
             }
         } catch (error) {
-            toast.error(`${error}`);
-        } finally {
-            setIsSubmitting(false);
+            toast.error("An unexpected error occurred. Please try again.")
+          
         }
-    };
+        finally {
+            setIsLoading(false)
+        }
+    }
+
+
 
     return (
-        <Card className="w-full dark:bg-gray-900 lg:px-8 max-w-4xl px-4 py-12 sm:px-6">
-            <CardHeader>
-                <CardTitle className="text-xl dark:text-white">Merchant Details</CardTitle>
-            </CardHeader>
-            <CardContent>
+        <div className="w-full dark:bg-gray-900 lg:px-8 px-4 py-12 sm:px-6">
+        <Form {...form}>
+            <form 
+                onSubmit={form.handleSubmit(onSubmit)} 
+                className="bg-white p-6 rounded-xl shadow-lg w-full dark:bg-gray-800 max-w-4xl space-y-8"
+            >
+                <div className="text-center space-y-2">
+                    <h1 className="text-2xl text-gray-900 dark:text-white font-bold">Create a merchant</h1>
+                    <p className="text-gray-600 text-sm dark:text-gray-400">Fill in the following details</p>
+                </div>
 
+                <div className="space-y-6">
+                    <FormField
+                        control={form.control}
+                        name="fullname"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Full Name</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                        placeholder="John Doe"
+                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage className="text-red-500 text-xs" />
+                            </FormItem>
+                        )}
+                    />
 
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-4xl space-y-6">
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Email Address</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                        type="email"
+                                        placeholder="john.doe@example.com"
+                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage className="text-red-500 text-xs" />
+                            </FormItem>
+                        )}
+                    />
 
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Merchant Name</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            placeholder="Bugs Bunny Enterprises"
-                                            className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage className="text-red-500 text-xs" />
-                                </FormItem>
-                            )}
-                        />
+                    <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Phone Number</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                        type="tel"
+                                        placeholder="+1 (555) 123-4567"
+                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage className="text-red-500 text-xs" />
+                            </FormItem>
+                        )}
+                    />
 
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Merchant Email</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                             type='email'
-                                            placeholder="Enter your business email address"
-                                            className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage className="text-red-500 text-xs" />
-                                </FormItem>
-                            )}
-                        />
+                    
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Password</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                        type="password"
+                                        placeholder="••••••••"
+                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage className="text-red-500 text-xs" />
+                            </FormItem>
+                        )}
+                    />
 
-                        <FormField
-                            control={form.control}
-                            name="address"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Merchant Address</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            placeholder="Enter your business address"
-                                            className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage className="text-red-500 text-xs" />
-                                </FormItem>
-                            )}
-                        />
+                    <Button
+                        type="submit"
+                        disabled={isLoading}
+                        className="bg-blue-600 rounded-md text-white w-full disabled:opacity-50 duration-200 font-medium hover:bg-blue-700 px-4 py-2 transition-colors"
+                    >
+                        {isLoading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                        Create Merchant
+                    </Button>
+                </div>
 
-                        <FormField
-                            control={form.control}
-                            name="tpin"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Tax Payer Indentifier Number*</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            placeholder="1111111111111"
-                                            className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage className="text-red-500 text-xs" />
-                                </FormItem>
-                            )}
-                        />
+                
+            </form>
+        </Form>
+    </div>
 
-                        <FormField
-                            control={form.control}
-                            name="phone"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Merchant Phone Number</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            placeholder="Enter your business phone number"
-                                            className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage className="text-red-500 text-xs" />
-                                </FormItem>
-                            )}
-                        />
-
-
-                        <FormField
-                            name="legal"
-                            control={form.control}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="dark:text-white">Upload Legal Documentation</FormLabel>
-                                    <FormControl>
-                                        <div className="flex justify-center w-full items-center">
-                                            <label className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer 
-                                                ${selectedFile ? '' : 'border-gray-200 bg-gray-50 hover:bg-gray-100 dark:bg-[#0d1b2a] dark:hover:bg-[#112a46]'}`}>
-                                                <div className="flex flex-col justify-center items-center pb-6 pt-5">
-                                                    {selectedFile ? (
-                                                        <div className="flex flex-col gap-2 items-center">
-                                                            <div className="flex gap-2 items-center">
-                                                                <span className="text-sm font-medium">
-                                                                    {selectedFile.name}
-                                                                </span>
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() => removeFile(field)}
-                                                                    className="p-1 rounded-full dark:hover:bg-gray-700 hover:bg-gray-200"
-                                                                >
-                                                                    <X className="h-4 text-gray-500 w-4" />
-                                                                </button>
-                                                            </div>
-                                                            <span className="text-gray-500 text-xs">
-                                                                {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
-                                                            </span>
-                                                        </div>
-                                                    ) : (
-                                                        <>
-                                                            <Upload className="h-8 w-8 mb-3" />
-                                                            <p className="text-gray-600 text-sm dark:text-gray-400">Click to upload or drag and drop</p>
-                                                            <p className="text-gray-500 text-xs">PDF or DOC (MAX. 5MB)</p>
-                                                        </>
-                                                    )}
-                                                </div>
-                                                <Input
-                                                    type="file"
-                                                    className="hidden"
-                                                    accept=".pdf,.doc,.docx"
-                                                    onChange={(e) => handleFileSelect(e, field)}
-                                                />
-                                            </label>
-                                        </div>
-                                    </FormControl>
-                                    {uploadError && (
-                                        <div className="text-red-500 text-sm mt-2">
-                                            {uploadError}
-                                        </div>
-                                    )}
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <Button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="bg-[#00AEEF] text-white w-full disabled:bg-gray-400 hover:bg-[#3C3C8C]"
-                        >
-                            {isSubmitting ? (
-                                <div className="flex gap-2 items-center">
-                                    <Loader2 className="h-4 w-4 animate-spin" />
-                                    <span>Submitting...</span>
-                                </div>
-                            ) : (
-                                'Submit Application'
-                            )}
-                        </Button>
-                    </form>
-                </Form>
-            </CardContent>
-        </Card>
     );
 };
 
-export default CreateMerchantForm
+
+export default CreateMerchantForm;

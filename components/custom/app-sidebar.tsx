@@ -12,58 +12,26 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar"
-import { CalendarCheck, ChevronDown, ChevronUp, Component, Eye, FileCheck, FolderCode, FolderCog, FolderCog2, Grid2X2Plus, LucideLayoutDashboard, MessageCircle, PenIcon, Shapes, SquarePen, TvMinimalPlay, User, User2, UserPlus2, Users, Users2 } from "lucide-react"
+import { ChevronDown, ChevronUp,  FolderCog, LucideLayoutDashboard, Settings, User2, UserPlus2 } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
 import { signOut } from "next-auth/react"
 
 
 const items = [
-
     {
         title: "Dashboard",
         url: "/admin/dashboard",
-        icon: LucideLayoutDashboard,
-    },
-  
-
-
-]
-
-
-const projects = [
-    {
-        title: "Create Project",
-        url: "/admin/projects/create",
-        icon: Grid2X2Plus,
-    },
-
-    {
-        title: "Manage Projects",
-        url: "/admin/projects",
-        icon: FolderCode,
+        icon: LucideLayoutDashboard,  
     },
 ]
 
-const admin = [
-    {
-        title: "Add User",
-        url: "/admin/user/create",
-        icon: UserPlus2,
-    },
-
-    {
-        title: "Manage Users",
-        url: "/admin/users",
-        icon: FolderCog2,
-    },
-]
 
 
 const merchants = [
     {
-        title: "Onboard Merchant",
-        url: "/admin/merchants/create/step-1",
+        title: "Create Merchant",
+        url: "/admin/merchants/create",
         icon: UserPlus2,
     },
 
@@ -74,10 +42,12 @@ const merchants = [
     },
     
     {
-        title: "Current Applications",
-        url: "/admin/merchants/applications",
-        icon: FileCheck,
+        title: "System Users",
+        url: "/admin/sys-users",
+        icon: Settings,
     },
+
+ 
 ]
 
 
@@ -113,33 +83,7 @@ export function AppSidebar() {
                     <SidebarGroup>
                         <SidebarGroupLabel asChild>
                             <CollapsibleTrigger>
-                                Projects
-                                <ChevronDown className="group-data-[state=open]/collapsible:rotate-180 ml-auto transition-transform" />
-                            </CollapsibleTrigger>
-                        </SidebarGroupLabel>
-                        <CollapsibleContent>
-                            <SidebarGroupContent>
-                                <SidebarMenu>
-                                    {projects.map((item) => (
-                                        <SidebarMenuItem key={item.title}>
-                                            <SidebarMenuButton asChild>
-                                                <a href={item.url}>
-                                                    <item.icon />
-                                                    <span>{item.title}</span>
-                                                </a>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                    ))}
-                                </SidebarMenu>
-                            </SidebarGroupContent>
-                        </CollapsibleContent>
-                    </SidebarGroup>
-                </Collapsible>
-                <Collapsible defaultOpen className="group/collapsible">
-                    <SidebarGroup>
-                        <SidebarGroupLabel asChild>
-                            <CollapsibleTrigger>
-                                Merchants
+                                Users
                                 <ChevronDown className="group-data-[state=open]/collapsible:rotate-180 ml-auto transition-transform" />
                             </CollapsibleTrigger>
                         </SidebarGroupLabel>
@@ -161,32 +105,7 @@ export function AppSidebar() {
                         </CollapsibleContent>
                     </SidebarGroup>
                 </Collapsible>
-                <Collapsible defaultOpen className="group/collapsible">
-                    <SidebarGroup>
-                        <SidebarGroupLabel asChild>
-                            <CollapsibleTrigger>
-                                User Management
-                                <ChevronDown className="group-data-[state=open]/collapsible:rotate-180 ml-auto transition-transform" />
-                            </CollapsibleTrigger>
-                        </SidebarGroupLabel>
-                        <CollapsibleContent>
-                            <SidebarGroupContent>
-                                <SidebarMenu>
-                                    {admin.map((item) => (
-                                        <SidebarMenuItem key={item.title}>
-                                            <SidebarMenuButton asChild>
-                                                <a href={item.url}>
-                                                    <item.icon />
-                                                    <span>{item.title}</span>
-                                                </a>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuItem>
-                                    ))}
-                                </SidebarMenu>
-                            </SidebarGroupContent>
-                        </CollapsibleContent>
-                    </SidebarGroup>
-                </Collapsible>
+                
             </SidebarContent>
             <SidebarFooter>
                 <SidebarMenu>
@@ -207,6 +126,11 @@ export function AppSidebar() {
                                     onClick={() => signOut({ callbackUrl: "/auth/signin/admin" })}
                                 >
                                     <span>Sign out</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => {}}
+                                >
+                                    <span>Profile</span>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>

@@ -53,18 +53,21 @@ const authOptions: AuthOptions = {
                     label: "Password",
                     type: "password",
                 },
+                portal: { // Add the portal credential
+                    label: "Portal",
+                    type: "text",
+                    hidden: true, // You might want to handle this differently in the UI
+                },
                
             },
 
             async authorize(credentials) {
                 if (!credentials) {
-                    console.log("No credentials provided.");
+                    // console.log("No credentials provided.");
                     return null;
                 }
 
-                const { email, password, } = credentials;
-               // console.log("Attempting login with email:", email);
-
+                const { email, password, portal } = credentials;
                 try {
 
                     const res = await fetch(api_endpoints.auth.login ,
@@ -76,18 +79,17 @@ const authOptions: AuthOptions = {
                         body: JSON.stringify({
                             email: email,
                             password: password,
+                            portal: portal,
                         }),
                     });
 
                     const result = await res.json();
-                    console.log("Login response:", result);
+                    // console.log("Login response:", result);
 
-                    // Check if the response is successful
+                    const user = result.user;
+
+
                     if (result.status === "success") {
-                      //  console.log("Login successful, returning user data.");
-                    
-                      const user = result.user;
-                      
                       return {
                             id: user.id,
                             accessToken: user.token,
@@ -95,14 +97,12 @@ const authOptions: AuthOptions = {
                             permissions: user.permissions,
                         };
                     } 
-                    // else if (!res.ok || user.status === "failure") {
-                    //     console.log("Login failed:", user.message || "Authentication failed");
-                    //     throw new Error(user.message || "Authentication failed");
-                    // }
-                    
+                    else if (result.status === "failure") {
+                        throw new Error(result.detail || "Authentication failed");
+                    }
+                   
                     else {
-                        console.log("Login failed:", result.message || "Authentication failed");
-                        throw new Error(result.message || "Authentication failed");
+                        throw new Error(result.detail || "Authentication failed");
                   }
                 } catch (error) {
                     console.error("Error during authentication:", error);
