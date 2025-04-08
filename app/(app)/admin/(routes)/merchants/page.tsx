@@ -52,11 +52,11 @@ const Users = () => {
       if (responseBody?.users?.user) {
         const users = responseBody.users.user.map((user: User) => ({
           id: user.id,
-          name: user.fullname,
+          fullname: user.fullname,
           email: user.email,
           phone: user.phone,
           role: "Merchant", // Default role or fetched from the data
-     
+          status:user.status
         }));
         setUserData(users);
         setTotalPages(responseBody.users.totalPages || 0);

@@ -35,7 +35,7 @@ const merchantStats = {
 
 const MerchantsTab = () => {
   return (
-    <main>
+    <main className='flex flex-col gap-5'>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <Card>
                   <CardHeader className="pb-2">

@@ -18,7 +18,6 @@ type UserActionsProps = {
 
 const UserActions: React.FC<UserActionsProps> = ({ row, onView, onEdit, onDelete }) => {
 
-  const userEmail = row.email;
   const router = useRouter()
 
   const resetPassword = () => {
@@ -45,13 +44,27 @@ const UserActions: React.FC<UserActionsProps> = ({ row, onView, onEdit, onDelete
   );
 };
 
+
+
+const StatusCell = ({ row }: { row: UserDetails }) => {
+
+  const status = row.status
+
+
+  return (
+    <div className={ status == "active"? "p-2  capitalize bg-green-200 rounded-2xl text-green-700": status == "pending" ?  "p-2 capitalize bg-orange-200 rounded-2xl text-orange-500":"p-2 bg-red-200 capitalize rounded-2xl text-red-700"}>
+{status}
+    </div>
+  );
+};
+
 export const UserColumns = (
   setViewUser: (user: UserDetails | null) => void,
   setEditUser: (user: UserDetails | null) => void,
    onDelete: (user: UserDetails) => void,
 ): ColumnDef<UserDetails>[] => [
     {
-      accessorKey: "name",
+      accessorKey: "fullname",
       header: ({ column }) => {
         return (
           <Button
@@ -73,6 +86,11 @@ export const UserColumns = (
     {
       accessorKey: "email",
       header: "Email",
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => <StatusCell row={row.original} />
     },
  
     {

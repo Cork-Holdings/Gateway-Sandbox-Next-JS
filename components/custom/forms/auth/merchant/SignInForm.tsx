@@ -50,7 +50,10 @@ const MerchantSignInForm = () => {
           redirect: false,
         });
 
-        if (signInResponse?.error  && signInResponse?.status === 401) {
+
+        console.log('signInResponse', signInResponse)
+
+        if (signInResponse?.error  && signInResponse?.status === 403) {
           toast.error("Access to the Merchant Portal is not allowed for your account.");
           return;
       } else if (signInResponse?.error) {

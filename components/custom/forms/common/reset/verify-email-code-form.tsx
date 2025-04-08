@@ -1,6 +1,7 @@
 "use client"
 import { Card, CardContent } from "@/components/ui/card";
 import { api_endpoints } from "@/utils/api_constants";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -11,7 +12,7 @@ interface OtpCodeProps {
 }
 
 
-const OTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
+const VerifyEmailOTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
   const [otp, setOtp] = useState("");
 
   const router = useRouter()
@@ -50,8 +51,8 @@ const OTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
 
     if(data.status == "success"){
         toast.success("Code Verified!")
-        router.push(`/common/reset/password?email=${email}`)
-    }
+        signOut({ callbackUrl: "/auth/signin/merchant" })
+          }
     else if (data.status == "failure"){
       toast.error(`${data.error}\n${data.detail}`)
         window.location.reload()
@@ -97,4 +98,4 @@ const OTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
   );
 };
 
-export default OTPCodeForm;
+export default VerifyEmailOTPCodeForm;

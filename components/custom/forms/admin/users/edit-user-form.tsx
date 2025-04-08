@@ -19,6 +19,14 @@ import { Loader2 } from "lucide-react";
 import { api_endpoints } from "@/utils/api_constants";
 import toast from "react-hot-toast";
 import { UserDetails } from "@/utils/types/Users";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { useSession } from "next-auth/react";
 
 
 interface EditUserFormProps {
@@ -27,18 +35,19 @@ interface EditUserFormProps {
 }
 
 
-
 const editUserSchema = z.object({
     fullname: z.string().optional(),
     email: z.string().optional(),
     phone: z.string().optional(),
     password: z.string().optional(),
+    status:z.string().optional()
 
 })
 
 const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
    
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const {data:session} = useSession()
 
     const form = useForm<z.infer<typeof editUserSchema>>({
         resolver: zodResolver(editUserSchema),
@@ -46,6 +55,7 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
             fullname: user?.fullname ||"", // Provide an initial empty string
             email: user?.email ||"",
             phone: user?.phone ||"",
+            status :user?.status ||""
         }
     });
 
@@ -55,16 +65,18 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
         console.log(values)
         try {
 
-            const body = {
+          const body = {
                 "fullname": values.fullname,
                 "email": values.email,
                 "phone": values.phone,
-                "role": "admin",
+                id: user?.id,
+                status: values.status
             }
             const res = await fetch(api_endpoints.backoffice.editUser, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization":`Bearer ${session?.accessToken}`
                 },
                 body: JSON.stringify(body)
             })
@@ -95,7 +107,7 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
                 className="bg-white p-6  w-full dark:bg-gray-800 max-w-4xl space-y-8"
             >
                 <div className="text-center space-y-2">
-                    <h1 className="text-2xl text-gray-900 dark:text-white font-bold">Edit A User</h1>
+                    <h1 className="text-2xl text-gray-900 dark:text-white font-bold">Edit a user</h1>
                     <p className="text-gray-600 text-sm dark:text-gray-400">Fill in the following details</p>
                 </div>
 
@@ -155,6 +167,33 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
                             </FormItem>
                         )}
                     />
+
+                    <FormField
+                                                control={form.control}
+                                                name="status"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Status Code</FormLabel>
+                                                        <Select
+                                                            onValueChange={field.onChange}
+                                                            defaultValue={field.value}
+                                                        >
+                                                            <FormControl>
+                                                                <SelectTrigger className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500">
+                                                                    <SelectValue placeholder="Select a status code" />
+                                                                </SelectTrigger>
+                                                            </FormControl>
+                                                            <SelectContent>
+                                                                <SelectItem value="active">Active</SelectItem>
+                                                                <SelectItem value="inactive">Inactive</SelectItem>
+                                                                <SelectItem value="pending">Pending</SelectItem>
+                                                               </SelectContent>
+                                                        </Select>
+                                                        <FormMessage className="text-red-500 text-xs" />
+                                                    </FormItem>
+                                                )}
+                                            />
+                    
 
                     
                 

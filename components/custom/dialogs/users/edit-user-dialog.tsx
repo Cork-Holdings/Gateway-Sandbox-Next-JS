@@ -16,8 +16,8 @@ const EditUserDialog: React.FC<EditUserDialogProps> = ({ user, open, onClose }) 
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="md:w-[800px] lg:w-[1200px] ">
-        <DialogHeader>
-          <DialogTitle>User Details</DialogTitle>
+        <DialogHeader className="hidden">
+          <DialogTitle></DialogTitle>
         </DialogHeader>
         <EditUserForm user={user}/>
         <DialogFooter>

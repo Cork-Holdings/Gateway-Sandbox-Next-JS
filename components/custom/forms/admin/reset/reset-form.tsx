@@ -19,7 +19,7 @@ import { api_endpoints } from '@/utils/api_constants';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 
-const SubmitTestimonySchema = z.object({
+const AdminResetSchema = z.object({
     email: z.string()
 });
 
@@ -29,14 +29,14 @@ const AdminResetForm = () => {
 
     const router = useRouter()
 
-    const form = useForm<z.infer<typeof SubmitTestimonySchema>>({
-        resolver: zodResolver(SubmitTestimonySchema),
+    const form = useForm<z.infer<typeof AdminResetSchema>>({
+        resolver: zodResolver(AdminResetSchema),
         defaultValues: {
             email: "",
         }
     });
 
-    const onSubmit = async (values: z.infer<typeof SubmitTestimonySchema>) => {
+    const onSubmit = async (values: z.infer<typeof AdminResetSchema>) => {
 
         const body = {
             "to": values.email,
@@ -56,10 +56,7 @@ const AdminResetForm = () => {
                 body: JSON.stringify(body),
             });
 
-            console.log('response', response)
             const data = await response.json();
-
-            console.log('data', data)
 
             if (data["status"] == "success") {
                 toast.success("Code sent successfully!");

@@ -4,6 +4,7 @@ export interface User {
   email: string;
   role: string;
   phone:string;
+  status:string;
   }
 
 
@@ -14,5 +15,6 @@ export type UserDetails = {
   email: string;
   role: string;
   phone:string;
+  status:string;
   }
   

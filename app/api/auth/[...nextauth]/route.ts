@@ -12,7 +12,9 @@ declare module "next-auth" {
         isFirstTimeLogin?: string;
         permissions?: string[];
         refreshToken?: string;
-        kycStatus?: string;
+        emailVerified?: boolean;
+        accountStatus:string;
+        email:string;
     }
 
     interface User {
@@ -22,7 +24,9 @@ declare module "next-auth" {
         isFirstTimeLogin?: string;
         permissions?: string[];
         refreshToken?: string;
-        kycStatus?: string;
+        emailVerified?: boolean;
+        accountStatus:string;
+        email:string;
     }
 }
 
@@ -36,7 +40,9 @@ declare module "next-auth/jwt" {
         isFirstTimeLogin?: string;
         permissions?: string[];
         accessTokenExpiry?: number;
-        kycStatus?: string;
+        emailVerified?: boolean;
+        accountStatus:string;
+        email:string;
     }
 }
 
@@ -95,6 +101,9 @@ const authOptions: AuthOptions = {
                             accessToken: user.token,
                             role: user.role,
                             permissions: user.permissions,
+                            emailVerified:user.emailVerified || false,
+                            accountStatus:user.accountStatus || "inactive",
+                            email: user.email,
                         };
                     } 
                     else if (result.status === "failure") {
@@ -127,19 +136,21 @@ const authOptions: AuthOptions = {
                 token.role = user.role;
                 token.name = user.name;
                 token.email = user.email;
-                token.kycStatus = user.kycStatus;
+                token.emailVerified = !!user.emailVerified;
                 console.log("Token ID:", token.id); // Log the token
+                token.accountStatus=user.accountStatus || "inactive",
+                token.email = user.email
             }
             return token;
-        }
-,        
-
+        },        
         async session({ session, token }) {
        
             session.id = token.id;
             session.accessToken = token.accessToken;
             session.role = token.role;
-            session.kycStatus = token.kycStatus;
+            session.emailVerified = token.emailVerified;
+            session.accountStatus = token.accountStatus;
+            session.email = token.email;
           return session;
         },
     },

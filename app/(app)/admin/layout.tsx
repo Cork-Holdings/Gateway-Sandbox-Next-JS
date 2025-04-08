@@ -9,6 +9,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     if(!session){
       return
     }
+
+    
 return (
   <main className="flex h-screen">
   <SidebarProvider>

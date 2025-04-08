@@ -61,10 +61,10 @@ export function UsersDataTable<TData, TValue>({
         <div className="w-full space-y-4 dark:bg-[#0d1b2a]">
             <div className="flex flex-col sm:flex-row sm:items-center py-4 gap-3 dark:bg-[#0d1b2a]">
                 <Input
-                    placeholder="Filter names..."
-                    value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                    placeholder="Filter by name..."
+                    value={(table.getColumn("fullname")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("name")?.setFilterValue(event.target.value)
+                        table.getColumn("fullname")?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm dark:bg-[#0d1b2a] dark:border-gray-600"
                 />

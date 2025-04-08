@@ -1,6 +1,6 @@
 // SignInForm.tsx
 "use client";
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +30,8 @@ const AdminSignInForm = () => {
   const { status, data: session } = useSession();
   const [loading, setLoading] = React.useState(false);
 
+  const [getEmail, setGetEmail] = useState<string>('')
+
   const form = useForm<z.infer<typeof SigninSchema>>({
     resolver: zodResolver(SigninSchema),
     defaultValues: {
@@ -50,7 +52,7 @@ const AdminSignInForm = () => {
           redirect: false,
         });
 
-        if (signInResponse?.error  && signInResponse?.status === 401) {
+        if (signInResponse?.error  && signInResponse?.status === 403) {
           toast.error("Access to the Admin Portal is not allowed for your account.");
           return;
       } else if (signInResponse?.error) {
@@ -70,7 +72,15 @@ const AdminSignInForm = () => {
 
   useEffect(() => {
     if (status === "authenticated" && session) {
+
+    const emailverified  = session.emailVerified
+
+    if (emailverified) {
       router.push("/admin/dashboard");
+    }else{
+      router.push(`/common/email-verify/${getEmail}`);
+    }
+    
     }
   }, [status, session, router]);
 
