@@ -1,6 +1,6 @@
 "use client"
 import { api_endpoints } from '@/utils/api_constants';
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, Loader2 } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
@@ -11,9 +11,7 @@ import toast from 'react-hot-toast';
 
 const VerifyEmailForm = () => {
     const { data: session } = useSession();
-   // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isLoading, setLoading] = useState<boolean>(false)
-
 
     const router = useRouter()
 
@@ -69,9 +67,10 @@ const VerifyEmailForm = () => {
               
                     <div className="flex space-x-4 justify-between">
                         <button 
+                        disabled={isLoading}
                         onClick={()=> requestCode()}
                         className="px-6 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors">
-                            Request Code
+                          {isLoading &&<Loader2 className='h-4 w-4 animate-spin'/> } Request Code
                         </button>
                         <button
                             onClick={() => signOut({ callbackUrl: "/auth/signin/merchant" })}

@@ -91,11 +91,11 @@ const SignUpForm = () => {
 
 
     return (
-        <div className="flex bg-gray-50 justify-center dark:bg-gray-900 items-center lg:px-8 px-4 py-12 sm:px-6">
+        <div className="flex justify-center dark:bg-gray-900 items-center lg:px-8 px-4 py-12 sm:px-6">
         <Form {...form}>
             <form 
                 onSubmit={form.handleSubmit(onSubmit)} 
-                className="bg-white p-6 rounded-xl shadow-lg w-full dark:bg-gray-800 max-w-md space-y-8"
+                className="p-6 rounded-xl shadow-lg w-full dark:bg-gray-800 max-w-md space-y-8"
             >
                 <div className="text-center space-y-2">
                     <h1 className="text-2xl text-gray-900 dark:text-white font-bold">Create Your Account</h1>

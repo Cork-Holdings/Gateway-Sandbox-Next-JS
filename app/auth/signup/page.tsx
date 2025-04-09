@@ -1,13 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
-import Header from '@/components/custom/common/Header'
 import SignUpForm from '@/components/custom/forms/auth/merchant/SignUpForm'
 
 
 const SignUpPage = () => {
   return (
-    <div className='w-full h-screen flex items-start'>
-        <Header/>
+    <div className='w-full h-screen  flex items-start'>
+     
         <div className='w-full lg:w-1/2 h-full  flex flex-col p-20 justify-between'>
                 <h1 className='text-xl text-black font-semibold'></h1>
 
@@ -34,6 +33,8 @@ const SignUpPage = () => {
             {/* The form section, takes full width on small/medium screens, half on large screens */}
             
         </div>
+
+        
   )
 }
 
