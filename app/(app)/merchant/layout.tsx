@@ -4,7 +4,6 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { signOut, useSession } from "next-auth/react";
 import { MerchantSidebar } from "@/components/custom/merchant-sidebar";
 import { AlertCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
 import VerifyEmailForm from "@/components/custom/forms/merchant/email-verification/verify-email-form";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode; }) {
@@ -17,7 +16,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex items-center justify-center h-screen">
         <div className="flex flex-col items-center space-y-4">
           <div className="w-12 h-12 rounded-full border-4 border-gray-200 border-t-blue-500 animate-spin"></div>
-          <p className="text-gray-500 font-medium">Loading dashboard...</p>
+          <p className="text-gray-500 font-medium">Loading </p>
         </div>
       </div>
     );
@@ -80,7 +79,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="flex items-center justify-between px-6 py-4">
               <div className="flex items-center">
                 <SidebarTrigger className="mr-4" />
-                <h1 className="text-xl font-semibold text-gray-800">Merchant Dashboard</h1>
+                <h1 className="text-xl font-semibold text-gray-800">Merchant </h1>
               </div>
               <div className="flex items-center space-x-4">
                 <span className="text-sm text-gray-600">

@@ -53,7 +53,9 @@ const HostedCheckoutUrlForm =(
     const handleSubmit = async (values: z.infer<typeof hostedSchema>) => {
 
 
-        const body = {}
+        const body = {
+            amount: values.amount
+        }
 
         try {
             setLoading(true);

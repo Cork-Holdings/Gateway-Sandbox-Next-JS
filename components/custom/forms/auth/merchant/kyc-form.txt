@@ -18,7 +18,6 @@ import { Upload, Loader2, X } from 'lucide-react';
 import { api_endpoints } from '@/utils/api_constants';
 import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
 
 const completeKYCSchema = z.object({
     name: z.string().min(1, { message: "Fullname is required" }),
@@ -39,7 +38,6 @@ const CompleteKYCForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { data: session } = useSession();
 
-    const router = useRouter()
 
     const form = useForm<z.infer<typeof completeKYCSchema>>({
         resolver: zodResolver(completeKYCSchema),
@@ -111,7 +109,7 @@ const CompleteKYCForm = () => {
    
 
         try {
-            const response = await fetch(api_endpoints.auth.merchantRegister, {
+            const response = await fetch(api_endpoints.auth.Register, {
                 method: "POST",
                 headers:{
                     "Authorization":`Bearer ${session?.accessToken}`

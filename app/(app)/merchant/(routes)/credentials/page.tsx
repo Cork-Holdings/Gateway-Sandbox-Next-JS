@@ -49,7 +49,9 @@ const Configure = () => {
         toast.error(`Unable to fetch client credentials\n${data.detail}`)
       }
 
-    } catch (error) {
+    } 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    catch (error) {
       toast.error("Something went wrong.Try Again.")
     } finally {
       setLoading(false);

@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { api_endpoints, base_url, next_url } from '@/utils/api_constants'
+import { api_endpoints, next_url } from '@/utils/api_constants'
 import React, { useState } from 'react'
 import { Loader2, Copy, Check } from 'lucide-react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
@@ -73,7 +73,9 @@ const CheckoutSessionContainer = () => {
         setResponse(data)
         throw new Error(data.message || 'Request failed')
       }
-    } catch (err) {
+    } 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    catch (err) {
 
       //   setError( 'An error occurred while making the request')
     } finally {

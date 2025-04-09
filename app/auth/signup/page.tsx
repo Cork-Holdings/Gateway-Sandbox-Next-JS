@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import MerchantSignInForm from '@/components/custom/forms/auth/merchant/SignInForm'
 import Header from '@/components/custom/common/Header'
 import SignUpForm from '@/components/custom/forms/auth/merchant/SignUpForm'
 

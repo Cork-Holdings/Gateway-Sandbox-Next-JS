@@ -12,11 +12,9 @@ import {
     Users, 
     Store,
   } from "lucide-react";
-  import { Progress } from "@/components/ui/progress";
   import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,

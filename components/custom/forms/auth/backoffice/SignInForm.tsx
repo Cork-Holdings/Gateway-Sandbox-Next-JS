@@ -30,6 +30,7 @@ const AdminSignInForm = () => {
   const { status, data: session } = useSession();
   const [loading, setLoading] = React.useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [getEmail, setGetEmail] = useState<string>('')
 
   const form = useForm<z.infer<typeof SigninSchema>>({
@@ -61,7 +62,9 @@ const AdminSignInForm = () => {
       }
 
         toast.success("Sign in successful");
-      } catch (error) {
+      } 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      catch (error) {
         toast.error("An unexpected error occurred");
       } finally {
         setLoading(false);

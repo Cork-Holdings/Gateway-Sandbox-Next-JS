@@ -1,5 +1,5 @@
 import React from 'react';
-import { api_endpoints, base_url } from '@/utils/api_constants';
+import { api_endpoints, } from '@/utils/api_constants';
 import { ArrowRight, CheckCircle, Clock, Code, FileJson, Globe, SendHorizonal } from 'lucide-react';
 
 const CollectionDocumentationContainer = () => {

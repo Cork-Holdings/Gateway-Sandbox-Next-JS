@@ -61,7 +61,9 @@ const MerchantSignInForm = () => {
           return;
       }
         toast.success("Sign in successful");
-      } catch (error) {
+      } 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      catch (error) {
         toast.error("An unexpected error occurred");
       } finally {
         setLoading(false);

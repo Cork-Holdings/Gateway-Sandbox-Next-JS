@@ -49,6 +49,7 @@ export const api_endpoints = {
         getAPIcredentials : `${base_url}/user/credentials/get`,
         resetPassword:`${base_url}/reset/password`,
         verifyCode:`${base_url}/verify/code`,
-        requestCode:`${base_url}/request/code`
+        requestCode:`${base_url}/request/code`,
+        getUserProfile: `${base_url}/user/get`
     },
 };

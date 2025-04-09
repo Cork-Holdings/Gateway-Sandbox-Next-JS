@@ -55,7 +55,9 @@ const CollectionContainer = () => {
         setResponse(data)
         throw new Error(data.message || 'Request failed')
       }
-    } catch (err) {
+    } 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    catch (err) {
 
     } finally {
       setIsLoading(false)
@@ -77,6 +79,7 @@ const CollectionContainer = () => {
   };
 
   const handleCopy = (text:string) => {
+    console.log('text', text)
     if (response) {
       navigator.clipboard.writeText(JSON.stringify(response, null, 2))
       setCopied(true)

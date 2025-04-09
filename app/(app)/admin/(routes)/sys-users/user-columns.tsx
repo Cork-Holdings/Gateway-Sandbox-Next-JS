@@ -21,7 +21,7 @@ const UserActions: React.FC<UserActionsProps> = ({ row, onView, onEdit, onDelete
   const router = useRouter()
 
   const resetPassword = () => {
-    router.push(`/admin/reset`)
+    router.push(`/admin/reset?email=${row.email}`)
   }
 
   return (

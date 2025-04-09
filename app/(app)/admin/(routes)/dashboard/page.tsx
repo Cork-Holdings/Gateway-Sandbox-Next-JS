@@ -1,41 +1,6 @@
 // pages/dashboard.jsx
 import React from 'react';
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { 
-  Activity, 
-  AlertTriangle, 
-  BarChart3, 
-  Bell, 
-  CheckCircle, 
-  Database, 
-  FileKey, 
-  Lock, 
-  Users, 
-  Settings, 
-  Store,
-  PieChart,
-  Server,
-  BarChartHorizontal,
-  Globe
-} from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import Overview from '@/components/custom/dashboard/Overview';
 import UsersTab from '@/components/custom/dashboard/Users';
 import MerchantsTab from '@/components/custom/dashboard/MerchantsTab';

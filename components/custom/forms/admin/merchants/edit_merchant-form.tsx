@@ -10,22 +10,13 @@ import {
 
 } from "@/components/ui/form";
 
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 
 import { Input } from "@/components/ui/input";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Loader2 } from "lucide-react";
-import Link from "next/link";
 import { api_endpoints } from "@/utils/api_constants";
 import toast from "react-hot-toast";
 import { MerchantDetails } from "@/utils/types/Merchants";
@@ -39,8 +30,7 @@ const editMerchantSchema = z.object({
     fullname: z.string().min(1, { message: "Fullname is required" }),
     email: z.string().min(1, { message: "Email is required" }),
     phone: z.string().min(1, { message: "Phone is required" }),
-    password: z.string().min(8, { message: "Must be more than 8 characters" }),
-
+   
 })
 
 const EditMerchantForm: React.FC<EditMerchantFormProps> = ({ merchant }) => {
@@ -50,11 +40,10 @@ const EditMerchantForm: React.FC<EditMerchantFormProps> = ({ merchant }) => {
     const form = useForm<z.infer<typeof editMerchantSchema>>({
         resolver: zodResolver(editMerchantSchema),
         defaultValues: {
-            fullname: "", // Provide an initial empty string
-            email: "",
-            phone: "",
-            password: "",
-        }
+            fullname: merchant?.name ||"", // Provide an initial empty string
+            email: merchant?.email|| "",
+            phone: merchant?.phone|| "",
+         }
     });
 
     const onSubmit = async (values: z.infer<typeof editMerchantSchema>) => {
@@ -66,7 +55,6 @@ const EditMerchantForm: React.FC<EditMerchantFormProps> = ({ merchant }) => {
             const body = {
                 "fullname": values.fullname,
                 "email": values.email,
-                "password": values.password,
                 "phone": values.phone,
                 "role": "admin",
             }
@@ -85,7 +73,9 @@ const EditMerchantForm: React.FC<EditMerchantFormProps> = ({ merchant }) => {
             } else if(responseBody.status === "failure") {
                 toast.error(responseBody.error)
             }
-        } catch (error) {
+        } 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        catch (error) {
             toast.error("An unexpected error occurred. Please try again.")
           
         }
@@ -166,25 +156,7 @@ const EditMerchantForm: React.FC<EditMerchantFormProps> = ({ merchant }) => {
                     />
 
                     
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Password</FormLabel>
-                                <FormControl>
-                                    <Input 
-                                        type="password"
-                                        placeholder="••••••••"
-                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage className="text-red-500 text-xs" />
-                            </FormItem>
-                        )}
-                    />
-
+                   
                     <Button
                         type="submit"
                         disabled={isLoading}

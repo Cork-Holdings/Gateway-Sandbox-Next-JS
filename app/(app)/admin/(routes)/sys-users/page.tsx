@@ -56,7 +56,7 @@ const Users = () => {
           email: user.email,
           phone: user.phone,
           role: "Admin", // Default role or fetched from the data
-     
+          status:user.status
         }));
         setUserData(users);
         setTotalPages(responseBody.users.totalPages || 0);

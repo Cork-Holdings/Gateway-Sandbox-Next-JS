@@ -18,14 +18,6 @@ import { z } from 'zod';
 import { Loader2 } from "lucide-react";
 import { api_endpoints } from "@/utils/api_constants";
 import toast from "react-hot-toast";
-import { UserDetails } from "@/utils/types/Users";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import { useSession } from "next-auth/react";
 import { Email } from "@/utils/types/Email";
 
@@ -82,7 +74,9 @@ const EditEmailForm : React.FC<EditEmailFormProps> = ({ email }) => {
             } else if(responseBody.status === "failure") {
                 toast.error(responseBody.error)
             }
-        } catch (error) {
+        } 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        catch (error) {
             toast.error("An unexpected error occurred. Please try again.")
           
         }

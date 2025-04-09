@@ -46,7 +46,9 @@ const NameLookupContainer = () => {
         setResponse(data)
         throw new Error(data.message || 'Request failed')
       }
-    } catch (err) {
+    } 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    catch (err) {
 
     } finally {
       setIsLoading(false)
@@ -66,7 +68,7 @@ const NameLookupContainer = () => {
     }
   };
 
-  const handleCopy = (text:string) => {
+  const handleCopy = () => {
     if (response) {
       navigator.clipboard.writeText(JSON.stringify(response, null, 2))
       setCopied(true)
@@ -185,7 +187,7 @@ const NameLookupContainer = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => handleCopy(JSON.stringify(response, null, 2))}
+                  onClick={() => handleCopy()}
                   className="flex items-center gap-1"
                 >
                   {copied ? (

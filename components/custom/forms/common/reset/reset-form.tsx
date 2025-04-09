@@ -76,7 +76,7 @@ const ResetForm = () => {
     };
 
     return (
-        <Card className="max-w-2xl w-full flex flex-col items-center justify-center">
+        <Card className="max-w-2xl w-full flex flex-col items-center justify-center ">
             <CardContent className='w-full'>
                 <p className='text-xl font-bold pb-2'>Request A code</p>
                 <p className='text-sm font-normal pb-6'>Enter the email address to which the code should be sent to</p>

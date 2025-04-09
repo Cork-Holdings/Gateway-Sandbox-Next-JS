@@ -16,6 +16,7 @@ import { ChevronDown, ChevronUp,  FolderCog, LucideLayoutDashboard, Settings, Us
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
 import { signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 
 const items = [
@@ -52,6 +53,8 @@ const merchants = [
 
 
 export function AppSidebar() {
+
+    const router = useRouter()
 
     const {
 
@@ -128,7 +131,7 @@ export function AppSidebar() {
                                     <span>Sign out</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
-                                    onClick={() => {}}
+                                    onClick={() => router.push("/admin/profile")}
                                 >
                                     <span>Profile</span>
                                 </DropdownMenuItem>

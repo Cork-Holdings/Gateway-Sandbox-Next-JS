@@ -10,7 +10,7 @@ import { api_endpoints } from '@/utils/api_constants'
 import { UserDetails } from '@/utils/types/Users'
 import { useRouter } from 'next/navigation'
 
-const MerchantProfile = () => {
+const AdminProfile = () => {
   const { data: session } = useSession()
   const [userData, setUserData] = useState<UserDetails | null>(null)
   const [loading, setLoading] = useState(true)
@@ -159,7 +159,7 @@ const MerchantProfile = () => {
     <main className="max-w-xl mx-auto">
       <Card className="shadow-md">
         <CardHeader className="border-b bg-gray-50">
-          <CardTitle className="text-xl font-semibold text-gray-800">Merchant Profile</CardTitle>
+          <CardTitle className="text-xl font-semibold text-gray-800">Admin Profile</CardTitle>
         </CardHeader>
         
         <CardContent className="pt-6">
@@ -200,13 +200,13 @@ const MerchantProfile = () => {
         
         <CardFooter className="flex justify-end border-t gap-3 bg-gray-50 p-4">
           <Button 
-          onClick={()=> router.push(`/merchant/reset/${userData?.email}`)}
+          onClick={()=> router.push(`/admin/reset?email=${userData?.email}`)}
           className="bg-gray-600 hover:bg-gray-700">
           
             Reset Password
           </Button>
           <Button
-          onClick={()=> router.push("/merchant/profile/edit")}
+          onClick={()=> router.push("/admin/profile/edit")}
           className="bg-blue-600 hover:bg-blue-700">
             Update Profile
           </Button>
@@ -216,4 +216,4 @@ const MerchantProfile = () => {
   )
 }
 
-export default MerchantProfile
+export default AdminProfile

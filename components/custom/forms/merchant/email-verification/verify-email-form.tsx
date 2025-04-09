@@ -10,7 +10,8 @@ import toast from 'react-hot-toast';
 
 
 const VerifyEmailForm = () => {
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isLoading, setLoading] = useState<boolean>(false)
 
 

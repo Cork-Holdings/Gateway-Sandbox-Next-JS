@@ -45,7 +45,9 @@ const AuthorizeContainer = () => {
         setResponse(data)
         throw new Error(data.message || 'Request failed')
       }
-    } catch (err) {
+    } 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    catch (err) {
         
     //   setError( 'An error occurred while making the request')
     } finally {

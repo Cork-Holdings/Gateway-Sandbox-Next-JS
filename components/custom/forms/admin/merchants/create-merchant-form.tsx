@@ -69,7 +69,9 @@ const CreateMerchantForm = () => {
             } else if(responseBody.status === "failure") {
                 toast.error(responseBody.error)
             }
-        } catch (error) {
+        } 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        catch (error) {
             toast.error("An unexpected error occurred. Please try again.")
           
         }

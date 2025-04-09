@@ -1,5 +1,5 @@
 import React from 'react';
-import { api_endpoints, base_ip, next_url } from '@/utils/api_constants';
+import { api_endpoints,  next_url } from '@/utils/api_constants';
 import { ArrowRight, BadgeXIcon, CheckCircle, Code, FileJson, Globe, SendHorizonal } from 'lucide-react';
 
 const CheckoutSessionDocumentationContainer = () => {
