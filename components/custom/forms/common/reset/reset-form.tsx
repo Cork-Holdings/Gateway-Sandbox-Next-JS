@@ -17,7 +17,6 @@ import { Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { api_endpoints } from '@/utils/api_constants';
 import { useRouter } from 'next/navigation';
-import { Card, CardContent } from '@/components/ui/card';
 
 const SubmitTestimonySchema = z.object({
     email: z.string()
@@ -59,6 +58,7 @@ const ResetForm = () => {
             console.log('response', response)
             const data = await response.json();
 
+            console.log('data', data)
             if (data["status"] == "success") {
                 toast.success("Code sent successfully!");
                 router.push(`/common/reset/${values.email}`)

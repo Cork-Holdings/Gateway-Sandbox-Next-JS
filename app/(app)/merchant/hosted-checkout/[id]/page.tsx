@@ -32,7 +32,7 @@ const HostedCheckoutPage = () => {
         setError("Failed to load checkout details. Please try again.")
       }
     } catch (err) {
-      setError("An error occurred while loading checkout details.")
+      setError(`An error occurred while loading checkout details.\n${err}`)
     } finally {
       setIsLoading(false)
     }

@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { api_endpoints } from "@/utils/api_constants";
-import { BadgeAlertIcon, CheckCircle, FileDigit, FileInput, Loader2 } from "lucide-react";
+import {  CheckCircle, FileDigit,  Loader2 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -39,6 +39,8 @@ const VerifyEmailOTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
 
     try {
 
+      setLoading(true)
+
 
       const response = await fetch(api_endpoints.common.verifyCode, {
         method: "POST",
@@ -48,6 +50,8 @@ const VerifyEmailOTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
 
 
       const data = await response.json()
+
+      setLoading(false)
 
       if (data.status == "success") {
         toast.success("Code Verified!")
@@ -61,6 +65,7 @@ const VerifyEmailOTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars                                     
     catch (error) {
+      setLoading(false)
       toast.error(`Something went wrong. Please try again`)
       window.location.reload()
     }

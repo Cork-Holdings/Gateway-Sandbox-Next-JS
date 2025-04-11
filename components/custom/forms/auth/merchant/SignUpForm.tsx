@@ -95,7 +95,7 @@ const SignUpForm = () => {
         <Form {...form}>
             <form 
                 onSubmit={form.handleSubmit(onSubmit)} 
-                className="p-6 rounded-xl shadow-lg w-full dark:bg-gray-800 max-w-md space-y-8"
+                className="p-6 rounded-xl shadow-xl w-full dark:bg-gray-800 max-w-md space-y-8"
             >
                 <div className="text-center space-y-2">
                     <h1 className="text-2xl text-gray-900 dark:text-white font-bold">Create Your Account</h1>
@@ -148,8 +148,8 @@ const SignUpForm = () => {
                                 <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Phone Number</FormLabel>
                                 <FormControl>
                                     <Input 
-                                        type="tel"
-                                        placeholder="+1 (555) 123-4567"
+                                        type="number"
+                                        placeholder="260 091 234-567"
                                         className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
                                         {...field}
                                     />

@@ -1,6 +1,4 @@
-import { Button } from '@/components/ui/button'
 import { CardContent, Card } from '@/components/ui/card'
-import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 

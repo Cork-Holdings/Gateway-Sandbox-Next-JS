@@ -67,7 +67,7 @@ const TransactionStatusContainer = () => {
        }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
   const handleCopy = () => {
     if (response) {
       navigator.clipboard.writeText(JSON.stringify(response, null, 2))

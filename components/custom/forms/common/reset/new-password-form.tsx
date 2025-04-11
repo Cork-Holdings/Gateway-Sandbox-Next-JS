@@ -17,7 +17,6 @@ import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
-import { Card, CardContent } from '@/components/ui/card'
 import { api_endpoints } from '@/utils/api_constants'
 
 

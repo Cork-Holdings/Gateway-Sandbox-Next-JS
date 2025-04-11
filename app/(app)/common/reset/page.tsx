@@ -19,7 +19,7 @@ const ResetPage = () => {
               Reset Your Password
             </h2>
             <p className="text-sm text-gray-500 text-center mt-2">
-              We'll send you a secure reset code
+              We&apos;ll send you a secure reset code
             </p>
           </div>
           <ResetForm />

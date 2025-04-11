@@ -1,6 +1,6 @@
 import React from 'react';
 import { api_endpoints } from '@/utils/api_constants';
-import { ArrowRight, BadgeXIcon, CheckCircle, Code, FileJson, Globe, SendHorizonal } from 'lucide-react';
+import { ArrowRight,  CheckCircle, Code, FileJson, Globe, SendHorizonal } from 'lucide-react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 

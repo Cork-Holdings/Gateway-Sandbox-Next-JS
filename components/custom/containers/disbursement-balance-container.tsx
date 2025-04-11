@@ -10,7 +10,6 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
-import QueryDisbursementDocumentationContainer from '../documentation/query_disbursement_documentation_container'
 import QueryDisbursementBalanceContainer from '../documentation/disburse-balance-documentation'
 
 const DisbursementBalanceContainer = () => {

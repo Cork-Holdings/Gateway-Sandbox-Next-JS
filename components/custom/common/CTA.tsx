@@ -3,8 +3,6 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import Image from 'next/image'
-
 const CTA = () => {
     const router = useRouter()
     return (
@@ -16,12 +14,14 @@ const CTA = () => {
                         Create your sandbox account today and start building your payment integration with confidence.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <Button size="lg" className="bg-[#3C3C8C] hover:bg-[#b8b8f3] text-white hover:text-black">
+                        <Button 
+                        onClick={()=>router.push("/auth/signup")}
+                        size="lg" className="bg-[#3C3C8C] hover:bg-[#b8b8f3] text-white hover:text-black">
                             Sign Up Free <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
-                        <Button size="lg" variant="outline" className="border-white text-black hover:bg-white hover:text-blue-600">
+                        {/* <Button size="lg" variant="outline" className="border-white text-black hover:bg-white hover:text-blue-600">
                             Contact Sales
-                        </Button>
+                        </Button> */}
                     </div>
             </div>
         </section>

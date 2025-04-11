@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { api_endpoints } from '@/utils/api_constants';
-import { AlertCircle, BadgeAlertIcon, Loader2, LogOut, CheckCircle } from 'lucide-react'
+import {  BadgeAlertIcon, Loader2, LogOut, CheckCircle } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
@@ -77,7 +77,7 @@ const VerifyEmailForm = () => {
 
                     <div className="text-center">
                         <h2 className="text-3xl font-bold text-gray-800 mb-2">Email Verification Required</h2>
-                        <p className="text-xl text-gray-600">We'll send a verification code to your email</p>
+                        <p className="text-xl text-gray-600">We&apos;ll send a verification code to your email</p>
                     </div>
 
                     <div className="bg-blue-50 p-6 rounded-lg w-full text-center border border-blue-100">

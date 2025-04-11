@@ -1,7 +1,6 @@
 import Hero from "@/components/custom/common/Hero";
 import Features from "@/components/custom/common/Features";
 import SIA from "@/components/custom/common/SIA";
-import Testimonials from "@/components/custom/common/Testimonials";
 import Footer from "@/components/custom/common/Footer";
 import { InfiniteLogoScroller } from "@/components/custom/common/infiniteScroller";
 import About from "@/components/custom/common/About";

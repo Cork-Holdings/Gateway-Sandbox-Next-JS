@@ -1,8 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { api_endpoints } from "@/utils/api_constants";
-import { BadgeAlertIcon, CheckCircle, Loader2, LogOut, Mail } from "lucide-react";
+import {  Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";

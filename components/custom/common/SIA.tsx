@@ -1,7 +1,6 @@
 import React from 'react'
 import { Code } from "lucide-react";
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 

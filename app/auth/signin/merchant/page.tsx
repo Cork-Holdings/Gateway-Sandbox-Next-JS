@@ -8,10 +8,10 @@ const SigninPage = () => {
     <div className='w-full h-screen flex items-start'>
             {/* The image section, visible only on large screens (lg) and above */}
             <div className='hidden lg:flex relative w-1/2 h-full flex-col'>
-                <div className='absolute inset-0 bg-black opacity-30'></div>
+                <div className='absolute inset-0 bg-black opacity-50'></div>
                 <div className='absolute top-[25%] left-[10%] flex flex-col'>
-                    <h1 className='text-6xl text-white font-extrabold my-4'>GEEPAY SandBox!</h1>
-                    <p className='text-3xl text-white font-bold'>Merchant Portal!</p>
+                    <h1 className='text-6xl text-white font-extrabold my-4'>GeePay SandBox</h1>
+                    <p className='text-3xl text-white font-bold'>Merchant Portal</p>
                 </div>
                 <Image 
                 width={1000}

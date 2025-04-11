@@ -36,7 +36,7 @@ const VerifyCode = () => {
             Verify Your Account
           </h2>
           <p className="text-xl text-gray-600 text-center mt-3">
-            We've sent you an OTP code to continue
+            We&apos;ve sent you an OTP code to continue
           </p>
         </div>
         
