@@ -1,6 +1,8 @@
 import React from 'react';
 import { api_endpoints } from '@/utils/api_constants';
 import { ArrowRight, BadgeXIcon, CheckCircle, Code, FileJson, Globe, SendHorizonal } from 'lucide-react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import vscDarkPlus from 'react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus';
 
 const QueryDisbursementDocumentationContainer = () => {
     return (
@@ -22,9 +24,9 @@ const QueryDisbursementDocumentationContainer = () => {
                 </div>
 
                 <div className="bg-gray-50 rounded-md p-4 mb-6">
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-2 overflow-auto whitespace-pre-wrap break-words">
                         <span className="bg-green-600 text-white text-xs font-medium px-2 py-1 rounded">GET</span>
-                        <code className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">{`${api_endpoints.merchant.makeQueryDisbursementRequest}/{transactionRef}`}</code>
+                        <code className=" text-sm font-mono bg-gray-200 px-2 py-1 rounded">{`${api_endpoints.merchant.makeQueryDisbursementRequest}/{transactionRef}`}</code>
                     </div>
                 </div>
             </div>
@@ -115,7 +117,9 @@ const QueryDisbursementDocumentationContainer = () => {
                 </div>
 
                 <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                    <pre>{JSON.stringify({
+                    <pre
+                    className='overflow-auto whitespace-pre-wrap break-words'
+                    >{JSON.stringify({
                         phone_number: "260961234567",
                         amount: 10,
                         narration: "test narration"
@@ -137,9 +141,18 @@ const QueryDisbursementDocumentationContainer = () => {
                         <CheckCircle className="text-green-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800">200 - Success</h3>
                     </div>
-                    <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                        <pre>
-                            {JSON.stringify({
+                   
+                    <SyntaxHighlighter
+                        language="json"
+                        style={vscDarkPlus}
+                        customStyle={{
+                            padding: '1rem',
+                            borderRadius: '0.5rem',
+                            maxHeight: '400px',
+                            overflow: 'auto'
+                        }}
+                    >
+                        {JSON.stringify({
                                 "code": 200,
                                 "data": {
                                     "amount": "200",
@@ -152,8 +165,7 @@ const QueryDisbursementDocumentationContainer = () => {
                                 "message": "Disbursement Status Retrieved",
                                 "status": "success"
                             }, null, 2)}
-                        </pre>
-                    </div>
+                    </SyntaxHighlighter>
                 </div>
 
                 {/* 202 Pending Response */}
@@ -162,20 +174,30 @@ const QueryDisbursementDocumentationContainer = () => {
                         <BadgeXIcon className="text-red-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800">404 - Invalid Transaction Reference</h3>
                     </div>
-                    <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                        <pre>
-                            {JSON.stringify({
-                                "code": 404,
-                                "error": {
-                                    "Transaction Reference": [
-                                        "Transaction Reference is invalid"
-                                    ]
+
+                    <SyntaxHighlighter
+                        language="json"
+                        style={vscDarkPlus}
+                        customStyle={{
+                            padding: '1rem',
+                            borderRadius: '0.5rem',
+                            maxHeight: '400px',
+                            overflow: 'auto'
+                        }}
+                    >
+                        {JSON.stringify({
+                                "code": 200,
+                                "data": {
+                                    "amount": "1",
+                                    "channel": "airtel",
+                                    "customer": "260978129089",
+                                    "date": "0001-01-01T00:00:00Z",
+                                    "status": "pending"
                                 },
-                                "message": "Transaction Not Found",
-                                "status": "failed"
+                                "message": "Transaction Status Retrieved",
+                                "status": "success"
                             }, null, 2)}
-                        </pre>
-                    </div>
+                    </SyntaxHighlighter>
                 </div>
             </div>
         </div>

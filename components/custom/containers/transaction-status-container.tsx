@@ -237,7 +237,7 @@ const TransactionStatusContainer = () => {
             <CardTitle className="text-lg">Request Details</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-sm overflow-auto whitespace-pre-wrap break-words">
               <p><strong>Endpoint:</strong>{` ${url}`}</p>
               <p><strong>Method:</strong> GET</p>
 

@@ -37,7 +37,7 @@ const CheckoutSessionContainer = () => {
       setResponse(null)
 
       const body = {
-        checkout_base_url: `http://${next_url}/merchant/hosted-checkout/`,
+        checkout_base_url: `https://${next_url}/merchant/hosted-checkout/`,
         order_id: orderId || "",
         amount: amount || "",
         customer: {
@@ -394,7 +394,7 @@ const CheckoutSessionContainer = () => {
             <CardTitle className="text-lg">Request Details</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-sm overflow-auto whitespace-pre-wrap break-words">
               <p><strong>Endpoint:</strong> {api_endpoints.merchant.makeAuthorizationRequest}</p>
               <p><strong>Method:</strong> POST</p>
               <p><strong>Headers:</strong></p>

@@ -3,7 +3,7 @@ import AuthorizeContainer from '@/components/custom/containers/authorize-contain
 import CollectionContainer from '@/components/custom/containers/collection-container';
 import DisbursementContainer from '@/components/custom/containers/disbursement-container';
 import { useParams, useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -33,18 +33,31 @@ const ExecuteAPI = () => {
     { id: "4", name: "Transaction Status", icon: RefreshCcw, component: TransactionStatusContainer, },
     { id: "5", name: "Name Look Up", icon: User, component: NameLookupContainer,  },
     { id: "6", name: "Hosted Checkout", icon: ScreenShare, component: CheckoutSessionContainer,  },
-
   ];
 
   const selectedEndpoint = endpoints.find(endpoint => endpoint.id === id);
   const SelectedComponent = selectedEndpoint?.component;
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) { // Tailwind lg breakpoint is 1024px
+        setIsSidebarOpen(false);
+      } else {
+        setIsSidebarOpen(true);
+      }
+    };
+  
+    handleResize(); // Set initial state on load
+    window.addEventListener('resize', handleResize);
+  
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white shadow-sm p-4 flex items-center justify-between">
+      <header className="hidden bg-white shadow-sm p-4  md:flex items-center justify-between">
         <div className="flex items-center gap-2">
           <LayoutDashboard className="h-6 w-6 text-blue-600" />
           <h1 className="text-xl font-bold text-gray-800">API Execution Dashboard</h1>
@@ -57,8 +70,11 @@ const ExecuteAPI = () => {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside
-          className={`bg-white shadow-md transition-all duration-300 ${isSidebarOpen ? 'w-64' : 'w-16'
-            }`}
+          className={`z-30 md:z-0 bg-white shadow-md transition-all duration-300
+            ${isSidebarOpen ? 'w-64' : 'w-16'}
+            
+               'relative md:absolute'}
+          `}
         >
           <div className="p-4 flex justify-end">
             <Button

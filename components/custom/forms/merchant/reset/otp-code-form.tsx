@@ -1,6 +1,9 @@
 "use client"
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { api_endpoints } from "@/utils/api_constants";
+import { Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -67,33 +70,41 @@ const MerchantOTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
 }
 
   return (
-    <Card className="max-w-2xl w-full flex flex-col items-center justify-center">
-            <CardContent className='w-full'> 
-       <p className="py-5">The email has been sent to {email}</p>
-        <h2 className="text-xl font-semibold text-center mb-4">Enter OTP Code</h2>
+  
+    <div className="w-full">
+      <h2 className="text-xl font-semibold text-center mb-4">Enter OTP Code</h2>
         
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
+          <div className="mb-6">
+            <div className="flex items-center p-4 bg-blue-50 rounded-lg border border-blue-100">
+              <Mail className="h-5 w-5 text-blue-600 mr-3 flex-shrink-0" />
+              <p className="text-sm text-blue-700">
+                A code has been sent to <strong>{email || "your email"}</strong>
+              </p>
+            </div>
+          </div>
+          
+          <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
             type="text"
             maxLength={6}
             value={otp}
             onChange={handleChange}
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter 6-digit OTP"
           />
 
-          <button
+          <Button
             type="submit"
-            className="w-full bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 transition"
+            className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-indigo-600 text-white p-2  hover:bg-blue-600 transition"
           >
             Submit OTP
-          </button>
+          </Button>
         </form>
-
-      
-      </CardContent>
-    </Card>
+        
+          
+          
+        </div>
   );
 };
 

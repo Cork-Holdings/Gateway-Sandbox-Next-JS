@@ -1,6 +1,8 @@
 import React from 'react';
 import { api_endpoints } from '@/utils/api_constants';
 import { ArrowRight, BadgeXIcon, CheckCircle, Code, FileJson, Globe, SendHorizonal } from 'lucide-react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const DisbursementAPIDocumentationContainer = () => {
     return (
@@ -21,7 +23,7 @@ const DisbursementAPIDocumentationContainer = () => {
                     <h2 className="text-xl font-semibold text-gray-800">Request</h2>
                 </div>
 
-                <div className="bg-gray-50 rounded-md p-4 mb-6">
+                <div className="bg-gray-50 rounded-md p-4 mb-6 overflow-auto whitespace-pre-wrap break-words">
                     <div className="flex items-center gap-2 mb-2">
                         <span className="bg-indigo-600 text-white text-xs font-medium px-2 py-1 rounded">POST</span>
                         <code className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">{`${api_endpoints.merchant.makeDisburseRequest}`}</code>
@@ -83,14 +85,14 @@ const DisbursementAPIDocumentationContainer = () => {
             </div>
 
             {/* Request Body Section */}
-            <div className="mb-8">
+            <div className="mb-8 ">
                 <div className="flex items-center gap-2 mb-4">
                     <FileJson className="text-indigo-600" size={20} />
                     <h2 className="text-xl font-semibold text-gray-800">Example Request Body</h2>
                 </div>
 
                 <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                    <pre>{JSON.stringify({
+                    <pre className='overflow-auto whitespace-pre-wrap break-words'>{JSON.stringify({
                         phone_number: "260961234567",
                         amount: 10,
                         narration: "test narration"
@@ -112,30 +114,72 @@ const DisbursementAPIDocumentationContainer = () => {
                         <CheckCircle className="text-green-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800">200 - Success</h3>
                     </div>
-                    <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                        <pre>
-                            {JSON.stringify({
-                                "code": 200,
-                                "data": {
-                                    "external_id": "8445203466",
-                                    "transaction_id": "testing-dis-ref"
-                                },
-                                "message": "Funds disbursed",
-                                "status": "successful"
-                            }, null, 2)}
-                        </pre>
-                    </div>
+
+
+                    <SyntaxHighlighter
+                        language="json"
+                        style={vscDarkPlus}
+                        customStyle={{
+                            padding: '1rem',
+                            borderRadius: '0.5rem',
+                            maxHeight: '400px',
+                            overflow: 'auto'
+                        }}
+                    >
+                        {JSON.stringify({
+                            "code": 200,
+                            "data": {
+                                "external_id": "8445203466",
+                                "transaction_id": "testing-dis-ref"
+                            },
+                            "message": "Funds disbursed",
+                            "status": "successful"
+                        }, null, 2)}
+                    </SyntaxHighlighter>
                 </div>
 
-                {/* 202 Pending Response */}
                 <div>
                     <div className="flex items-center gap-2 mb-2">
                         <BadgeXIcon className="text-red-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800">400 - Invalid Phone Number</h3>
                     </div>
-                    <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                        <pre>
-                            {JSON.stringify({
+                   
+
+                    <SyntaxHighlighter
+                        language="json"
+                        style={vscDarkPlus}
+                        customStyle={{
+                            padding: '1rem',
+                            borderRadius: '0.5rem',
+                            maxHeight: '400px',
+                            overflow: 'auto'
+                        }}
+                    >
+                        {JSON.stringify({
+                            "code": 400,
+                            "status": "error",
+                            "message": "Insufficient disbursement balance for transaction, please request for more float"
+                        }, null, 2)}
+                    </SyntaxHighlighter>
+                </div>
+                <div>
+                    <div className="flex items-center gap-2 mb-2">
+                        <BadgeXIcon className="text-red-500" size={16} />
+                        <h3 className="text-md font-semibold text-gray-800">400 - Invalid Phone Number</h3>
+                    </div>
+            
+
+                    <SyntaxHighlighter
+                        language="json"
+                        style={vscDarkPlus}
+                        customStyle={{
+                            padding: '1rem',
+                            borderRadius: '0.5rem',
+                            maxHeight: '400px',
+                            overflow: 'auto'
+                        }}
+                    >
+                        {JSON.stringify({
                                 "code": 400,
                                 "errors": {
                                     "phone_number": [
@@ -145,8 +189,7 @@ const DisbursementAPIDocumentationContainer = () => {
                                 "message": "Validation failed.",
                                 "status": "error"
                             }, null, 2)}
-                        </pre>
-                    </div>
+                    </SyntaxHighlighter>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ import { ArrowRight, BadgeXIcon, CheckCircle, Code, FileJson, Globe, SendHorizon
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-const QueryDocumentationContainer = () => {
+const QueryDisbursementBalanceContainer = () => {
 
 
     return (
@@ -13,9 +13,9 @@ const QueryDocumentationContainer = () => {
             <div className="border-b pb-6 mb-6">
                 <div className="flex items-center gap-2 mb-2">
                     <SendHorizonal className="text-indigo-600" size={24} />
-                    <h1 className="text-2xl font-bold text-gray-800">Query Transaction Status</h1>
+                    <h1 className="text-2xl font-bold text-gray-800">Query Disbursement Balance</h1>
                 </div>
-                <p className="text-gray-600">This enables you query transaction status using a simple API call</p>
+                <p className="text-gray-600">This enables you query your disbursement balance using a simple API call</p>
             </div>
 
             {/* Request Information */}
@@ -25,7 +25,7 @@ const QueryDocumentationContainer = () => {
                     <h2 className="text-xl font-semibold text-gray-800">Request</h2>
                 </div>
 
-                <div className="bg-gray-50 rounded-md p-4 mb-6 overflow-auto whitespace-pre-wrap break-words">
+                <div className="bg-gray-50 rounded-md p-4 mb-6">
                     <div className="flex items-center gap-2 mb-2">
                         <span className="bg-green-600 text-white text-xs font-medium px-2 py-1 rounded">GET</span>
                         <code className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">{`${api_endpoints.merchant.makeNameLookupRequest}/{transaction-ref}`}</code>
@@ -35,7 +35,7 @@ const QueryDocumentationContainer = () => {
 
             {/* Headers Section */}
             <div className="mb-8">
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2 mb-4 ">
                     <Code className="text-indigo-600" size={20} />
                     <h2 className="text-xl font-semibold text-gray-800">Request Headers</h2>
                 </div>
@@ -65,33 +65,14 @@ const QueryDocumentationContainer = () => {
                                 <td className="py-2 px-4">Your Bearer Token</td>
                                 <td className="py-2 px-4">true</td>
                             </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            {/* Parameters Section */}
-            <div className="mb-8">
-                <div className="flex items-center gap-2 mb-4">
-                    <Code className="text-indigo-600" size={20} />
-                    <h2 className="text-xl font-semibold text-gray-800">Request Parameters</h2>
-                </div>
-
-                <div className="bg-gray-50 rounded-md p-4 overflow-hidden">
-                    <table className="w-full text-sm">
-                        <thead className="bg-gray-100">
                             <tr>
-                                <th className="text-left py-2 px-4 font-semibold text-gray-700">Parameter</th>
-                                <th className="text-left py-2 px-4 font-semibold text-gray-700">Value</th>
-                                <th className="text-left py-2 px-4 font-semibold text-gray-700">Required</th>
-
+                                <td className="py-2 px-4 font-mono">X-Client-ID</td>
+                                <td className="py-2 px-4">Your Client ID</td>
+                                <td className="py-2 px-4">true</td>
                             </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-200">
                             <tr>
-                                <td className="py-2 px-4 font-mono">Transaction Ref</td>
-                                <td className="py-2 px-4">Your Transaction Reference</td>
+                                <td className="py-2 px-4 font-mono">X-Auth-Signature</td>
+                                <td className="py-2 px-4">Your OAuth Signature</td>
                                 <td className="py-2 px-4">true</td>
                             </tr>
 
@@ -123,7 +104,7 @@ const QueryDocumentationContainer = () => {
                         <CheckCircle className="text-green-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800">200 - Success</h3>
                     </div>
-            
+                
                     <SyntaxHighlighter
                         language="json"
                         style={vscDarkPlus}
@@ -135,53 +116,22 @@ const QueryDocumentationContainer = () => {
                         }}
                     >
                         {JSON.stringify({
-                                "code": 200,
+                                "status": "success",
+                                "message": "Disbursement balance fetched successfully.",
                                 "data": {
-                                    "amount": "1",
-                                    "channel": "airtel",
-                                    "customer": "260978129089",
-                                    "date": "0001-01-01T00:00:00Z",
-                                    "status": "pending"
-                                },
-                                "message": "Transaction Status Retrieved",
-                                "status": "success"
+                                    "merchant": "chin",
+                                    "balance": "996.92",
+                                    "currency": "ZMW",
+                                    "last_updated": "2025-04-09 09:48:29"
+                                }
                             }, null, 2)}
                     </SyntaxHighlighter>
                 </div>
 
-                {/* 202 Pending Response */}
-                <div>
-                    <div className="flex items-center gap-2 mb-2">
-                        <BadgeXIcon className="text-red-500" size={16} />
-                        <h3 className="text-md font-semibold text-gray-800">404 - Not Found</h3>
-                    </div>
-
-
-                    <SyntaxHighlighter
-                        language="json"
-                        style={vscDarkPlus}
-                        customStyle={{
-                            padding: '1rem',
-                            borderRadius: '0.5rem',
-                            maxHeight: '400px',
-                            overflow: 'auto'
-                        }}
-                    >
-                        {JSON.stringify({
-                            "code": 404,
-                            "error": {
-                                "Transaction Reference": [
-                                    "Transaction Reference is invalid"
-                                ]
-                            },
-                            "message": "Transaction Not Found",
-                            "status": "failed"
-                        }, null, 2)}
-                    </SyntaxHighlighter>
-                </div>
+                
             </div>
         </div>
     );
 };
 
-export default QueryDocumentationContainer;
+export default QueryDisbursementBalanceContainer;

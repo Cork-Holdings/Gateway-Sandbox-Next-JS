@@ -16,6 +16,7 @@ const AuthorizeContainer = () => {
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [grantType, setGrantType] = useState('')
 
   const makeRequest = async () => {
     try {
@@ -26,6 +27,7 @@ const AuthorizeContainer = () => {
       const body = {
         client_id: clientId,
         client_secret: clientSecret,
+        grant_type: grantType
       }
 
       const apiResponse = await fetch(api_endpoints.merchant.makeAuthorizationRequest, {
@@ -98,6 +100,21 @@ const AuthorizeContainer = () => {
                 value={clientSecret}
                 onChange={(e) => setClientSecret(e.target.value)}
                 placeholder="Enter your client secret"
+                type="text"
+                disabled={isLoading}
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="grantType" className="text-sm font-medium">
+                Grant Type
+              </Label>
+              <Input
+                id="grantType"
+                value={grantType}
+                onChange={(e) => setGrantType(e.target.value)}
+                placeholder="Enter the grant type"
                 type="text"
                 disabled={isLoading}
                 className="mt-1"
@@ -180,7 +197,7 @@ const AuthorizeContainer = () => {
           <CardTitle className="text-lg">Request Details</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2 text-sm">
+          <div className="space-y-2 text-sm overflow-auto whitespace-pre-wrap break-words">
             <p><strong>Endpoint:</strong> {api_endpoints.merchant.makeAuthorizationRequest}</p>
             <p><strong>Method:</strong> POST</p>
             <p><strong>Payload:</strong></p>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { api_endpoints } from '@/utils/api_constants';
 import { ArrowRight, BadgeXIcon, CheckCircle, Code, FileJson, Globe, SendHorizonal } from 'lucide-react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const NameLookupDocumentationContainer = () => {
     return (
@@ -21,7 +23,7 @@ const NameLookupDocumentationContainer = () => {
                     <h2 className="text-xl font-semibold text-gray-800">Request</h2>
                 </div>
 
-                <div className="bg-gray-50 rounded-md p-4 mb-6">
+                <div className="bg-gray-50 rounded-md p-4 mb-6 overflow-auto whitespace-pre-wrap break-words">
                     <div className="flex items-center gap-2 mb-2">
                         <span className="bg-green-600 text-white text-xs font-medium px-2 py-1 rounded">GET</span>
                         <code className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">{`${api_endpoints.merchant.makeNameLookupRequest}/{phone_number}`}</code>
@@ -43,7 +45,7 @@ const NameLookupDocumentationContainer = () => {
                                 <th className="text-left py-2 px-4 font-semibold text-gray-700">Header</th>
                                 <th className="text-left py-2 px-4 font-semibold text-gray-700">Value</th>
                                 <th className="text-left py-2 px-4 font-semibold text-gray-700">Required</th>
-    
+
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
@@ -82,7 +84,7 @@ const NameLookupDocumentationContainer = () => {
                                 <th className="text-left py-2 px-4 font-semibold text-gray-700">Parameter</th>
                                 <th className="text-left py-2 px-4 font-semibold text-gray-700">Value</th>
                                 <th className="text-left py-2 px-4 font-semibold text-gray-700">Required</th>
-    
+
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
@@ -91,7 +93,7 @@ const NameLookupDocumentationContainer = () => {
                                 <td className="py-2 px-4">A valid phone number</td>
                                 <td className="py-2 px-4">true</td>
                             </tr>
-                         
+
                         </tbody>
                     </table>
                 </div>
@@ -119,18 +121,30 @@ const NameLookupDocumentationContainer = () => {
                         <CheckCircle className="text-green-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800">200 - Success</h3>
                     </div>
-                    <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                        <pre>
-                            {JSON.stringify({
-                                "code": "200",
-                                "data": {
-                                    "names": "John MTN Doe"
-                                },
-                                "message": "Names retrieved successfully",
-                                "status": "success"
-                            }, null, 2)}
-                        </pre>
-                    </div>
+                   
+
+                    <SyntaxHighlighter
+                        language="json"
+                        style={vscDarkPlus}
+                        customStyle={{
+                            padding: '1rem',
+                            borderRadius: '0.5rem',
+                            maxHeight: '400px',
+                            overflow: 'auto'
+                        }}
+                    >
+                        {JSON.stringify({
+                            "code": 200,
+                            "status": "success",
+                            "message": "Name lookup completed successfully.",
+                            "data": {
+                                "status": "success",
+                                "provider": "MTN",
+                                "phone_number": "260765631424",
+                                "names": "John MTN Doe"
+                            }
+                        }, null, 2)}
+                    </SyntaxHighlighter>
                 </div>
 
                 {/* 202 Pending Response */}
@@ -139,9 +153,19 @@ const NameLookupDocumentationContainer = () => {
                         <BadgeXIcon className="text-red-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800">400 - Invalid Phone Number</h3>
                     </div>
-                    <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                        <pre>
-                            {JSON.stringify({
+                
+
+                    <SyntaxHighlighter
+                        language="json"
+                        style={vscDarkPlus}
+                        customStyle={{
+                            padding: '1rem',
+                            borderRadius: '0.5rem',
+                            maxHeight: '400px',
+                            overflow: 'auto'
+                        }}
+                    >
+                        {JSON.stringify({
                                 "code": 400,
                                 "errors": {
                                     "phone_number": [
@@ -151,8 +175,7 @@ const NameLookupDocumentationContainer = () => {
                                 "message": "Validation failed.",
                                 "status": "error"
                             }, null, 2)}
-                        </pre>
-                    </div>
+                    </SyntaxHighlighter>
                 </div>
             </div>
         </div>

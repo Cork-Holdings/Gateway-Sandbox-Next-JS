@@ -4,20 +4,20 @@
 
 
 //local
-// export const base_ip = "localhost:2000";
-// export const next_url ="localhost:3000";
-// export const base_url = `http://${base_ip}/v1`;
+export const base_ip = "localhost:2000";
+export const next_url ="localhost:3000";
+export const base_url = `http://${base_ip}/v1`;
 
-// export const sandbox_url = `http://${base_ip}`;
+export const sandbox_url = `http://${base_ip}`;
 
 
 //prod
 
-export const base_ip = "sandbox.mygeepay.com";
-export const next_url ="sandbox.mygeepay.com";
-export const base_url = `https://${base_ip}/v1`;
+// export const base_ip = "sandbox.mygeepay.com";
+// export const next_url ="sandbox.mygeepay.com";
+// export const base_url = `https://${base_ip}/v1`;
 
-export const sandbox_url = `https://${base_ip}`;
+// export const sandbox_url = `https://${base_ip}`;
 
 // API Endpoints
 export const api_endpoints = {
@@ -36,15 +36,16 @@ export const api_endpoints = {
 
     // Company-related Endpoints
     merchant: {
-        makeAuthorizationRequest : `${base_url}/token-generate`,
-        makeCollectionRequest: `${base_url}/make-collection`,
+        makeAuthorizationRequest : `${base_url}/oauth/token`,
+        makeCollectionRequest: `${base_url}/mobile-money/collect`,
         makeTransactionQueryRequest:`${base_url}/mobile-money/check-status`,
         makeNameLookupRequest:`${base_url}/mobile-money/name-lookup`,
         makeDisburseRequest: `${base_url}/mobile-money/disburse`,
         makeQueryDisbursementRequest: `${base_url}/mobile-money/disburse/status`,
         makeCheckoutRequest: `${base_url}/checkout/respond`,
         makeGetCheckoutDetailsRequest: `${base_url}/checkout/get`,
-        makeAddCheckoutRequest: `${base_url}/checkout/session`
+        makeAddCheckoutRequest: `${base_url}/checkout/session`,
+        makeQueryDisbursementBalanceRequest: `${base_url}/mobile-money/disburse/balance`,
     },
 
     common: {

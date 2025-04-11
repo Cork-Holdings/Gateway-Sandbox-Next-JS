@@ -200,16 +200,16 @@ const MerchantProfile = () => {
         
         <CardFooter className="flex justify-end border-t gap-3 bg-gray-50 p-4">
           <Button 
-          onClick={()=> router.push(`/merchant/reset/${userData?.email}`)}
+          onClick={()=> router.push(`/merchant/reset`)}
           className="bg-gray-600 hover:bg-gray-700">
           
             Reset Password
           </Button>
-          <Button
+          {/* <Button
           onClick={()=> router.push("/merchant/profile/edit")}
           className="bg-blue-600 hover:bg-blue-700">
             Update Profile
-          </Button>
+          </Button> */}
         </CardFooter>
       </Card>
     </main>

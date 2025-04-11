@@ -59,8 +59,6 @@ const ResetForm = () => {
             console.log('response', response)
             const data = await response.json();
 
-            console.log('data', data)
-
             if (data["status"] == "success") {
                 toast.success("Code sent successfully!");
                 router.push(`/common/reset/${values.email}`)
@@ -76,53 +74,53 @@ const ResetForm = () => {
     };
 
     return (
-        <Card className="max-w-2xl w-full flex flex-col items-center justify-center ">
-            <CardContent className='w-full'>
-                <p className='text-xl font-bold pb-2'>Request A code</p>
-                <p className='text-sm font-normal pb-6'>Enter the email address to which the code should be sent to</p>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+
+        <div>             
+             <p className='text-xl font-bold pb-2'>Request A code</p>
+            <p className='text-sm font-normal pb-6'>Enter the email address to which the code should be sent to</p>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
 
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-gray-700">Email Address</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            type="email"
-                                            placeholder="johndoe@example.com"
-                                            className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+             <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="text-gray-700">Email Address</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        type="email"
+                                        placeholder="johndoe@example.com"
+                                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
 
 
-                        <Button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors"
-                        >
-                            {loading ? (
-                                <>
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    Requesting Code...
-                                </>
-                            ) : (
-                                "Request Code"
-                            )}
-                        </Button>
-                    </form>
-                </Form>
-            </CardContent>
-        </Card>
+                    <Button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors"
+                    >
+                        {loading ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Requesting Code...
+                            </>
+                        ) : (
+                            "Request Code"
+                        )}
+                    </Button>
+                </form>
+            </Form>
+        </div>
+
     );
 };
 

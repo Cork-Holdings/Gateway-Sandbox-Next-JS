@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { api_endpoints } from "@/utils/api_constants";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 interface CredentialsFormProps {
     clientID: string,
@@ -77,8 +78,8 @@ const APICredentialsForm: React.FC<CredentialsFormProps> = ({ clientID, clientSe
         <Card className="max-w-6xl w-full">
         <CardContent className="w-full  mx-auto space-y-6 pt-6">
             <div className="text-center space-y-2">
-                <h1 className="text-3xl font-bold">API Credentials</h1>
-                <p className="text-gray-700">Manage your API credentials below. Ensure your Client Secret and PIN are stored securely.</p>
+                <h1 className="text-2xl font-bold">Client ID and Client Secret </h1>
+                <Separator/>
             </div>
             <div className="flex flex-col gap-3">
                 <Label>Client ID</Label>

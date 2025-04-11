@@ -22,7 +22,7 @@ import { api_endpoints } from '@/utils/api_constants'
 
 
 const NewPasswordSchema = z.object({
-    confirmPassword: z.string().min(8,{ message: "Password must be at least 8 characters" }),
+    confirmPassword: z.string().min(8, { message: "Password must be at least 8 characters" }),
     password: z.string().min(8, { message: "Password must be at least 8 characters" })
 })
 
@@ -51,23 +51,23 @@ const NewPasswordForm: React.FC<NewPasswordFormProps> = ({ email }) => {
     const onSubmit = async (values: z.infer<typeof NewPasswordSchema>) => {
 
         const body = {
-             email : email,
-             password :values.password,
-             confirm_password : values.confirmPassword,
-             logged_in :false,
-             user_id : "",
+            email: email,
+            password: values.password,
+            confirm_password: values.confirmPassword,
+            logged_in: false,
+            user_id: "",
         }
 
-        if(values.password!= values.confirmPassword){
+        if (values.password != values.confirmPassword) {
             toast.error("Password do not match")
             return
         }
         try {
             setLoading(true)
             const response = await fetch(api_endpoints.common.resetPassword, {
-                method:"POST",
+                method: "POST",
                 body: JSON.stringify(body)
-          
+
             });
 
 
@@ -103,88 +103,85 @@ const NewPasswordForm: React.FC<NewPasswordFormProps> = ({ email }) => {
     }
 
     return (
-        
-        <Card className="max-w-2xl w-full flex flex-col items-center justify-center">
-            <CardContent className='w-full'>
-                   <div className=" p-8 md:p-12 flex flex-col justify-center">
-                    <Form {...form}>
-                        <form
-                            onSubmit={form.handleSubmit(onSubmit)}
-                            className="space-y-6"
-                        >
-                            <div className="text-center mb-6">
-                                <h1 className="text-2xl font-bold ">Reset Password</h1>
-                                <p className="text-gray-700">Enter your new password</p>
-                            </div>
+
+        <div className=" w-full flex flex-col justify-center overflow-y-scroll ">
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-6"
+                >
+                    <div className="text-center mb-6">
+                        <h1 className="text-2xl font-bold ">Reset Password</h1>
+                        <p className="text-gray-700">Enter your new password</p>
+                    </div>
 
 
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="">Password</FormLabel>
-                                        <FormControl>
-                                            <div className='flex'>
-                                                <Input
-                                                    type={toggleHidePassword ? "password" : "text"}
-                                                    placeholder="Enter your password"
-                                                    {...field}
-                                                    className="  placeholder-gray-400 focus:border-amber-500"
-                                                />
-                                                <Button
-                                                    type='reset'
-                                                    variant="ghost" onClick={handleVisibility}>{toggleHidePassword ? <FaEye /> : <FaEyeSlash />}</Button>
-                                            </div>
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="">Password</FormLabel>
+                                <FormControl>
+                                    <div className='flex'>
+                                        <Input
+                                            type={toggleHidePassword ? "password" : "text"}
+                                            placeholder="Enter your password"
+                                            {...field}
+                                            className="  placeholder-gray-400 focus:border-amber-500"
+                                        />
+                                        <Button
+                                            type='reset'
+                                            variant="ghost" onClick={handleVisibility}>{toggleHidePassword ? <FaEye /> : <FaEyeSlash />}</Button>
+                                    </div>
 
 
-                                        </FormControl>
-                                        <FormMessage className="text-red-400" />
-                                    </FormItem>
-                                )}
-                            />
-                            
-                            <FormField
-                                control={form.control}
-                                name="confirmPassword"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="">Confirm Password</FormLabel>
-                                        <FormControl>
-                                        <div className='flex'>
-                                                <Input
-                                                    type={toggleHidePasswordC ? "password" : "text"}
-                                                    placeholder="Enter your password"
-                                                    {...field}
-                                                    className="  placeholder-gray-400 focus:border-amber-500"
-                                                />
-                                                <Button
-                                                    type='reset'
-                                                    variant="ghost" onClick={handleVisibilityC}>{toggleHidePasswordC ? <FaEye /> : <FaEyeSlash />}</Button>
-                                            </div>
-                                        </FormControl>
-                                        <FormMessage className="text-red-400" />
-                                    </FormItem>
-                                )}
-                            />
-                            
-                            <Button
-                                type="submit"
-                                className="w-full bg-yellow-500 hover:bg-yellow-600 text-black"
-                                disabled={loading}
-                            >
-                                {loading ? (
-                                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing In...</>
-                                ) : (
-                                    "Reset"
-                                )}
-                            </Button>
-                        </form>
-                    </Form>
-                </div>
-            
-            </CardContent>
-        </Card>
+                                </FormControl>
+                                <FormMessage className="text-red-400" />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="confirmPassword"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="">Confirm Password</FormLabel>
+                                <FormControl>
+                                    <div className='flex'>
+                                        <Input
+                                            type={toggleHidePasswordC ? "password" : "text"}
+                                            placeholder="Enter your password"
+                                            {...field}
+                                            className="  placeholder-gray-400 focus:border-amber-500"
+                                        />
+                                        <Button
+                                            type='reset'
+                                            variant="ghost" onClick={handleVisibilityC}>{toggleHidePasswordC ? <FaEye /> : <FaEyeSlash />}</Button>
+                                    </div>
+                                </FormControl>
+                                <FormMessage className="text-red-400" />
+                            </FormItem>
+                        )}
+                    />
+
+                    <Button
+                        type="submit"
+                        className="w-full bg-gradient-to-r from-orange-500 to-indigo-600 hover:from-orange-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg  text-black hover:text-white"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing In...</>
+                        ) : (
+                            "Reset"
+                        )}
+                    </Button>
+                </form>
+            </Form>
+        </div>
+
+
 
     )
 }

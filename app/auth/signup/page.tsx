@@ -4,14 +4,14 @@ import SignUpForm from '@/components/custom/forms/auth/merchant/SignUpForm'
 
 
 const SignUpPage = () => {
-  return (
-    <div className='w-full h-screen  flex items-start'>
-     
-        <div className='w-full lg:w-1/2 h-full  flex flex-col p-20 justify-between'>
+    return (
+        <div className='w-full h-screen overflow-y-clip flex items-start'>
+
+            <div className='w-full lg:w-1/2 h-full  flex flex-col  justify-between'>
                 <h1 className='text-xl text-black font-semibold'></h1>
 
                 <div className='w-full flex flex-col'>
-             <SignUpForm /> 
+                    <SignUpForm />
                 </div>
                 <div className='w-full'>
                     <p className='hidden'>Rand</p>
@@ -24,18 +24,18 @@ const SignUpPage = () => {
                     <h1 className='text-6xl text-white font-extrabold my-4'>GEEPAY SandBox!</h1>
                     <p className='text-3xl text-white font-bold'>Merchant Portal!</p>
                 </div>
-                <Image 
-                width={1000}
-                height={1000}
-                src={"/images/create.jpg"} alt='Work Icon' className='w-full h-full object-cover' />
+                <Image
+                    width={1000}
+                    height={1000}
+                    src={"/images/create.jpg"} alt='Work Icon' className='w-full h-full object-cover' />
             </div>
 
             {/* The form section, takes full width on small/medium screens, half on large screens */}
-            
+
         </div>
 
-        
-  )
+
+    )
 }
 
 export default SignUpPage

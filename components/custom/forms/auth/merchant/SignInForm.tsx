@@ -151,7 +151,7 @@ const MerchantSignInForm = () => {
          </Link>
       </p>
       <p className="text-center text-gray-700 text-sm">
-        Already Have an account?{" "}
+      Don&apos;t Have an account?{" "}
         <a href="/auth/signup" onClick={()=>router.push("/auth/signup")} className="text-[#1383ec] hover:underline">
           Create An account
         </a>

@@ -1,6 +1,8 @@
 import React from 'react';
-import { api_endpoints,  next_url } from '@/utils/api_constants';
+import { api_endpoints, next_url } from '@/utils/api_constants';
 import { ArrowRight, BadgeXIcon, CheckCircle, Code, FileJson, Globe, SendHorizonal } from 'lucide-react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const CheckoutSessionDocumentationContainer = () => {
     return (
@@ -21,7 +23,7 @@ const CheckoutSessionDocumentationContainer = () => {
                     <h2 className="text-xl font-semibold text-gray-800">Request</h2>
                 </div>
 
-                <div className="bg-gray-50 rounded-md p-4 mb-6">
+                <div className="bg-gray-50 rounded-md p-4 mb-6 overflow-auto whitespace-pre-wrap break-words">
                     <div className="flex items-center gap-2 mb-2">
                         <span className="bg-indigo-600 text-white text-xs font-medium px-2 py-1 rounded">POST</span>
                         <code className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">{`${api_endpoints.merchant.makeAddCheckoutRequest}`}</code>
@@ -79,21 +81,28 @@ const CheckoutSessionDocumentationContainer = () => {
                     <h2 className="text-xl font-semibold text-gray-800">Example Request Body</h2>
                 </div>
 
-                <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                    <pre>{JSON.stringify(
-                        {
-                            "order_id": "ORD123",
-                            "amount": "K150",
-                            "customer_name": "John Doe",
-                            "customer_email": "jd@example.com",
-                            "success_url": "https://www.success.com/",
-                            "cancelled_url": "https://www.cancelled.com/",
-                            "failed_url": "https://www.failed.com/",
-                        },
-                        null,
-                        2
-                    )}</pre>
-                </div>
+
+
+                <SyntaxHighlighter
+                    language="json"
+                    style={vscDarkPlus}
+                    customStyle={{
+                        padding: '1rem',
+                        borderRadius: '0.5rem',
+                        maxHeight: '400px',
+                        overflow: 'auto'
+                    }}
+                >
+                    {JSON.stringify({
+                        "order_id": "ORD123",
+                        "amount": "K150",
+                        "customer_name": "John Doe",
+                        "customer_email": "jd@example.com",
+                        "success_url": "https://www.success.com/",
+                        "cancelled_url": "https://www.cancelled.com/",
+                        "failed_url": "https://www.failed.com/",
+                    }, null, 2)}
+                </SyntaxHighlighter>
             </div>
 
 
@@ -110,15 +119,23 @@ const CheckoutSessionDocumentationContainer = () => {
                         <CheckCircle className="text-green-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800">200 - Success</h3>
                     </div>
-                    <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                        <pre>
-                            {JSON.stringify({
-                                "checkout_url": `http://${next_url}/merchant/hosted-checkout/ff466c58-258b-4428-9beb-d81f6c8d7532`,
-                                "message": "Checkout session created",
-                                "status": "success"
-                            }, null, 2)}
-                        </pre>
-                    </div>
+
+                    <SyntaxHighlighter
+                        language="json"
+                        style={vscDarkPlus}
+                        customStyle={{
+                            padding: '1rem',
+                            borderRadius: '0.5rem',
+                            maxHeight: '400px',
+                            overflow: 'auto'
+                        }}
+                    >
+                        {JSON.stringify({
+                            "checkout_url": `https://${next_url}/merchant/hosted-checkout/ff466c58-258b-4428-9beb-d81f6c8d7532`,
+                            "message": "Checkout session created",
+                            "status": "success"
+                        }, null, 2)}
+                    </SyntaxHighlighter>
                 </div>
 
                 {/* 202 Pending Response */}
@@ -127,20 +144,29 @@ const CheckoutSessionDocumentationContainer = () => {
                         <BadgeXIcon className="text-red-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800">400 - Invalid Phone Number</h3>
                     </div>
-                    <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                        <pre>
-                            {JSON.stringify({
-                                "code": 400,
-                                "errors": {
-                                    "phone_number": [
-                                        "Invalid Phone number"
-                                    ]
-                                },
-                                "message": "Validation failed.",
-                                "status": "error"
-                            }, null, 2)}
-                        </pre>
-                    </div>
+
+
+                    <SyntaxHighlighter
+                        language="json"
+                        style={vscDarkPlus}
+                        customStyle={{
+                            padding: '1rem',
+                            borderRadius: '0.5rem',
+                            maxHeight: '400px',
+                            overflow: 'auto'
+                        }}
+                    >
+                        {JSON.stringify({
+                            "code": 400,
+                            "errors": {
+                                "phone_number": [
+                                    "Invalid Phone number"
+                                ]
+                            },
+                            "message": "Validation failed.",
+                            "status": "error"
+                        }, null, 2)}
+                    </SyntaxHighlighter>
                 </div>
             </div>
         </div>

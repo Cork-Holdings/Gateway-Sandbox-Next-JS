@@ -49,7 +49,7 @@ const Configure = () => {
         toast.error(`Unable to fetch client credentials\n${data.detail}`)
       }
 
-    } 
+    }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     catch (error) {
       toast.error("Something went wrong.Try Again.")
@@ -78,15 +78,19 @@ const Configure = () => {
   return (
     <main className='flex flex-col items-center gap-8'>
 
+      <div className="text-center space-y-2">
+        <h1 className="text-3xl font-bold">API Credentials</h1>
+        <p className="text-gray-700">Manage your API credentials below. Ensure your credentials are stored securely.</p>
+      </div>
       <div className='flex flex-col lg:flex-row w-full gap-8 items-start justify-between'>
         <APICredentialsForm clientID={clientID} clientSecret={clientSecret} />
         <OAuthSignatureForm signature={clientSignature} />
-      
+
       </div>
 
       <div className='flex flex-col  lg:flex-row w-full gap-8 items-start justify-between'>
-      <PinConfigurationForm />
-      <UpdateFloatForm currentFloat={float} />
+        <PinConfigurationForm />
+        <UpdateFloatForm currentFloat={float} />
       </div>
 
     </main>

@@ -1,6 +1,8 @@
 "use client"
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { api_endpoints } from "@/utils/api_constants";
+import { BadgeAlertIcon, CheckCircle, Loader2, LogOut, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -13,6 +15,7 @@ interface OtpCodeProps {
 
 const OTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
   const [otp, setOtp] = useState("");
+
 
   const router = useRouter()
 
@@ -67,11 +70,18 @@ const OTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
 }
 
   return (
-    <Card className="max-w-2xl w-full flex flex-col items-center justify-center">
-            <CardContent className='w-full'> 
-       <p className="py-5">The email has been sent to {email}</p>
+ 
+    <main className="text-start">
         <h2 className="text-xl font-semibold text-center mb-4">Enter OTP Code</h2>
         
+        <div className="mb-6">
+            <div className="flex items-center p-4 bg-blue-50 rounded-lg border border-blue-100">
+              <Mail className="h-5 w-5 text-blue-600 mr-3 flex-shrink-0" />
+              <p className="text-sm text-blue-700">
+                A code has been sent to <strong>{email || "your email"}</strong>
+              </p>
+            </div>
+          </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -83,17 +93,18 @@ const OTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
             placeholder="Enter 6-digit OTP"
           />
 
-          <button
+          <Button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
           >
             Submit OTP
-          </button>
+          </Button>
         </form>
 
+    </main>
       
-      </CardContent>
-    </Card>
+      
+   
   );
 };
 

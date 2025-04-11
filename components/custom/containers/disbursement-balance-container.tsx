@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -8,12 +9,12 @@ import { Loader2, Copy, Check } from 'lucide-react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Textarea } from '@/components/ui/textarea'
-import CollectionDocumentationContainer from '../documentation/collection_documentation'
 import { Badge } from '@/components/ui/badge'
+import QueryDisbursementDocumentationContainer from '../documentation/query_disbursement_documentation_container'
+import QueryDisbursementBalanceContainer from '../documentation/disburse-balance-documentation'
 
-const CollectionContainer = () => {
-  const [phone, setPhone] = useState('')
-  const [amount, setAmount] = useState('')
+const DisbursementBalanceContainer = () => {
+  const [authSignature, setAuthSignature] = useState('')
   const [response, setResponse] = useState(null)
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -21,8 +22,9 @@ const CollectionContainer = () => {
   const [token, setToken] = useState('')
   const [contentType, setContentType] = useState('')
   const [acceptType, setAcceptType] = useState('')
-  const [tRef, setTRef] = useState('')
   const [clientID, setClientID] = useState('')
+
+  const url = `${api_endpoints.merchant.makeQueryDisbursementBalanceRequest}`
 
   const makeRequest = async () => {
     try {
@@ -30,21 +32,16 @@ const CollectionContainer = () => {
       setError(null)
       setResponse(null)
 
-      const body = {
-        phone_number: phone,
-        amount: amount,
-      }
 
-      const apiResponse = await fetch(api_endpoints.merchant.makeCollectionRequest, {
-        method: "POST",
+      const apiResponse = await fetch(url, {
         headers: {
           'Content-Type': contentType,
           'Accept': acceptType,
           "X-Client-ID": clientID,
           "Authorization": `Bearer ${token}`,
-          "X-Transaction-Ref": tRef
+          "X-Auth-Signature": authSignature,
         },
-        body: JSON.stringify(body)
+  
       })
 
       const data = await apiResponse.json()
@@ -64,22 +61,18 @@ const CollectionContainer = () => {
     }
   }
 
-  const getStatusBadge = () => {
+  const getBalanceBadge = () => {
     if (!response) return null;
-    
-    
-    const code = response["code"];
-    if (code === 200) {
+
+
+    if (response["status"] =="success") {
       return <Badge className="bg-green-500 hover:bg-green-600">Success - 200</Badge>;
-    } else if (code === 202) {
-      return <Badge className="bg-amber-500 hover:bg-amber-600">Pending - 202</Badge>;
-    } else {
-      return <Badge className="bg-red-500 hover:bg-red-600">Error - {code || "Unknown"}</Badge>;
+    }  else {
+      return <Badge className="bg-red-500 hover:bg-red-600">Error - 400</Badge>;
     }
   };
 
-  const handleCopy = (text:string) => {
-    console.log('text', text)
+  const handleCopy = () => {
     if (response) {
       navigator.clipboard.writeText(JSON.stringify(response, null, 2))
       setCopied(true)
@@ -90,10 +83,10 @@ const CollectionContainer = () => {
   return (
     <main className='flex flex-col lg:flex-row gap-8  bg-gray-100 p-6'>
       <div className="max-w-4xl w-full">
-        <Card className="max-w-2xl mx-auto">
+        <Card className="max-w-4xl w-full mx-auto">
           <CardHeader>
             <CardTitle className="text-2xl font-bold">API Execution Sandbox</CardTitle>
-            <p className="text-sm text-gray-500">Request To Pay</p>
+            <p className="text-sm text-gray-500">Make A disbursement</p>
           </CardHeader>
           <CardContent className="space-y-6">
 
@@ -108,7 +101,7 @@ const CollectionContainer = () => {
                 <Label htmlFor="token" className="text-sm font-medium flex items-center gap-1">
                   Bearer Token
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Textarea
                   id="token"
@@ -124,7 +117,7 @@ const CollectionContainer = () => {
                 <Label htmlFor="xclientId" className="text-sm font-medium flex items-center gap-1">
                   X-Client-ID
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Input
                   id="xclientId"
@@ -139,7 +132,7 @@ const CollectionContainer = () => {
                 <Label htmlFor="contentType" className="text-sm font-medium flex items-center gap-1">
                   Content-Type
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Input
                   id="contentType"
@@ -152,22 +145,6 @@ const CollectionContainer = () => {
               </div>
 
 
-              <div className='space-y-2'>
-
-                <Label htmlFor="xtref" className="text-sm font-medium flex items-center gap-1">
-                  X-Transaction-Ref
-                  <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
-                </Label>
-                <Input
-                  id="xtref"
-                  value={tRef}
-                  onChange={(e) => setTRef(e.target.value)}
-                  placeholder="Enter your Transaction Reference"
-                  disabled={isLoading}
-                  className="mt-1"
-                />
-              </div>
 
 
               <div className='space-y-2'>
@@ -175,7 +152,7 @@ const CollectionContainer = () => {
                 <Label htmlFor="acceptType" className="text-sm font-medium flex items-center gap-1">
                   Accept
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Input
                   id="acceptType"
@@ -187,127 +164,105 @@ const CollectionContainer = () => {
                 />
               </div>
 
-            </div>
+              <div className='space-y-2'>
 
-            <Label className="text-lg font-medium">
-              Request Body
-            </Label>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-
-              <div>
-                <Label htmlFor="phone" className="text-sm font-medium flex items-center gap-1">
-                  Phone
+                <Label htmlFor="xauthSig" className="text-sm font-medium flex items-center gap-1">
+                  X-Auth-Signature
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Input
-                  id="phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Enter your Phone Number"
-                  disabled={isLoading}
-                  className="mt-1"
-                  type="text"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="amount" className="text-sm font-medium flex items-center gap-1">
-                  Amount
-                  <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
-                </Label>
-                <Input
-                  id="amount"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder="Enter your client secret"
-                  type="number"
+                  id="xauthSig"
+                  value={authSignature}
+                  onChange={(e) => setAuthSignature(e.target.value)}
+                  placeholder="Enter your X-Auth-Signature"
                   disabled={isLoading}
                   className="mt-1"
                 />
               </div>
 
             </div>
-            
+
+
+
+
             <Button
-                onClick={makeRequest}
-                disabled={isLoading}
-                className="w-full"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Executing...
-                  </>
-                ) : (
-                  'Execute Request'
-                )}
-              </Button>
+              onClick={makeRequest}
+              disabled={isLoading}
+              className="w-full"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Executing...
+                </>
+              ) : (
+                'Execute Request'
+              )}
+            </Button>
 
             {/* Response Section */}
             {(response || error) && (
               <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-semibold">Response</h3>
-                  {getStatusBadge()}
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold">Response</h3>
+                    {getBalanceBadge()}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleCopy()}
+                    className="flex items-center gap-1"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="h-4 w-4" />
+                        Copied
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="h-4 w-4" />
+                        Copy JSON
+                      </>
+                    )}
+                  </Button>
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleCopy(JSON.stringify(response, null, 2))}
-                  className="flex items-center gap-1"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="h-4 w-4" />
-                      Copied
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-4 w-4" />
-                      Copy JSON
-                    </>
-                  )}
-                </Button>
+
+                {response && (
+                  <SyntaxHighlighter
+                    language="json"
+                    style={vscDarkPlus}
+                    customStyle={{
+                      padding: '1rem',
+                      borderRadius: '0.5rem',
+                      maxHeight: '400px',
+                      overflow: 'auto'
+                    }}
+                  >
+                    {JSON.stringify(response, null, 2)}
+                  </SyntaxHighlighter>
+                )}
+
+                {error && (
+                  <div className="p-4 bg-red-50 text-red-700 border border-red-200 rounded-md">
+                    {error}
+                  </div>
+                )}
               </div>
-              
-              {response && (
-                <SyntaxHighlighter
-                  language="json"
-                  style={vscDarkPlus}
-                  customStyle={{
-                    padding: '1rem',
-                    borderRadius: '0.5rem',
-                    maxHeight: '400px',
-                    overflow: 'auto'
-                  }}
-                >
-                  {JSON.stringify(response, null, 2)}
-                </SyntaxHighlighter>
-              )}
-              
-              {error && (
-                <div className="p-4 bg-red-50 text-red-700 border border-red-200 rounded-md">
-                  {error}
-                </div>
-              )}
-            </div>
             )}
           </CardContent>
         </Card>
 
         {/* Request Details */}
-        <Card className="max-w-2xl mx-auto mt-6">
+        <Card className="max-w-4xl w-full mx-auto mt-6">
           <CardHeader>
             <CardTitle className="text-lg">Request Details</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2 text-sm overflow-auto whitespace-pre-wrap break-words">
-              <p><strong>Endpoint:</strong> {api_endpoints.merchant.makeAuthorizationRequest}</p>
-              <p><strong>Method:</strong> POST</p>
+              <p><strong>Endpoint:</strong> {url}</p>
+              <p><strong>Method:</strong>GET</p>
 
               <p><strong>Headers:</strong></p>
               <SyntaxHighlighter language="json" style={vscDarkPlus} customStyle={{ padding: '1rem', borderRadius: '0.375rem' }}>
@@ -317,7 +272,7 @@ const CollectionContainer = () => {
                     "Accept": acceptType || '[Accept]',
                     "X-Client-ID": clientID || '[X-Client-ID]',
                     "Authorization": token ? `Bearer ${token}` : '[Authorization Token]',
-                    "X-Transaction-Ref": tRef || '[X-Transaction-Ref]'
+                    "X-Auth-Signature": authSignature || '[X-Auth-Signature]',
                   },
                   null,
                   2
@@ -325,24 +280,15 @@ const CollectionContainer = () => {
               </SyntaxHighlighter>
 
               <p><strong>Payload (Request Body):</strong></p>
-              <SyntaxHighlighter language="json" style={vscDarkPlus} customStyle={{ padding: '1rem', borderRadius: '0.375rem' }}>
-                {JSON.stringify(
-                  {
-                    "phone_number": phone || '[phone_number]',
-                    "amount": amount || '[amount]'
-                  },
-                  null,
-                  2
-                )}
-              </SyntaxHighlighter>
+              <p className='font-semibold'>No Request Body</p>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <CollectionDocumentationContainer />
+      <QueryDisbursementBalanceContainer />
     </main>
   )
 }
 
-export default CollectionContainer
+export default DisbursementBalanceContainer

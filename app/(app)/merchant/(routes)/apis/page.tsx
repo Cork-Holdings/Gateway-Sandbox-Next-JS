@@ -2,15 +2,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import React from 'react';
-import { 
-  CreditCard, 
-  Send, 
-  Key, 
+import {
+  CreditCard,
+  Send,
+  Key,
   ArrowRight,
-  LayoutDashboard, 
+  LayoutDashboard,
   RefreshCcw,
   User,
-  ScreenShare
+  ScreenShare,
+  Code
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 const apis = [
@@ -61,7 +62,7 @@ const apis = [
 
 const APIPage = () => {
 
-  
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
@@ -73,6 +74,13 @@ const APIPage = () => {
         <p className="text-sm text-gray-500">
           Explore available API endpoints
         </p>
+
+        <a href="/files/GEEPAY API DOCUMENTATION.pdf" download>
+          <Button variant="outline" className="flex items-center gap-2">
+        View   Documentation
+            <Code className="h-4 w-4" />
+          </Button>
+        </a>
       </header>
 
       {/* Main Content */}
@@ -85,7 +93,7 @@ const APIPage = () => {
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Discover and test our powerful API endpoints for payment processing,
-              disbursements, and authentication.
+              disbursements, authentication and so much more.
             </p>
           </section>
 
@@ -108,8 +116,8 @@ const APIPage = () => {
                     <p className="text-gray-600 text-sm">
                       {api.description}
                     </p>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="w-full group-hover:bg-blue-50"
                     >
                       Test Endpoint
@@ -125,7 +133,7 @@ const APIPage = () => {
 
       {/* Footer */}
       <footer className="bg-white border-t p-4 text-center text-sm text-gray-500">
-        © {new Date().getFullYear()} Payment Gateway API. All rights reserved.
+        © {new Date().getFullYear()} GeePay Gateway. All rights reserved.
       </footer>
     </div>
   );

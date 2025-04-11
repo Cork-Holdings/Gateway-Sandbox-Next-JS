@@ -1,6 +1,8 @@
 import React from 'react';
 import { api_endpoints, } from '@/utils/api_constants';
-import { ArrowRight, CheckCircle, Clock, Code, FileJson, Globe, SendHorizonal } from 'lucide-react';
+import { ArrowRight, BadgeAlert, CheckCircle, Clock, Code, FileJson, Globe, SendHorizonal } from 'lucide-react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const CollectionDocumentationContainer = () => {
   return (
@@ -21,16 +23,16 @@ const CollectionDocumentationContainer = () => {
           <h2 className="text-xl font-semibold text-gray-800">Request</h2>
         </div>
 
-        <div className="bg-gray-50 rounded-md p-4 mb-6">
-          <div className="flex items-center gap-2 mb-2">
+        <div className="bg-gray-50 rounded-md p-4 mb-6 ">
+          <div className="flex items-center gap-2 mb-2 overflow-auto whitespace-pre-wrap break-words">
             <span className="bg-indigo-600 text-white text-xs font-medium px-2 py-1 rounded">POST</span>
-            <code className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">{`${api_endpoints.merchant.makeCollectionRequest}`}</code>
+            <code className="text-sm font-mono bg-gray-200 px-2 py-1 rounded  ">{`${api_endpoints.merchant.makeCollectionRequest}`}</code>
           </div>
         </div>
       </div>
 
       {/* Headers Section */}
-      <div className="mb-8">
+      <div className="mb-8 ">
         <div className="flex items-center gap-2 mb-4">
           <Code className="text-indigo-600" size={20} />
           <h2 className="text-xl font-semibold text-gray-800">Request Headers</h2>
@@ -83,12 +85,23 @@ const CollectionDocumentationContainer = () => {
           <h2 className="text-xl font-semibold text-gray-800">Example Request Body</h2>
         </div>
 
-        <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-          <pre>{JSON.stringify({
+    
+
+        <SyntaxHighlighter
+          language="json"
+          style={vscDarkPlus}
+          customStyle={{
+            padding: '1rem',
+            borderRadius: '0.5rem',
+            maxHeight: '400px',
+            overflow: 'auto'
+          }}
+        >
+          {JSON.stringify({
             phone_number: "260961234567",
             amount: 10
-          }, null, 2)}</pre>
-        </div>
+          }, null, 2)}
+        </SyntaxHighlighter>
       </div>
 
       {/* Response Section */}
@@ -105,14 +118,14 @@ const CollectionDocumentationContainer = () => {
             <h3 className="text-md font-semibold text-gray-800">200 - Success</h3>
           </div>
           <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-            <pre>
+            <pre className='overflow-auto whitespace-pre-wrap break-words'>
               {JSON.stringify({
                 code: 200,
                 data: {
-                  "external_id": "8558591377",
-                  "transaction_id": "example-test-reference 4"
+                  "external_reference": "8558591377",
+                  "transaction_reference": "example-test-reference 4"
                 },
-                message: "Process service request successfully.",
+                message: "Payment was successful.",
                 status: "successful"
               }, null, 2)}
             </pre>
@@ -125,19 +138,56 @@ const CollectionDocumentationContainer = () => {
             <Clock className="text-amber-500" size={16} />
             <h3 className="text-md font-semibold text-gray-800">202 - Pending</h3>
           </div>
-          <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-          <pre>  
+
+          <SyntaxHighlighter
+            language="json"
+            style={vscDarkPlus}
+            customStyle={{
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              maxHeight: '400px',
+              overflow: 'auto'
+            }}
+          >
             {JSON.stringify({
-            code: 202,
-            data: {
-              "external_id": "6871026019",
-              "transaction_id": "exapmle-test-reference 4"
-            },
-            message: "Request sent. Awaiting customer action.",
-            status: "pending"
-          }, null, 2)}  
-        </pre>
+              code: 202,
+              data: {
+                "external_reference": "6871026019",
+                "transaction_reference": "exapmle-test-reference 4"
+              },
+              message: "Request sent. Awaiting customer action.",
+              status: "pending"
+            }, null, 2)}
+          </SyntaxHighlighter>
+        </div>
+
+
+        {/* 202 Pending Response */}
+        <div className='pt-5'>
+          <div className="flex items-center gap-2 mb-2">
+            <BadgeAlert className="text-red-500" size={16} />
+            <h3 className="text-md font-semibold text-gray-800">402 - Failed</h3>
           </div>
+
+          <SyntaxHighlighter
+            language="json"
+            style={vscDarkPlus}
+            customStyle={{
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              maxHeight: '400px',
+              overflow: 'auto'
+            }}
+          >
+            {JSON.stringify({
+              "code": 402,
+              "status": "failed",
+              "message": "Payment failed: low balance or payee limit reached or not allowed",
+              "data": {
+                "transaction_reference": "001943a1-a594-4003-941d-27abfb60a2f4"
+              }
+            }, null, 2)}
+          </SyntaxHighlighter>
         </div>
       </div>
     </div>

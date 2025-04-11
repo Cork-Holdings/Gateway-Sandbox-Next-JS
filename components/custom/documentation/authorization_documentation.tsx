@@ -1,6 +1,8 @@
 import React from 'react';
 import { api_endpoints, } from '@/utils/api_constants';
 import { ArrowRight, CheckCircle, Clock, Code, FileJson, Globe, Lock, } from 'lucide-react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import vscDarkPlus from 'react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus';
 
 const AuthorizationDocumentation = () => {
   return (
@@ -21,7 +23,7 @@ const AuthorizationDocumentation = () => {
           <h2 className="text-xl font-semibold text-gray-800">Request</h2>
         </div>
 
-        <div className="bg-gray-50 rounded-md p-4 mb-6">
+        <div className="bg-gray-50 rounded-md p-4 mb-6 overflow-auto whitespace-pre-wrap break-words">
           <div className="flex items-center gap-2 mb-2">
             <span className="bg-indigo-600 text-white text-xs font-medium px-2 py-1 rounded">POST</span>
             <code className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">{`${api_endpoints.merchant.makeAuthorizationRequest}`}</code>
@@ -31,7 +33,7 @@ const AuthorizationDocumentation = () => {
 
       {/* Headers Section */}
       <div className="mb-8">
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2 mb-4 " >
           <Code className="text-indigo-600" size={20} />
           <h2 className="text-xl font-semibold text-gray-800">Request Headers</h2>
         </div>
@@ -79,7 +81,7 @@ const AuthorizationDocumentation = () => {
         </div>
 
         <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-          <pre>{JSON.stringify({
+          <pre className='overflow-auto whitespace-pre-wrap break-words' >{JSON.stringify({
             client_id: "test-id",
             client_secret: "test-secret"
           }, null, 2)}</pre>
@@ -99,41 +101,26 @@ const AuthorizationDocumentation = () => {
             <CheckCircle className="text-green-500" size={16} />
             <h3 className="text-md font-semibold text-gray-800">200 - Success</h3>
           </div>
-          <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-            <pre>
-              {JSON.stringify({
-                code: 200,
-                data: {
-                  "external_id": "8558591377",
-                  "transaction_id": "example-test-reference 4"
-                },
-                message: "Process service request successfully.",
-                status: "successful"
-              }, null, 2)}
-            </pre>
-          </div>
+
+          <SyntaxHighlighter
+            language="json"
+            style={vscDarkPlus}
+            customStyle={{
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              maxHeight: '400px',
+              overflow: 'auto'
+            }}
+          >
+            {JSON.stringify({
+              "token_type": "Bearer",
+              "expires_in": 31536000,
+              "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9..."
+            }, null, 2)}
+          </SyntaxHighlighter>
         </div>
 
-        {/* 202 Pending Response */}
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <Clock className="text-amber-500" size={16} />
-            <h3 className="text-md font-semibold text-gray-800">202 - Pending</h3>
-          </div>
-          <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-            <pre>
-              {JSON.stringify({
-                code: 202,
-                data: {
-                  "external_id": "6871026019",
-                  "transaction_id": "exapmle-test-reference 4"
-                },
-                message: "Request sent. Awaiting customer action.",
-                status: "pending"
-              }, null, 2)}
-            </pre>
-          </div>
-        </div>
+        
       </div>
     </div>
   );

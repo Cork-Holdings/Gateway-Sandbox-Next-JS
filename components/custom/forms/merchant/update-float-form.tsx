@@ -19,6 +19,7 @@ import {  useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { api_endpoints } from "@/utils/api_constants";
 import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 const floatConfigSchema = z.object({
   float: z.string(),
@@ -74,9 +75,12 @@ const UpdateFloatForm = ({currentFloat}: {currentFloat: string}) => {
   return (
     <Card className="max-w-6xl w-full">
       <CardContent className="w-full mx-auto space-y-6">
-      <div className="text-start space-y-2">
-        <h1 className="text-xl font-bold">Float Configuration</h1>
+      <div className="text-center space-y-2">
+        <h1 className="text-2xl font-bold">Float Configuration</h1>
+        <Separator/>
       </div>
+
+     
 
       <p>Current Float balance: K{currentFloat}</p>
 
