@@ -4,20 +4,20 @@
 
 
 //local
-// export const base_ip = "localhost:2000";
-// export const next_url ="localhost:3000";
-// export const base_url = `http://${base_ip}/v1`;
+export const base_ip = "localhost:2000";
+export const next_url ="localhost:3000";
+export const base_url = `http://${base_ip}/v1`;
 
-// export const sandbox_url = `http://${base_ip}`;
+export const sandbox_url = `http://${base_ip}`;
 
 
 //prod
 
-export const base_ip = "sandbox.mygeepay.com";
-export const next_url ="sandbox.mygeepay.com";
-export const base_url = `https://${base_ip}/v1`;
+// export const base_ip = "sandbox.mygeepay.com";
+// export const next_url ="sandbox.mygeepay.com";
+// export const base_url = `https://${base_ip}/v1`;
 
-export const sandbox_url = `https://${base_ip}`;
+// export const sandbox_url = `https://${base_ip}`;
 
 // API Endpoints
 export const api_endpoints = {
@@ -32,6 +32,19 @@ export const api_endpoints = {
         deleteUser: `${base_url}/user/delete`,
         editUser: `${base_url}/user/edit`,
         getMerchants:`${base_url}/merchants/get`,
+        getOverviewInfo:`${base_url}/overview/cards`,
+        getTransactions:`${base_url}/dashboard/transactions`,
+        getAPIRequests:`${base_url}/dashboard/requests`,
+        getAllUsers: `${base_url}/dashboard/users`,
+        getTransactionChannels:`${base_url}/dashboard/transactions/channels`,
+        getResponseTimes:`${base_url}/dashboard/request/response`,
+        getTopMerchants:`${base_url}/dashboard/merchants/top`,
+        getUserStats: `${base_url}/dashboard/users/info`,
+        getMerchantStats: `${base_url}/dashboard/merchants/info`,
+        getAPIStats: `${base_url}/dashboard/requests/info`,
+        getTransactionStats: `${base_url}/dashboard/transactions/info`,
+        
+    
     },
 
     // Company-related Endpoints

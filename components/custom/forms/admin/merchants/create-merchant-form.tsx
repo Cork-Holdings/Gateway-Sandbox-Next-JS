@@ -83,7 +83,7 @@ const CreateMerchantForm = () => {
 
 
     return (
-        <div className="w-full dark:bg-gray-900 lg:px-8 px-4 py-12 sm:px-6">
+        <div className="w-full dark:bg-gray-900 lg:px-8 px-4 py-12 sm:px-6 ">
         <Form {...form}>
             <form 
                 onSubmit={form.handleSubmit(onSubmit)} 

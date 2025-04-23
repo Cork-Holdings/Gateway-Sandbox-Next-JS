@@ -1,13 +1,12 @@
 import React from 'react'
 import { Code } from "lucide-react";
 import { Button } from '@/components/ui/button';
-import SyntaxHighlighter from 'react-syntax-highlighter';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-
 const SIA = () => {
   return (
     <section id='documentation' className="py-20 bg-gradient-to-r from-[#00AEEF] to-[#3C3C8C]">
-      <div className="container mx-auto px-4 max-w-4xl">
+      <div className="container mx-auto px-4 max-w-5xl">
         <div className="flex flex-col lg:flex-row items-center gap-12">
           <div className="flex-1">
             <h2 className="text-3xl md:text-4xl text-[#3C3C8C] font-bold mb-6">Designed For Developers</h2>

@@ -12,6 +12,11 @@ const logos = [
   { src: '/images/mtn.png', alt: 'MTN' },
   { src: '/images/zamtel_logo.png', alt: 'Zamtel' },
   { src: '/images/gpay_logo_transaparent.png', alt: 'GeePay' },
+  { src: '/images/airtel.png', alt: 'Airtel' },
+  { src: '/images/mtn.png', alt: 'MTN' },
+  { src: '/images/zamtel_logo.png', alt: 'Zamtel' },
+  { src: '/images/gpay_logo_transaparent.png', alt: 'GeePay' },
+
 
 ];
 
