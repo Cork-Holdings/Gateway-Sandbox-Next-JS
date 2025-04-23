@@ -5,7 +5,7 @@ import PinConfigurationForm from '@/components/custom/forms/merchant/pin-configu
 import UpdateFloatForm from '@/components/custom/forms/merchant/update-float-form'
 import { api_endpoints } from '@/utils/api_constants'
 import { Loader2 } from 'lucide-react'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -37,15 +37,19 @@ const Configure = () => {
 
       const data = await response.json()
 
+      if (response.status  ==  401){
+        signOut({ callbackUrl: "/auth/signin/admin" })
+      }
+
       if (data.status == "success") {
-
-
         setClientID(data.credentials.clientID)
         setClientSecret(data.credentials.clientSecret)
         setClientSignature(data.credentials.clientSignature)
         setFloat(data.credentials.float_balance)
 
-      } else if (data.status == "failure") {
+      } 
+      
+      else if (data.status == "failure") {
         toast.error(`Unable to fetch client credentials\n${data.detail}`)
       }
 

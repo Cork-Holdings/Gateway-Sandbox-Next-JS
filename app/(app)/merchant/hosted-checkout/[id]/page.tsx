@@ -17,6 +17,7 @@ const HostedCheckoutPage = () => {
       const response = await fetch(`${api_endpoints.merchant.makeGetCheckoutDetailsRequest}/${id}`)
       const data = await response.json()
 
+
       if (data.status === "success") { 
         const res = data.response;
 

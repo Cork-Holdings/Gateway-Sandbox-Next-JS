@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button'
@@ -20,7 +20,7 @@ const MerchantProfile = () => {
   const fetchUserProfile = async () => {
     try {
       setLoading(true)
-      
+
       if (!session?.id || !session?.accessToken) {
         setError("Authentication required")
         setLoading(false)
@@ -35,6 +35,10 @@ const MerchantProfile = () => {
 
       const data = await response.json()
 
+      if (response.status == 401) {
+        signOut({ callbackUrl: "/auth/signin/admin" })
+      }
+
       if (data.status === "success") {
         setUserData({
           id: data.user.id,
@@ -48,7 +52,7 @@ const MerchantProfile = () => {
       } else {
         setError(data.message || "Failed to load profile data")
       }
-    } 
+    }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     catch (err) {
       setError("An error occurred while fetching profile data")
@@ -76,13 +80,13 @@ const MerchantProfile = () => {
   // Generate a deterministic color based on the user's name
   const generateAvatarColor = (name?: string) => {
     if (!name) return "#6366F1" // Default indigo color
-    
+
     // Create a simple hash from the name
     let hash = 0;
     for (let i = 0; i < name.length; i++) {
       hash = name.charCodeAt(i) + ((hash << 5) - hash);
     }
-    
+
     // List of pleasing background colors with good contrast for text
     const colors = [
       "#4F46E5", // Indigo
@@ -96,7 +100,7 @@ const MerchantProfile = () => {
       "#14B8A6", // Teal
       "#F97316"  // Orange
     ];
-    
+
     // Use the hash to select a color
     const index = Math.abs(hash) % colors.length;
     return colors[index];
@@ -106,7 +110,7 @@ const MerchantProfile = () => {
   const generateAvatarSvg = (name?: string) => {
     const initials = getInitials(name);
     const bgColor = generateAvatarColor(name);
-    
+
     return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
       <rect width="100" height="100" fill="${bgColor.replace('#', '%23')}" />
       <text x="50" y="50" font-family="Arial" font-size="35" font-weight="bold" text-anchor="middle" dominant-baseline="central" fill="white">${initials}</text>
@@ -161,7 +165,7 @@ const MerchantProfile = () => {
         <CardHeader className="border-b bg-gray-50">
           <CardTitle className="text-xl font-semibold text-gray-800">Merchant Profile</CardTitle>
         </CardHeader>
-        
+
         <CardContent className="pt-6">
           <div className="flex flex-col items-center mb-6">
             <Avatar className="w-24 h-24 mb-4 border-2 border-gray-200">
@@ -170,7 +174,7 @@ const MerchantProfile = () => {
                 {getInitials(userData?.fullname)}
               </AvatarFallback>
             </Avatar>
-            
+
             <h2 className="text-2xl font-bold text-gray-800">{userData?.fullname}</h2>
             <span className={`px-3 py-1 text-xs font-medium rounded-full mt-2 border ${getStatusColor(userData?.status)}`}>
               {userData?.status || "Unknown"}
@@ -185,7 +189,7 @@ const MerchantProfile = () => {
                 <p className="text-gray-800">{userData?.email || "Not provided"}</p>
               </div>
             </div>
-            
+
             <div className="flex items-center p-3 bg-gray-50 rounded-lg">
               <Phone className="text-gray-500 mr-3" size={18} />
               <div>
@@ -193,16 +197,16 @@ const MerchantProfile = () => {
                 <p className="text-gray-800">{userData?.phone || "Not provided"}</p>
               </div>
             </div>
-            
-           
+
+
           </div>
         </CardContent>
-        
+
         <CardFooter className="flex justify-end border-t gap-3 bg-gray-50 p-4">
-          <Button 
-          onClick={()=> router.push(`/merchant/reset`)}
-          className="bg-gray-600 hover:bg-gray-700">
-          
+          <Button
+            onClick={() => router.push(`/merchant/reset`)}
+            className="bg-gray-600 hover:bg-gray-700">
+
             Reset Password
           </Button>
           {/* <Button
