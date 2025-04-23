@@ -9,8 +9,7 @@ import {
   CardFooter
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { BarChart, ShoppingBag, Store, UserPlus, ArrowUpRight, Search, Filter, Plus, Download, MoreHorizontal } from "lucide-react";
+import { BarChart, ShoppingBag, Store, UserPlus, ArrowUpRight, Plus, Download } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -33,8 +32,6 @@ const MerchantsTab = () => {
   const [userData, setUserData] = useState<UserDetails[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { data: session } = useSession();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -92,8 +89,6 @@ const MerchantsTab = () => {
       const body = {
         page: pagination.pageIndex + 1,
         pageSize: pagination.pageSize,
-        searchTerm: searchTerm || undefined,
-        status: statusFilter !== "all" ? statusFilter : undefined
       };
 
       const response = await fetch(api_endpoints.backoffice.getAllUsers, {
@@ -146,7 +141,7 @@ const MerchantsTab = () => {
     }, 500);
     
     return () => clearTimeout(timer);
-  }, [searchTerm, statusFilter]);
+  }, []);
 
   const getStatusBadge = (status: string) => {
     if (status === "active") {

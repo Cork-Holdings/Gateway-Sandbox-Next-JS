@@ -37,7 +37,7 @@ const UsersTab = () => {
   const [cardData, setCardData] = useState<UserStatistics | null>(null);
   const [userData, setUserData] = useState<UserDetails[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+
   const { data: session } = useSession();
 
   const [pagination, setPagination] = useState({
@@ -72,7 +72,7 @@ const UsersTab = () => {
       const body = {
         page: pagination.pageIndex + 1,
         pageSize: pagination.pageSize,
-        searchTerm: searchTerm || undefined
+
       };
 
       const response = await fetch(api_endpoints.backoffice.getAllUsers, {

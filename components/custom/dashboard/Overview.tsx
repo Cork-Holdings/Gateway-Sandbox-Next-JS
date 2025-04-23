@@ -34,8 +34,7 @@ const Overview = () => {
   const [transactionData, setTransactionData] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { data: session } = useSession();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("all");
+
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -73,9 +72,7 @@ const Overview = () => {
       const body = {
         page: pagination.pageIndex + 1,
         pageSize: pagination.pageSize,
-        searchTerm: searchTerm || undefined,
-        status: filterStatus !== "all" ? filterStatus : undefined
-      };
+     };
 
       const response = await fetch(api_endpoints.backoffice.getTransactions, {
         method: "POST",
@@ -129,7 +126,7 @@ const Overview = () => {
     }, 500);
     
     return () => clearTimeout(timer);
-  }, [searchTerm, filterStatus]);
+  }, []);
 
   const getStatusStyle = (status: string) => {
     if (status === "successful" || status === "completed") {
