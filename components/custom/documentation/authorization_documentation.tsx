@@ -6,12 +6,12 @@ import vscDarkPlus from 'react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark
 
 const AuthorizationDocumentation = () => {
   return (
-    <div className="max-w-4xl w-full mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-4xl w-full mx-auto p-6 bg-white dark:bg-inherit rounded-lg shadow-md border">
       {/* Header Section */}
       <div className="border-b pb-6 mb-6">
         <div className="flex items-center gap-2 mb-2">
           <Lock className="text-indigo-600" size={24} />
-          <h1 className="text-2xl font-bold text-gray-800">Authorization</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Authorization</h1>
         </div>
         <p className="text-gray-600">Generate an access token</p>
       </div>
@@ -20,13 +20,13 @@ const AuthorizationDocumentation = () => {
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
           <Globe className="text-indigo-600" size={20} />
-          <h2 className="text-xl font-semibold text-gray-800">Request</h2>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Request</h2>
         </div>
 
-        <div className="bg-gray-50 rounded-md p-4 mb-6 overflow-auto whitespace-pre-wrap break-words">
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-md p-4 mb-6 overflow-auto whitespace-pre-wrap break-words">
           <div className="flex items-center gap-2 mb-2">
-            <span className="bg-indigo-600 text-white text-xs font-medium px-2 py-1 rounded">POST</span>
-            <code className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">{`${api_endpoints.merchant.makeAuthorizationRequest}`}</code>
+            <span className="bg-indigo-600 text-white dark:text-black text-xs font-medium px-2 py-1 rounded">POST</span>
+            <code className="text-sm font-mono bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded">{`${api_endpoints.merchant.makeAuthorizationRequest}`}</code>
           </div>
         </div>
       </div>
@@ -35,16 +35,16 @@ const AuthorizationDocumentation = () => {
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4 " >
           <Code className="text-indigo-600" size={20} />
-          <h2 className="text-xl font-semibold text-gray-800">Request Headers</h2>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Request Headers</h2>
         </div>
 
-        <div className="bg-gray-50 rounded-md p-4 overflow-hidden">
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-md p-4 overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-gray-100">
+            <thead className="bg-gray-100 dark:bg-gray-800">
               <tr>
-                <th className="text-left py-2 px-4 font-semibold text-gray-700">Header</th>
-                <th className="text-left py-2 px-4 font-semibold text-gray-700">Value</th>
-                <th className="text-left py-2 px-4 font-semibold text-gray-700">Required</th>
+                <th className="text-left py-2 px-4 font-semibold text-gray-700 dark:text-white">Header</th>
+                <th className="text-left py-2 px-4 font-semibold text-gray-700 dark:text-white">Value</th>
+                <th className="text-left py-2 px-4 font-semibold text-gray-700 dark:text-white">Required</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">

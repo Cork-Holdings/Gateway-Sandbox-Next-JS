@@ -8,12 +8,12 @@ const QueryDisbursementBalanceContainer = () => {
 
 
     return (
-        <div className="max-w-4xl w-full mx-auto p-6 bg-white rounded-lg shadow-md">
+        <div className="max-w-4xl w-full mx-auto p-6 bg-white border dark:bg-inherit rounded-lg shadow-md">
             {/* Header Section */}
             <div className="border-b pb-6 mb-6">
                 <div className="flex items-center gap-2 mb-2">
                     <SendHorizonal className="text-indigo-600" size={24} />
-                    <h1 className="text-2xl font-bold text-gray-800">Query Disbursement Balance</h1>
+                    <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Query Disbursement Balance</h1>
                 </div>
                 <p className="text-gray-600">This enables you query your disbursement balance using a simple API call</p>
             </div>
@@ -22,13 +22,13 @@ const QueryDisbursementBalanceContainer = () => {
             <div className="mb-8">
                 <div className="flex items-center gap-2 mb-4">
                     <Globe className="text-indigo-600" size={20} />
-                    <h2 className="text-xl font-semibold text-gray-800">Request</h2>
+                    <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Request</h2>
                 </div>
 
-                <div className="bg-gray-50 rounded-md p-4 mb-6">
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-md p-4 mb-6">
                     <div className="flex items-center gap-2 mb-2">
                         <span className="bg-green-600 text-white text-xs font-medium px-2 py-1 rounded">GET</span>
-                        <code className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">{`${api_endpoints.merchant.makeNameLookupRequest}/{transaction-ref}`}</code>
+                        <code className="text-sm font-mono bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded">{`${api_endpoints.merchant.makeNameLookupRequest}/{transaction-ref}`}</code>
                     </div>
                 </div>
             </div>
@@ -37,12 +37,12 @@ const QueryDisbursementBalanceContainer = () => {
             <div className="mb-8">
                 <div className="flex items-center gap-2 mb-4 ">
                     <Code className="text-indigo-600" size={20} />
-                    <h2 className="text-xl font-semibold text-gray-800">Request Headers</h2>
+                    <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Request Headers</h2>
                 </div>
 
-                <div className="bg-gray-50 rounded-md p-4 overflow-hidden">
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-md p-4 overflow-hidden">
                     <table className="w-full text-sm">
-                        <thead className="bg-gray-100">
+                        <thead className="bg-gray-100 dark:bg-gray-800">
                             <tr>
                                 <th className="text-left py-2 px-4 font-semibold text-gray-700">Header</th>
                                 <th className="text-left py-2 px-4 font-semibold text-gray-700">Value</th>
@@ -86,7 +86,7 @@ const QueryDisbursementBalanceContainer = () => {
             <div className="mb-8">
                 <div className="flex items-center gap-2 mb-4">
                     <FileJson className="text-indigo-600" size={20} />
-                    <h2 className="text-xl font-semibold text-gray-800">Example Request Body</h2>
+                    <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Example Request Body</h2>
                 </div>
                 <p>No Request Body</p>
             </div>
@@ -95,14 +95,14 @@ const QueryDisbursementBalanceContainer = () => {
             <div>
                 <div className="flex items-center gap-2 mb-4">
                     <ArrowRight className="text-indigo-600" size={20} />
-                    <h2 className="text-xl font-semibold text-gray-800">Expected Responses</h2>
+                    <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Expected Responses</h2>
                 </div>
 
                 {/* 200 Success Response */}
                 <div className="mb-6">
                     <div className="flex items-center gap-2 mb-2">
                         <CheckCircle className="text-green-500" size={16} />
-                        <h3 className="text-md font-semibold text-gray-800">200 - Success</h3>
+                        <h3 className="text-md font-semibold text-gray-800 dark:text-white">200 - Success</h3>
                     </div>
                 
                     <SyntaxHighlighter

@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import Provider from "@/components/custom/common/Provider";
 import { Toaster } from "react-hot-toast";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+ const imbplexmono = IBM_Plex_Mono({
+      weight: ['400', '600'], 
+      subsets: ['latin'],     
+      display: 'swap',          
+    });
+
 
 export const metadata: Metadata = {
   title: "Payment Gateway Sandbox",
@@ -27,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${imbplexmono.className} antialiased`}
       >
       <Provider> 
             

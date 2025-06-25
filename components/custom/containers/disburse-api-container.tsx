@@ -55,6 +55,10 @@ const DisbursementAPIContainer = () => {
             })
 
             const data = await apiResponse.json()
+               // Simulate 3 second delay
+      await new Promise(resolve => setTimeout(resolve, 3000))
+
+
 
             if (apiResponse.ok) {
                 setResponse(data)
@@ -94,7 +98,7 @@ const DisbursementAPIContainer = () => {
     }
 
     return (
-        <main className='flex flex-col lg:flex-row gap-8  bg-gray-100 p-6'>
+        <main className='flex flex-col lg:flex-row gap-8  bg-gray-100 dark:bg-inherit p-6'>
             <div className="max-w-4xl w-full">
                 <Card className="max-w-2xl mx-auto">
                     <CardHeader>

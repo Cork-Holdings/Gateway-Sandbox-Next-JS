@@ -1,14 +1,22 @@
 "use client"
-import React, {  } from "react";
+import React, { } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { signOut, useSession } from "next-auth/react";
 import { MerchantSidebar } from "@/components/custom/merchant-sidebar";
 import { AlertCircle } from "lucide-react";
 import VerifyEmailForm from "@/components/custom/forms/merchant/email-verification/verify-email-form";
+import { Button } from "@/components/ui/button";
+import { FaMoon, FaSun } from "react-icons/fa";
+import { useTheme } from 'next-themes'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode; }) {
   const { data: session, status } = useSession();
 
+  const { theme, setTheme } = useTheme()
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   // Loading state
   if (status === "loading") {
@@ -47,16 +55,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <h2 className="text-xl font-bold">Account Blocked</h2>
           </div>
           <p className="text-gray-600 mb-6">Your account has been deactivated. Please contact the administrator for assistance.</p>
-         <div className="flex flex-col md:flex-row justify-between">
-         <button className="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors">
-            Contact Support
-          </button>
-          <button 
-               onClick={() => signOut({ callbackUrl: "/auth/signin/merchant" })}                              
-          className="px-6 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors">
-            Sign Out
-          </button>
-         </div>
+          <div className="flex flex-col md:flex-row justify-between">
+            <button className="px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors">
+              Contact Support
+            </button>
+            <button
+              onClick={() => signOut({ callbackUrl: "/auth/signin/merchant" })}
+              className="px-6 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors">
+              Sign Out
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -65,26 +73,33 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   // Email not verified
   if (session.emailVerified === false) {
     return (
-      <VerifyEmailForm/>
+      <VerifyEmailForm />
     );
   }
 
   // Main dashboard layout
   return (
-    <main className="flex h-screen overflow-hidden bg-gray-50">
+    <main className="flex h-screen overflow-hidden bg-gray-50 dark:bg-inherit">
       <SidebarProvider>
         <MerchantSidebar />
         <div className="flex flex-col flex-1 overflow-auto">
-          <header className="bg-white shadow-sm">
+          <header className="bg-white dark:bg-gray-800 shadow-sm">
             <div className="flex items-center justify-between px-6 py-4">
               <div className="flex items-center">
                 <SidebarTrigger className="mr-4" />
-                <h1 className="text-xl font-semibold text-gray-800">Merchant </h1>
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Merchant </h1>
               </div>
               <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-600">
+                <span className="text-sm text-gray-600 dark:text-white">
                   Welcome, {session.user?.name || "Merchant"}
                 </span>
+                <Button
+                  variant="secondary"
+                  className="rounded-full"
+                  onClick={toggleTheme}
+                >
+                  {theme === "dark" ? <FaSun /> : <FaMoon />}
+                </Button>
               </div>
             </div>
           </header>

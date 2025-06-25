@@ -64,12 +64,12 @@ const APIPage = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-inherit flex flex-col">
       {/* Header */}
-      <header className="bg-white shadow-sm p-6 flex items-center justify-between">
+      <header className="bg-white dark:bg-inherit shadow-sm p-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <LayoutDashboard className="h-6 w-6 text-blue-600" />
-          <h1 className="text-2xl font-bold text-gray-800">API Dashboard</h1>
+          <h1 className="text-2xl font-bold text-gray-800 0 dark:text-white">API Dashboard</h1>
         </div>
         <p className="text-sm text-gray-500">
           Explore available API endpoints
@@ -88,10 +88,10 @@ const APIPage = () => {
         <div className="max-w-5xl mx-auto">
           {/* Welcome Section */}
           <section className="mb-10 text-center">
-            <h2 className="text-3xl font-semibold text-gray-800 mb-2">
+            <h2 className="text-3xl font-semibold text-gray-800 0 dark:text-white mb-2">
               Payment Gateway API Suite
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 0 dark:text-gray-300 max-w-2xl mx-auto">
               Discover and test our powerful API endpoints for payment processing,
               disbursements, authentication and so much more.
             </p>
@@ -101,19 +101,19 @@ const APIPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {apis.map((api) => (
               <Link key={api.id} href={`/merchant/apis/${api.id}`} className="group">
-                <Card className="h-full hover:shadow-lg transition-shadow duration-300">
+                <Card className="h-full hover:shadow-lg transition-shadow duration-300 dark:bg-gray-900 ">
                   <CardHeader>
                     <div className="flex items-center gap-3">
                       <div className={`p-2 rounded-full ${api.color}`}>
                         <api.icon className="h-6 w-6" />
                       </div>
-                      <CardTitle className="text-xl font-semibold text-gray-800">
+                      <CardTitle className="text-xl font-semibold text-gray-800 dark:text-white">
                         {api.name}
                       </CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-gray-600 0 dark:text-gray-200 text-sm">
                       {api.description}
                     </p>
                     <Button
@@ -132,7 +132,7 @@ const APIPage = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t p-4 text-center text-sm text-gray-500">
+      <footer className="bg-white dark:bg-inherit border-t p-4 text-center text-sm text-gray-500">
         © {new Date().getFullYear()} GeePay Gateway. All rights reserved.
       </footer>
     </div>

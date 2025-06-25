@@ -28,7 +28,7 @@ const signUpSchema = z.object({
     fullname: z.string().min(1, { message: "Fullname is required" }),
     email: z.string().min(1, { message: "Email is required" }),
     phone: z.string().min(1, { message: "Phone is required" }),
-    password: z.string().min(6, { message: "Must be more than 6 characters" }),
+    password: z.string().min(8, { message: "Must be more than 8 characters" }),
 
 })
 
@@ -44,7 +44,6 @@ const SignUpForm = () => {
             fullname: "", // Provide an initial empty string
             email: "",
             phone: "",
-          
             password: "",
         }
     });

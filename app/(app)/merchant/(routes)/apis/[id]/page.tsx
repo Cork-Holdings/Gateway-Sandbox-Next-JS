@@ -55,12 +55,12 @@ const ExecuteAPI = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-inherit flex flex-col">
       {/* Header */}
-      <header className="hidden bg-white shadow-sm p-4  md:flex items-center justify-between">
+      <header className="hidden bg-white dark:bg-inherit shadow-sm p-4  md:flex items-center justify-between">
         <div className="flex items-center gap-2">
           <LayoutDashboard className="h-6 w-6 text-blue-600" />
-          <h1 className="text-xl font-bold text-gray-800">API Execution Dashboard</h1>
+          <h1 className="text-xl font-bold text-gray-800 dark:text-white">API Execution Dashboard</h1>
         </div>
         <div className="text-sm text-gray-500">
           Current Date: {new Date().toLocaleDateString()}
@@ -70,7 +70,7 @@ const ExecuteAPI = () => {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside
-          className={`z-30 md:z-0 bg-white shadow-md transition-all duration-300
+          className={`z-30 md:z-0 bg-white dark:bg-gray-900 rounded-2xl shadow-md transition-all duration-300
             ${isSidebarOpen ? 'w-64' : 'w-16'}
             
                'relative md:absolute'}
@@ -127,7 +127,7 @@ const ExecuteAPI = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white border-t p-4 text-center text-sm text-gray-500">
+      <footer className="bg-white dark:bg-inherit border-t p-4 text-center text-sm text-gray-500">
         © {new Date().getFullYear()} API Execution Sandbox. All rights reserved.
       </footer>
     </div>
