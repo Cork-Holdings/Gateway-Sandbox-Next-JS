@@ -13,7 +13,7 @@ const Hero = () => {
   return (
     <section className="relative bg-gradient-to-r from-[#00AEEF] to-indigo-800 text-white">
       <div className="absolute inset-0 bg-[url(/api/placeholder/1200/600)] opacity-10 bg-cover bg-center"></div>
-      <div className="container mx-auto px-4 max-w-5xl py-24 relative z-10">
+      <div className="container mx-auto px-4 max-w-7xl py-24 relative z-10">
         <div className="flex flex-col md:flex-row gap-12 items-center">
           <div className="flex-1 space-y-6  md:pr-20">
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight">

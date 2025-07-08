@@ -5,7 +5,7 @@ import React from 'react'
 const Features = () => {
   return (
     <section id='features' className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4 max-w-5xl">
+      <div className="container mx-auto px-4 max-w-7xl">
         <div className="container mx-auto px-4 text-start">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-[#00AEEF]">Why use the sandbox?</h2>
           <p className='font-semibold '>Made for developers, by developers</p>
