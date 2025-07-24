@@ -102,7 +102,7 @@ const QueryDisbursementDocumentationContainer = () => {
                                 <td className="py-2 px-4">Your transaction reference</td>
                                 <td className="py-2 px-4">true</td>
                             </tr>
-                           
+
 
                         </tbody>
                     </table>
@@ -118,7 +118,7 @@ const QueryDisbursementDocumentationContainer = () => {
 
                 <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
                     <pre
-                    className='overflow-auto whitespace-pre-wrap break-words'
+                        className='overflow-auto whitespace-pre-wrap break-words'
                     >{JSON.stringify({
                         phone_number: "260961234567",
                         amount: 10,
@@ -141,7 +141,7 @@ const QueryDisbursementDocumentationContainer = () => {
                         <CheckCircle className="text-green-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800 dark:text-white">200 - Success</h3>
                     </div>
-                   
+
                     <SyntaxHighlighter
                         language="json"
                         style={vscDarkPlus}
@@ -153,18 +153,17 @@ const QueryDisbursementDocumentationContainer = () => {
                         }}
                     >
                         {JSON.stringify({
-                                "code": 200,
-                                "data": {
-                                    "amount": "200",
-                                    "channel": "airtel",
-                                    "customer": "260978098777s",
-                                    "date": "0001-01-01T00:00:00Z",
-                                    "narration": "Testing narration",
-                                    "status": "successful"
-                                },
-                                "message": "Disbursement Status Retrieved",
-                                "status": "success"
-                            }, null, 2)}
+                            "code": 200,
+                            "data": {
+                                "amount": "200",
+                                "transaction_reference": "278bedc0-d292-42e1-8dd3-ca91d63fa302",
+                                "external_reference": "000799895807",
+                                "narration": "Testing narration",
+                                "status": "successful"
+                            },
+                            "message": "Disbursement Status Retrieved",
+                            "status": "success"
+                        }, null, 2)}
                     </SyntaxHighlighter>
                 </div>
 
@@ -186,17 +185,16 @@ const QueryDisbursementDocumentationContainer = () => {
                         }}
                     >
                         {JSON.stringify({
-                                "code": 200,
-                                "data": {
-                                    "amount": "1",
-                                    "channel": "airtel",
-                                    "customer": "260978129089",
-                                    "date": "0001-01-01T00:00:00Z",
-                                    "status": "pending"
-                                },
-                                "message": "Transaction Status Retrieved",
-                                "status": "success"
-                            }, null, 2)}
+                            "code": 200,
+                            "data": {
+                                "amount": "1",
+                                "transaction_reference": "278bedc0-d292-42e1-8dd3-ca91d63fa302",
+                                "external_reference": "000799895807",
+                                "status": "pending"
+                            },
+                            "message": "Transaction Status Retrieved",
+                            "status": "success"
+                        }, null, 2)}
                     </SyntaxHighlighter>
                 </div>
             </div>

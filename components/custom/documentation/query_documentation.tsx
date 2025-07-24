@@ -123,7 +123,7 @@ const QueryDocumentationContainer = () => {
                         <CheckCircle className="text-green-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800 dark:text-white">200 - Success</h3>
                     </div>
-            
+
                     <SyntaxHighlighter
                         language="json"
                         style={vscDarkPlus}
@@ -135,17 +135,17 @@ const QueryDocumentationContainer = () => {
                         }}
                     >
                         {JSON.stringify({
-                                "code": 200,
-                                "data": {
-                                    "amount": "1",
-                                    "channel": "airtel",
-                                    "customer": "260978129089",
-                                    "date": "0001-01-01T00:00:00Z",
-                                    "status": "pending"
-                                },
-                                "message": "Transaction Status Retrieved",
-                                "status": "success"
-                            }, null, 2)}
+                            "code": 200,
+                            "data": {
+                                "amount": "1",
+                                "status": "pending",
+                                "transaction_reference": "278bedc0-d292-42e1-8dd3-ca91d63fa302",
+                                "external_reference": "000799895807",
+                            },
+
+                            "message": "Transaction Status Retrieved",
+                            "status": "success"
+                        }, null, 2)}
                     </SyntaxHighlighter>
                 </div>
 
@@ -169,13 +169,8 @@ const QueryDocumentationContainer = () => {
                     >
                         {JSON.stringify({
                             "code": 404,
-                            "error": {
-                                "Transaction Reference": [
-                                    "Transaction Reference is invalid"
-                                ]
-                            },
                             "message": "Transaction Not Found",
-                            "status": "failed"
+                            "status": "error"
                         }, null, 2)}
                     </SyntaxHighlighter>
                 </div>

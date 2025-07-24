@@ -129,10 +129,10 @@ const DisbursementAPIDocumentationContainer = () => {
                         {JSON.stringify({
                             "code": 200,
                             "data": {
-                                "external_id": "8445203466",
-                                "transaction_id": "testing-dis-ref"
+                                "transaction_id": "8c404fd1-6c2e-46b4-a6ed-8210e78fc9cc",
+                                "external_reference": "000799902816"
                             },
-                            "message": "Funds disbursed",
+                            "message": "Disbursement was processed successfully",
                             "status": "successful"
                         }, null, 2)}
                     </SyntaxHighlighter>
@@ -143,7 +143,7 @@ const DisbursementAPIDocumentationContainer = () => {
                         <BadgeXIcon className="text-red-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800 dark:text-white">400 - Invalid Phone Number</h3>
                     </div>
-                   
+
 
                     <SyntaxHighlighter
                         language="json"
@@ -158,7 +158,7 @@ const DisbursementAPIDocumentationContainer = () => {
                         {JSON.stringify({
                             "code": 400,
                             "status": "error",
-                            "message": "Insufficient disbursement balance for transaction, please request for more float"
+                            "message": "Insufficient disbursement balance, please top up"
                         }, null, 2)}
                     </SyntaxHighlighter>
                 </div>
@@ -167,7 +167,7 @@ const DisbursementAPIDocumentationContainer = () => {
                         <BadgeXIcon className="text-red-500" size={16} />
                         <h3 className="text-md font-semibold text-gray-800 dark:text-white">400 - Invalid Phone Number</h3>
                     </div>
-            
+
 
                     <SyntaxHighlighter
                         language="json"
@@ -180,15 +180,15 @@ const DisbursementAPIDocumentationContainer = () => {
                         }}
                     >
                         {JSON.stringify({
-                                "code": 400,
-                                "errors": {
-                                    "phone_number": [
-                                        "Invalid Phone number"
-                                    ]
-                                },
-                                "message": "Validation failed.",
-                                "status": "error"
-                            }, null, 2)}
+                            "code": 400,
+                            "errors": {
+                                "phone_number": [
+                                    "Invalid Phone number"
+                                ]
+                            },
+                            "message": "Validation failed.",
+                            "status": "error"
+                        }, null, 2)}
                     </SyntaxHighlighter>
                 </div>
             </div>

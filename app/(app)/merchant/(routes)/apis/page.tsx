@@ -17,25 +17,26 @@ import { Button } from '@/components/ui/button';
 const apis = [
   {
     id: "1",
+    name: "Authorization",
+    description: "Manage authentication with the Authorization API",
+    icon: Key,
+    color: "bg-violet-100 text-violet-700"
+  },
+  {
+    id: "2",
     name: "Collection",
     description: "Process payments through the Payment Gateway collection endpoint",
     icon: CreditCard,
     color: "bg-blue-100 text-blue-700"
   },
   {
-    id: "2",
+    id: "3",
     name: "Disbursement",
     description: "Handle payouts using the Payment Gateway disbursement API",
     icon: Send,
     color: "bg-emerald-100 text-emerald-700"
   },
-  {
-    id: "3",
-    name: "Authorization",
-    description: "Manage authentication with the Authorization API",
-    icon: Key,
-    color: "bg-violet-100 text-violet-700"
-  },
+  
   {
     id: "4",
     name: "Transaction Status",

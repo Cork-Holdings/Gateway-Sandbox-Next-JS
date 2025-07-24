@@ -33,7 +33,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   // Not authenticated
   if (!session) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-50">
+      <div className="flex items-center justify-center h-screen bg-gray-50 dark:bg-gray-800">
         <div className="max-w-md p-8 bg-white rounded-lg shadow-lg text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Authentication Required</h2>
           <p className="text-gray-600 mb-6">Please sign in to access your dashboard.</p>
@@ -48,7 +48,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   // Account inactive
   if (session.accountStatus === "inactive") {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-50">
+      <div className="flex items-center justify-center h-screen bg-gray-50 dark:bg-gray-800">
         <div className="max-w-md p-8 bg-white rounded-lg shadow-lg">
           <div className="flex items-center mb-4 text-red-500">
             <AlertCircle className="mr-2" size={24} />
@@ -79,7 +79,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   // Main dashboard layout
   return (
-    <main className="flex h-screen overflow-hidden bg-gray-50 dark:bg-inherit">
+    <main className="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-800">
       <SidebarProvider>
         <MerchantSidebar />
         <div className="flex flex-col flex-1 overflow-auto">

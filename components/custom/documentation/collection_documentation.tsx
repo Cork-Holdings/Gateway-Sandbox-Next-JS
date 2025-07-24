@@ -69,6 +69,11 @@ const CollectionDocumentationContainer = () => {
                 <td className="py-2 px-4">true</td>
               </tr>
               <tr>
+                <td className="py-2 px-4 font-mono">X-Callback Url</td>
+                <td className="py-2 px-4">https://yourapp.com/api/auth/callback</td>
+                <td className="py-2 px-4">false</td>
+              </tr>
+              <tr>
                 <td className="py-2 px-4 font-mono">X-Transaction-Ref</td>
                 <td className="py-2 px-4">example-test-reference 4</td>
                 <td className="py-2 px-4">true</td>
@@ -150,7 +155,7 @@ const CollectionDocumentationContainer = () => {
             }}
           >
             {JSON.stringify({
-              code: 202,
+              code: 200,
               data: {
                 "external_reference": "6871026019",
                 "transaction_reference": "exapmle-test-reference 4"

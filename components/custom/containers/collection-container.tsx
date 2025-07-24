@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge'
 
 const CollectionContainer = () => {
   const [phone, setPhone] = useState('')
-  const [amount, setAmount] = useState('')
+  const [amount, setAmount] = useState(0)
   const [response, setResponse] = useState(null)
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -23,6 +23,7 @@ const CollectionContainer = () => {
   const [acceptType, setAcceptType] = useState('')
   const [tRef, setTRef] = useState('')
   const [clientID, setClientID] = useState('')
+  const [callbackUrl, setCallbackUrl] = useState('')
 
   const makeRequest = async () => {
     try {
@@ -42,7 +43,8 @@ const CollectionContainer = () => {
           'Accept': acceptType,
           "X-Client-ID": clientID,
           "Authorization": `Bearer ${token}`,
-          "X-Transaction-Ref": tRef
+          "X-Transaction-Ref": tRef,
+
         },
         body: JSON.stringify(body)
       })
@@ -59,7 +61,7 @@ const CollectionContainer = () => {
         setResponse(data)
         throw new Error(data.message || 'Request failed')
       }
-    } 
+    }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     catch (err) {
 
@@ -70,8 +72,8 @@ const CollectionContainer = () => {
 
   const getStatusBadge = () => {
     if (!response) return null;
-    
-    
+
+
     const code = response["code"];
     if (code === 200) {
       return <Badge className="bg-green-500 hover:bg-green-600">Success - 200</Badge>;
@@ -82,8 +84,8 @@ const CollectionContainer = () => {
     }
   };
 
-  const handleCopy = (text:string) => {
-    console.log('text', text)
+  const handleCopy = (text: string) => {
+    // console.log('text', text)
     if (response) {
       navigator.clipboard.writeText(JSON.stringify(response, null, 2))
       setCopied(true)
@@ -112,7 +114,7 @@ const CollectionContainer = () => {
                 <Label htmlFor="token" className="text-sm font-medium flex items-center gap-1">
                   Bearer Token
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Textarea
                   id="token"
@@ -128,7 +130,7 @@ const CollectionContainer = () => {
                 <Label htmlFor="xclientId" className="text-sm font-medium flex items-center gap-1">
                   X-Client-ID
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Input
                   id="xclientId"
@@ -143,7 +145,7 @@ const CollectionContainer = () => {
                 <Label htmlFor="contentType" className="text-sm font-medium flex items-center gap-1">
                   Content-Type
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Input
                   id="contentType"
@@ -155,13 +157,29 @@ const CollectionContainer = () => {
                 />
               </div>
 
+              <div className='space-y-2'>
+
+                <Label htmlFor="callbackurl" className="text-sm font-medium flex items-center gap-1">
+                  X-CALLBACK-URL
+                  <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
+
+                </Label>
+                <Input
+                  id="callbackurl"
+                  value={callbackUrl}
+                  onChange={(e) => setCallbackUrl(e.target.value)}
+                  placeholder="Enter your callback url"
+                  disabled={isLoading}
+                  className="mt-1"
+                />
+              </div>
 
               <div className='space-y-2'>
 
                 <Label htmlFor="xtref" className="text-sm font-medium flex items-center gap-1">
                   X-Transaction-Ref
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Input
                   id="xtref"
@@ -179,7 +197,7 @@ const CollectionContainer = () => {
                 <Label htmlFor="acceptType" className="text-sm font-medium flex items-center gap-1">
                   Accept
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Input
                   id="acceptType"
@@ -203,7 +221,7 @@ const CollectionContainer = () => {
                 <Label htmlFor="phone" className="text-sm font-medium flex items-center gap-1">
                   Phone
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Input
                   id="phone"
@@ -212,7 +230,7 @@ const CollectionContainer = () => {
                   placeholder="Enter your Phone Number"
                   disabled={isLoading}
                   className="mt-1"
-                  type="text"
+                  type="number"
                 />
               </div>
 
@@ -220,13 +238,13 @@ const CollectionContainer = () => {
                 <Label htmlFor="amount" className="text-sm font-medium flex items-center gap-1">
                   Amount
                   <Badge variant="outline" className="ml-1 font-normal">Required</Badge>
-                
+
                 </Label>
                 <Input
                   id="amount"
                   value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder="Enter your client secret"
+                  onChange={(e) => setAmount(Number(e.target.value))}
+                  placeholder="Enter an amount"
                   type="number"
                   disabled={isLoading}
                   className="mt-1"
@@ -234,71 +252,71 @@ const CollectionContainer = () => {
               </div>
 
             </div>
-            
+
             <Button
-                onClick={makeRequest}
-                disabled={isLoading}
-                className="w-full"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Executing...
-                  </>
-                ) : (
-                  'Execute Request'
-                )}
-              </Button>
+              onClick={makeRequest}
+              disabled={isLoading}
+              className="w-full"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Executing...
+                </>
+              ) : (
+                'Execute Request'
+              )}
+            </Button>
 
             {/* Response Section */}
             {(response || error) && (
               <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-semibold">Response</h3>
-                  {getStatusBadge()}
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold">Response</h3>
+                    {getStatusBadge()}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleCopy(JSON.stringify(response, null, 2))}
+                    className="flex items-center gap-1"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="h-4 w-4" />
+                        Copied
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="h-4 w-4" />
+                        Copy JSON
+                      </>
+                    )}
+                  </Button>
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleCopy(JSON.stringify(response, null, 2))}
-                  className="flex items-center gap-1"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="h-4 w-4" />
-                      Copied
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-4 w-4" />
-                      Copy JSON
-                    </>
-                  )}
-                </Button>
+
+                {response && (
+                  <SyntaxHighlighter
+                    language="json"
+                    style={vscDarkPlus}
+                    customStyle={{
+                      padding: '1rem',
+                      borderRadius: '0.5rem',
+                      maxHeight: '400px',
+                      overflow: 'auto'
+                    }}
+                  >
+                    {JSON.stringify(response, null, 2)}
+                  </SyntaxHighlighter>
+                )}
+
+                {error && (
+                  <div className="p-4 bg-red-50 text-red-700 border border-red-200 rounded-md">
+                    {error}
+                  </div>
+                )}
               </div>
-              
-              {response && (
-                <SyntaxHighlighter
-                  language="json"
-                  style={vscDarkPlus}
-                  customStyle={{
-                    padding: '1rem',
-                    borderRadius: '0.5rem',
-                    maxHeight: '400px',
-                    overflow: 'auto'
-                  }}
-                >
-                  {JSON.stringify(response, null, 2)}
-                </SyntaxHighlighter>
-              )}
-              
-              {error && (
-                <div className="p-4 bg-red-50 text-red-700 border border-red-200 rounded-md">
-                  {error}
-                </div>
-              )}
-            </div>
             )}
           </CardContent>
         </Card>
@@ -321,7 +339,8 @@ const CollectionContainer = () => {
                     "Accept": acceptType || '[Accept]',
                     "X-Client-ID": clientID || '[X-Client-ID]',
                     "Authorization": token ? `Bearer ${token}` : '[Authorization Token]',
-                    "X-Transaction-Ref": tRef || '[X-Transaction-Ref]'
+                    "X-Transaction-Ref": tRef || '[X-Transaction-Ref]',
+                    "X-CALLBACK-URL": tRef || '[X-CALLBACK-URL]',
                   },
                   null,
                   2
@@ -333,7 +352,7 @@ const CollectionContainer = () => {
                 {JSON.stringify(
                   {
                     "phone_number": phone || '[phone_number]',
-                    "amount": amount || '[amount]'
+                    "amount": Number(amount) || '[amount]'
                   },
                   null,
                   2

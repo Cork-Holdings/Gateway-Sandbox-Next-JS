@@ -122,7 +122,7 @@ const authOptions: AuthOptions = {
     ],
 
     pages: {
-        signIn: "/auth/signin",
+        signIn: "/auth/signin/merchant",
         signOut: "/auth/signout",
     },
 

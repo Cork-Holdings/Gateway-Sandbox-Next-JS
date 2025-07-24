@@ -68,6 +68,11 @@ const AuthorizationDocumentation = () => {
                 <td className="py-2 px-4">Your Client Secret</td>
                 <td className="py-2 px-4">true</td>
               </tr>
+               <tr>
+                <td className="py-2 px-4 font-mono">Grant type</td>
+                <td className="py-2 px-4">client_credentials</td>
+                <td className="py-2 px-4">true</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -77,13 +82,14 @@ const AuthorizationDocumentation = () => {
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
           <FileJson className="text-indigo-600" size={20} />
-          <h2 className="text-xl font-semibold text-gray-800">Example Request Body</h2>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Example Request Body</h2>
         </div>
 
         <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
           <pre className='overflow-auto whitespace-pre-wrap break-words' >{JSON.stringify({
             client_id: "test-id",
-            client_secret: "test-secret"
+            client_secret: "test-secret",
+                        grant_type: "client_credentials"
           }, null, 2)}</pre>
         </div>
       </div>
@@ -92,14 +98,14 @@ const AuthorizationDocumentation = () => {
       <div>
         <div className="flex items-center gap-2 mb-4">
           <ArrowRight className="text-indigo-600" size={20} />
-          <h2 className="text-xl font-semibold text-gray-800">Expected Responses</h2>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Expected Responses</h2>
         </div>
 
         {/* 200 Success Response */}
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-2">
             <CheckCircle className="text-green-500" size={16} />
-            <h3 className="text-md font-semibold text-gray-800">200 - Success</h3>
+            <h3 className="text-md font-semibold text-gray-800 dark:text-gray-300">200 - Success</h3>
           </div>
 
           <SyntaxHighlighter

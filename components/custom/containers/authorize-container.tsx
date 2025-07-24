@@ -213,7 +213,7 @@ const AuthorizeContainer = () => {
                   borderRadius: '0.375rem'
                 }}
               >
-                {JSON.stringify({ client_id: clientId || '[client_id]', client_secret: clientSecret || '[client_secret]' }, null, 2)}
+                {JSON.stringify({ client_id: clientId || '[client_id]', client_secret: clientSecret || '[client_secret]' ,grant_type: grantType || '[grant_type]' }, null, 2)}
               </SyntaxHighlighter>
             </div>
           </CardContent>
