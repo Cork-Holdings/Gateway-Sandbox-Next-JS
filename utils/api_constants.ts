@@ -43,7 +43,7 @@ export const api_endpoints = {
         getMerchantStats: `${base_url}/dashboard/merchants/info`,
         getAPIStats: `${base_url}/dashboard/requests/info`,
         getTransactionStats: `${base_url}/dashboard/transactions/info`,
-        
+         
     
     },
 
