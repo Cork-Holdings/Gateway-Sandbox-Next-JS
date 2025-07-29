@@ -10,7 +10,7 @@ const ResetPage = () => {
       <Header />
       <div className="flex items-center md:items-start md:pt-24 justify-center w-full min-h-screen bg-gradient-to-br ">
 
-        <div className="w-full max-w-3xl max-h-xl p-8 mx-4 bg-white rounded-xl shadow-lg border border-indigo-100 animate-fadeIn">
+        <div className="w-full max-w-3xl max-h-xl p-8 mx-4 bg-white  rounded-xl shadow-lg border border-indigo-100 animate-fadeIn">
           <div className="flex flex-col items-center mb-6">
             <div className="h-16 w-16 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
               <LockKeyhole className="h-8 w-8 text-indigo-600" />

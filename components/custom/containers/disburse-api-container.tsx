@@ -36,7 +36,7 @@ const DisbursementAPIContainer = () => {
 
             const body = {
                 phone_number: phone,
-                amount: amount,
+                amount: Number(amount),
                 narration: narration
             }
 
@@ -394,7 +394,7 @@ const DisbursementAPIContainer = () => {
                                 {JSON.stringify(
                                     {
                                         "phone_number": phone || '[phone_number]',
-                                        "amount": amount || '[amount]',
+                                        "amount":Number(amount) || '[amount]',
                                         "narration": narration || '[narration]',
                                     },
                                     null,

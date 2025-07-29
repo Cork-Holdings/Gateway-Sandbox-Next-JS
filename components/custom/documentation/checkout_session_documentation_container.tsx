@@ -98,9 +98,8 @@ const CheckoutSessionDocumentationContainer = () => {
                         "amount": "K150",
                         "customer_name": "John Doe",
                         "customer_email": "jd@example.com",
-                        "success_url": "https://www.success.com/",
-                        "cancelled_url": "https://www.cancelled.com/",
-                        "failed_url": "https://www.failed.com/",
+                        "return_url": "https://www.success.com/",
+                       
                     }, null, 2)}
                 </SyntaxHighlighter>
             </div>

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Provider from "@/components/custom/common/Provider";
 import { Toaster } from "react-hot-toast";
 
 
- const imbplexmono = IBM_Plex_Mono({
+ const imbplexmono = Inter({
       weight: ['400', '600'], 
       subsets: ['latin'],     
       display: 'swap',          

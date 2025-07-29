@@ -41,7 +41,7 @@ const SIA = () => {
                 "data": {
                   "status": "success",
                   "provider": "MTN",
-                  "phone_number": "260765631424",
+                  "phone_number": "260712345678",
                   "names": "John MTN Doe"
                 }
               }, null, 2)}

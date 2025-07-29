@@ -6,7 +6,7 @@ import React from 'react'
 const CTA = () => {
     const router = useRouter()
     return (
-        <section className="py-20 bg-gray-50 text-black">
+        <section className="py-20 bg-gray-50 dark:bg-[#102542] text-black dark:text-white">
             <div className="container mx-auto max-w-5xl px-4 text-center ">
         
                     <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>

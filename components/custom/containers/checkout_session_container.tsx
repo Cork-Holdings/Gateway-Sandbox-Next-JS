@@ -20,9 +20,7 @@ const CheckoutSessionContainer = () => {
   const [amount, setAmount] = useState('')
   const [customerName, setCustomerName] = useState('')
   const [customerEmail, setCustomerEmail] = useState('')
-  const [successUrl, setSuccessUrl] = useState('')
-  const [failedUrl, setFailedUrl] = useState('')
-  const [canceledUrl, setCanceledUrl] = useState('')
+  const [returnUrl, setReturnUrl] = useState('')
   const [token, setToken] = useState('')
 
   const [response, setResponse] = useState(null)
@@ -44,11 +42,7 @@ const CheckoutSessionContainer = () => {
           name: customerName || "",
           email: customerEmail || ""
         },
-        redirect_urls: {
-          success: successUrl || "",
-          failure: failedUrl || "",
-          cancel: canceledUrl || "",
-        }
+          return: returnUrl || "",
 
         
       }
@@ -267,55 +261,22 @@ const CheckoutSessionContainer = () => {
                 </div>
                 <div>
                   <Label htmlFor="surl" className="text-sm font-medium flex items-center gap-1">
-                    Success URL
+                    Return URL
                     <Badge variant="outline" className="ml-1 font-normal">Not required</Badge>
 
                   </Label>
                   <Input
                     id="surl"
-                    value={successUrl}
-                    onChange={(e) => setSuccessUrl(e.target.value)}
-                    placeholder="Enter your success URL"
+                    value={returnUrl}
+                    onChange={(e) => setReturnUrl(e.target.value)}
+                    placeholder="Enter your return URL"
                     type="text"
                     disabled={isLoading}
                     className="mt-1"
                   />
                 </div>
 
-                <div>
-                  <Label htmlFor="furl" className="text-sm font-medium flex items-center gap-1">
-                    Failed URL
-                    <Badge variant="outline" className="ml-1 font-normal">Not required</Badge>
-
-                  </Label>
-                  <Input
-                    id="furl"
-                    value={failedUrl}
-                    onChange={(e) => setFailedUrl(e.target.value)}
-                    placeholder="Enter your failed URL"
-                    type="text"
-                    disabled={isLoading}
-                    className="mt-1"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="curl" className="text-sm font-medium flex items-center gap-1">
-                    Cancelled URL
-                    <Badge variant="outline" className="ml-1 font-normal">Not required</Badge>
-
-                  </Label>
-                  <Input
-                    id="curl"
-                    value={canceledUrl}
-                    onChange={(e) => setCanceledUrl(e.target.value)}
-                    placeholder="Enter your cancelled URL"
-                    type="text"
-                    disabled={isLoading}
-                    className="mt-1"
-                  />
-                </div>
-
+                
               </div>
 
               <Button
@@ -395,7 +356,7 @@ const CheckoutSessionContainer = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-2 text-sm overflow-auto whitespace-pre-wrap break-words">
-              <p><strong>Endpoint:</strong> {api_endpoints.merchant.makeAuthorizationRequest}</p>
+              <p><strong>Endpoint:</strong> {api_endpoints.merchant.makeAddCheckoutRequest}</p>
               <p><strong>Method:</strong> POST</p>
               <p><strong>Headers:</strong></p>
               <SyntaxHighlighter language="json" style={vscDarkPlus} customStyle={{ padding: '1rem', borderRadius: '0.375rem' }}>
@@ -420,9 +381,7 @@ const CheckoutSessionContainer = () => {
                     "amount": amount || '[amount]',
                     "customer_name": customerName || '[customer_name]',
                     "customer_email": customerEmail || '[customer_email]',
-                    "success_url": successUrl || '[success_url]',
-                    "cancelled_url": canceledUrl || '[cancelled_url]',
-                    "failed_url": failedUrl || '[failed_url]',
+                    "return_url": returnUrl || '[return_url]',
                     
                   },
                   null,

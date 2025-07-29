@@ -4,7 +4,7 @@ import React from 'react'
 
 const About = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-white dark:bg-[#00AEEF] border-b-1">
       <div className="container mx-auto px-4 max-w-5xl text-start">
         <Card className="p-0 rounded-lg shadow-xl">
           <CardContent className="flex flex-col md:flex-row p-0 gap-4 md:gap-2 items-center">

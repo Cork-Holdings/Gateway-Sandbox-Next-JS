@@ -14,6 +14,10 @@ export const InfiniteLogoScroller: React.FC<LogoScrollerProps> = ({
 }) => {
   return (
     <div className="relative overflow-hidden py-10 md:py-32">
+     <div className='dark:text-white text-black text-center mb-10 text-3xl space-y-2'>
+       <p className='text-white'>Our Ecosystem</p>
+      <p className='text-lg text-white'>Join a community of financial instituitions and developers</p>
+     </div>
       <div className="flex whitespace-nowrap">
         <div
           className="flex animate-marquee"
@@ -27,9 +31,9 @@ export const InfiniteLogoScroller: React.FC<LogoScrollerProps> = ({
               <Image
                 src={logo.src}
                 alt={logo.alt}
-                width={300}
-                height={200}
-                className="object-contain w-[150px] h-[100px]"
+                width={100}
+                height={70}
+                className="object-contain w-[100px] h-[70px]"
               />
             </div>
           ))}
@@ -40,9 +44,9 @@ export const InfiniteLogoScroller: React.FC<LogoScrollerProps> = ({
               <Image
                 src={logo.src}
                 alt={logo.alt}
-                width={300}
-                height={200}
-                className="object-contain w-[150px] h-[100px]"
+                width={100}
+                height={70}
+                className="object-contain w-[100px] h-[70px]"
               />
             </div>
           ))}

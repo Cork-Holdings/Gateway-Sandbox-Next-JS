@@ -8,9 +8,11 @@ import VerifyEmailForm from "@/components/custom/forms/merchant/email-verificati
 import { Button } from "@/components/ui/button";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useTheme } from 'next-themes'
+import { useRouter } from "next/navigation";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode; }) {
   const { data: session, status } = useSession();
+  const router = useRouter()
 
   const { theme, setTheme } = useTheme()
 
@@ -37,7 +39,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="max-w-md p-8 bg-white rounded-lg shadow-lg text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Authentication Required</h2>
           <p className="text-gray-600 mb-6">Please sign in to access your dashboard.</p>
-          <button className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+          <button 
+          onClick={()=> router.push("/auth/signin/merchant")}
+          className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
             Sign In
           </button>
         </div>

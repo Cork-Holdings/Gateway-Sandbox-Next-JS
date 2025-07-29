@@ -75,11 +75,11 @@ const ResetForm = () => {
 
     return (
 
-        <div>             
+        <div className=''>             
              <p className='text-xl font-bold pb-2'>Request A code</p>
             <p className='text-sm font-normal pb-6'>Enter the email address to which the code should be sent to</p>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
 
 
              <FormField

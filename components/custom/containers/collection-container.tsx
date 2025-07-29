@@ -34,6 +34,7 @@ const CollectionContainer = () => {
       const body = {
         phone_number: phone,
         amount: amount,
+        
       }
 
       const apiResponse = await fetch(api_endpoints.merchant.makeCollectionRequest, {
@@ -85,7 +86,7 @@ const CollectionContainer = () => {
   };
 
   const handleCopy = (text: string) => {
-    // console.log('text', text)
+    console.log('text', text)
     if (response) {
       navigator.clipboard.writeText(JSON.stringify(response, null, 2))
       setCopied(true)
