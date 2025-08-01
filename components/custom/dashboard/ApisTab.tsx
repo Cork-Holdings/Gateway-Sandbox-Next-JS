@@ -175,7 +175,7 @@ const ApisTab = () => {
     <main className="flex flex-col gap-5">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card className="overflow-hidden transition-all hover:shadow-md">
-          <CardHeader className="pb-2 bg-gradient-to-r from-blue-50 to-indigo-50">
+          <CardHeader className="pb-2 bg-indigo-50 dark:bg-inherit">
             <div className="flex justify-between items-center">
               <CardTitle className="flex items-center gap-2">
                 <Activity className="h-5 w-5 text-blue-500" />
@@ -204,7 +204,7 @@ const ApisTab = () => {
                 </p>
                 <div className="space-y-4">
                   {cardData?.endpoint1 && (
-                    <div className="flex items-center justify-between p-2 rounded-md bg-gray-50">
+                    <div className="flex items-center justify-between p-2 rounded-md bg-gray-50 dark:bg-[#272727] ">
                       <div className="truncate max-w-48">
                         <p className="font-medium text-sm">{cardData?.endpoint1}</p>
                       </div>
@@ -215,7 +215,7 @@ const ApisTab = () => {
                   )}
 
                   {cardData?.endpoint2 && (
-                    <div className="flex items-center justify-between p-2 rounded-md bg-gray-50">
+                    <div className="flex items-center justify-between p-2 rounded-md bg-gray-50 dark:bg-[#272727] ">
                       <div className="truncate max-w-48">
                         <p className="font-medium text-sm">{cardData?.endpoint2}</p>
                       </div>
@@ -226,7 +226,7 @@ const ApisTab = () => {
                   )}
 
                   {cardData?.endpoint3 && (
-                    <div className="flex items-center justify-between p-2 rounded-md bg-gray-50">
+                    <div className="flex items-center justify-between p-2 rounded-md bg-gray-50 dark:bg-[#272727] ">
                       <div className="truncate max-w-48">
                         <p className="font-medium text-sm">{cardData?.endpoint3}</p>
                       </div>
@@ -246,7 +246,7 @@ const ApisTab = () => {
         </Card>
 
         <Card className="overflow-hidden transition-all hover:shadow-md">
-          <CardHeader className="pb-2 bg-gradient-to-r from-purple-50 to-pink-50">
+          <CardHeader className="pb-2 bg-pink-50 dark:bg-inherit">
             <div className="flex justify-between items-center">
               <CardTitle className="flex items-center gap-2">
                 <Clock className="h-5 w-5 text-purple-500" />
@@ -264,6 +264,7 @@ const ApisTab = () => {
                       <span className="text-purple-700">{apiResponeTimesData?.endpoint1Time ?? "0 ms"}</span>
                     </div>
                     <Progress
+                    indicatorColor='bg-purple-500'
                       value={calculateProgressPercentage(apiResponeTimesData?.endpoint1Time)}
                       className="h-2 bg-purple-100"
                     />
@@ -277,6 +278,7 @@ const ApisTab = () => {
                       <span className="text-purple-700">{apiResponeTimesData?.endpoint2Time ?? "0 ms"}</span>
                     </div>
                     <Progress
+                                        indicatorColor='bg-cyan-500'
                       value={calculateProgressPercentage(apiResponeTimesData?.endpoint2Time)}
                       className="h-2 bg-purple-100"
                     />
@@ -290,6 +292,7 @@ const ApisTab = () => {
                       <span className="text-purple-700">{apiResponeTimesData?.endpoint3Time ?? "0 ms"}</span>
                     </div>
                     <Progress
+                                        indicatorColor='bg-yellow-500'
                       value={calculateProgressPercentage(apiResponeTimesData?.endpoint3Time)}
                       className="h-2 bg-purple-100"
                     />
@@ -307,7 +310,7 @@ const ApisTab = () => {
         </Card>
 
         <Card className="overflow-hidden transition-all hover:shadow-md lg:col-span-1 md:col-span-2">
-          <CardHeader className="pb-2 bg-gradient-to-r from-amber-50 to-orange-50">
+          <CardHeader className="pb-2 bg-orange-50 dark:bg-inherit">
             <div className="flex justify-between items-center">
               <CardTitle className="flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-amber-500" />
@@ -318,11 +321,11 @@ const ApisTab = () => {
           <CardContent className="pt-4">
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-green-50 rounded-lg text-center">
+                <div className="p-4 bg-green-50 rounded-lg text-center dark:bg-[#272727] ">
                   <p className="text-sm font-medium text-green-700">API Uptime</p>
                   <p className="text-2xl font-bold text-green-600">99.9%</p>
                 </div>
-                <div className="p-4 bg-blue-50 rounded-lg text-center">
+                <div className="p-4 bg-blue-50 rounded-lg text-center dark:bg-[#272727] ">
                   <p className="text-sm font-medium text-blue-700">Avg Response</p>
                   <p className="text-2xl font-bold text-blue-600">85ms</p>
                 </div>
@@ -330,7 +333,7 @@ const ApisTab = () => {
 
               <div className="space-y-2">
                 <p className="text-sm font-medium mb-2">Success Rate</p>
-                <div className="w-full bg-gray-200 rounded-full h-3">
+                <div className="w-full bg-gray-200 rounded-full h-3 dark:bg-[#272727] ">
                   <div
                     className="bg-green-500 h-3 rounded-full"
                     style={{ width: cardData?.error_rate ? `${100 - (cardData?.error_rate || 0)}%` : '100%' }}
@@ -346,7 +349,7 @@ const ApisTab = () => {
       </div>
 
       <Card className="overflow-hidden transition-all hover:shadow-md">
-        <CardHeader className="bg-gradient-to-r from-gray-50 to-slate-50">
+        <CardHeader className="bg-slate-50 dark:bg-inherit">
           <div className="flex justify-between items-center">
             <div>
               <CardTitle>API Requests</CardTitle>
@@ -366,19 +369,18 @@ const ApisTab = () => {
         <CardContent className="p-0">
           <div className="rounded-md overflow-hidden">
             <Table>
-              <TableHeader className="bg-gray-50">
+              <TableHeader className="bg-gray-50 dark:bg-[#272727] ">
                 <TableRow>
                   <TableHead className="font-medium">Endpoint</TableHead>
                   <TableHead className="font-medium">Method</TableHead>
                   <TableHead className="font-medium">Status</TableHead>
                   <TableHead className="font-medium">User</TableHead>
-                  <TableHead className="font-medium">IP Address</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {apiData.length > 0 ? (
                   apiData.map((request) => (
-                    <TableRow key={request.id} className="hover:bg-slate-50">
+                    <TableRow key={request.id} className="hover:bg-slate-50  dark:hover:bg-[#272727]">
                       <TableCell className="font-medium truncate max-w-32 md:max-w-48">
                         {request.endpoint}
                       </TableCell>
@@ -388,13 +390,12 @@ const ApisTab = () => {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Badge className={getStatusBadgeClass(request.status)}>
+                        <Badge className={ `capitalize ${getStatusBadgeClass(request.status)}`}>
                           {request.status}
                         </Badge>
                       </TableCell>
                       <TableCell className="font-mono text-sm">{request.user_id}</TableCell>
-                      <TableCell className="font-mono text-sm">{request.ip_address}</TableCell>
-                    </TableRow>
+                      </TableRow>
                   ))
                 ) : (
                   <TableRow>

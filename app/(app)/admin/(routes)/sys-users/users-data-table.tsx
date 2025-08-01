@@ -58,15 +58,15 @@ export function UsersDataTable<TData, TValue>({
     });
 
     return (
-        <div className="w-full space-y-4 dark:bg-[#0d1b2a]">
-            <div className="flex flex-col sm:flex-row sm:items-center py-4 gap-3 dark:bg-[#0d1b2a]">
+        <div className="w-full space-y-4 dark:bg-inherit">
+            <div className="flex flex-col sm:flex-row sm:items-center py-4 gap-3 dark:bg-inherit">
                 <Input
                     placeholder="Filter by name..."
                     value={(table.getColumn("fullname")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn("fullname")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm dark:bg-[#0d1b2a] dark:border-gray-600"
+                    className="max-w-sm dark:bg-[#272727] dark:border-gray-600"
                 />
             </div>
             
@@ -77,7 +77,7 @@ export function UsersDataTable<TData, TValue>({
                         table.getRowModel().rows.map((row) => (
                             <div
                                 key={row.id}
-                                className="bg-white dark:bg-[#1b2a3b] p-4 rounded-lg shadow border dark:border-gray-600"
+                                className="bg-white dark:bg-[#272727] p-4 rounded-lg shadow border dark:border-gray-600"
                             >
                                 {row.getVisibleCells().map((cell) => {
                                     // Skip rendering the Actions column header in the card view
@@ -116,7 +116,7 @@ export function UsersDataTable<TData, TValue>({
 
             {/* Desktop view (traditional table) */}
             <div className="hidden sm:block">
-                <div className="rounded-md border dark:border-gray-600">
+                <div className="rounded-md border dark:bg-inherit dark:border-gray-600">
                     <ScrollArea className="w-full">
                         <Table>
                             <TableHeader>

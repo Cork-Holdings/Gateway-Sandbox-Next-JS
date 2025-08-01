@@ -83,11 +83,11 @@ const CreateMerchantForm = () => {
 
 
     return (
-        <div className="w-full dark:bg-gray-900 lg:px-8 px-4 py-12 sm:px-6 ">
+        <div className="w-full  lg:px-8 px-4 py-12 sm:px-6 ">
         <Form {...form}>
             <form 
                 onSubmit={form.handleSubmit(onSubmit)} 
-                className="bg-white p-6 rounded-xl shadow-lg w-full dark:bg-gray-800 max-w-4xl space-y-8"
+                className="bg-white p-6 rounded-xl shadow-lg w-full dark:bg-[#272727] max-w-4xl space-y-8"
             >
                 <div className="text-center space-y-2">
                     <h1 className="text-2xl text-gray-900 dark:text-white font-bold">Create a merchant</h1>
@@ -100,11 +100,11 @@ const CreateMerchantForm = () => {
                         name="fullname"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Full Name</FormLabel>
+                                <FormLabel className=" text-sm dark:text-gray-300 font-medium">Full Name</FormLabel>
                                 <FormControl>
                                     <Input 
                                         placeholder="John Doe"
-                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                        className="border-gray-300 rounded-md w-full  dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
                                         {...field}
                                     />
                                 </FormControl>
@@ -118,12 +118,12 @@ const CreateMerchantForm = () => {
                         name="email"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Email Address</FormLabel>
+                                <FormLabel className=" text-sm dark:text-gray-300 font-medium">Email Address</FormLabel>
                                 <FormControl>
                                     <Input 
                                         type="email"
                                         placeholder="john.doe@example.com"
-                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                        className="border-gray-300 rounded-md w-full  dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
                                         {...field}
                                     />
                                 </FormControl>
@@ -137,12 +137,12 @@ const CreateMerchantForm = () => {
                         name="phone"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Phone Number</FormLabel>
+                                <FormLabel className=" text-sm dark:text-gray-300 font-medium">Phone Number</FormLabel>
                                 <FormControl>
                                     <Input 
                                         type="tel"
                                         placeholder="+1 (555) 123-4567"
-                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                        className="border-gray-300 rounded-md w-full  dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
                                         {...field}
                                     />
                                 </FormControl>
@@ -157,12 +157,12 @@ const CreateMerchantForm = () => {
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-gray-700 text-sm dark:text-gray-300 font-medium">Password</FormLabel>
+                                <FormLabel className=" text-sm dark:text-gray-300 font-medium">Password</FormLabel>
                                 <FormControl>
                                     <Input 
                                         type="password"
                                         placeholder="••••••••"
-                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                        className="border-gray-300 rounded-md w-full  dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
                                         {...field}
                                     />
                                 </FormControl>

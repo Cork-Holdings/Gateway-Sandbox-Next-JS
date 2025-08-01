@@ -139,9 +139,9 @@ const Overview = () => {
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-ZM', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'ZMW'
     }).format(amount);
   };
 
@@ -236,12 +236,13 @@ const Overview = () => {
                 </TableHeader>
                 <TableBody>
                   {transactionData.map((tx) => (
-                    <TableRow key={tx.id} className="hover:bg-gray-50">
+                    <TableRow key={tx.id} className="hover:bg-gray-50 dark:hover:bg-[#272727]">
                       <TableCell className="font-medium">{tx.reference}</TableCell>
                       <TableCell>{formatCurrency(Number(tx.amount))}</TableCell>
                       <TableCell>
                         <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${getStatusStyle(tx.status)}`}>
-                          {tx.status}
+                          {tx.status.charAt(0).toUpperCase() + tx.status.slice(1).toLowerCase()}
+                        
                         </span>
                       </TableCell>
                       <TableCell>{tx.customer}</TableCell>

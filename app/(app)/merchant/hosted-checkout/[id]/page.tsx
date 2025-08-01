@@ -21,13 +21,15 @@ const HostedCheckoutPage = () => {
       if (data.status === "success") { 
         const res = data.response;
 
+        console.log('res', res)
+
         setHDetails({
           order_id: res.order_id,
           amount: res.amount,
           customer_name: res.customer.name,
           customer_email: res.customer.email,
           checkout_url: res.checkout_url,
-          redirect_urls: res.redirect_urls,
+          return_url: res.return_url,
         });
       } else if (data.status === "failure") {
         setError("Failed to load checkout details. Please try again.")
@@ -46,7 +48,7 @@ const HostedCheckoutPage = () => {
   return (
     <main className="min-h-screen ">
       <div className="container mx-auto px-4 py-12">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-lg mx-auto">
           <div className="bg-white rounded-xl shadow-lg border border-purple-100 overflow-hidden">
             <div className="bg-gradient-to-r from-blue-500 to-purple-600 py-4">
               <h1 className="text-2xl font-bold text-white text-center">Secure Checkout</h1>

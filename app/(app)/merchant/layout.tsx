@@ -94,7 +94,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Merchant </h1>
               </div>
               <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-600 dark:text-white">
+                <span className="text-sm text-gray-600 dark:text-white hidden md:block">
                   Welcome, {session.user?.name || "Merchant"}
                 </span>
                 <Button

@@ -137,7 +137,7 @@ const authOptions: AuthOptions = {
                 token.name = user.name;
                 token.email = user.email;
                 token.emailVerified = !!user.emailVerified;
-                console.log("Token ID:", token.id); // Log the token
+                // console.log("Token ID:", token.id); // Log the token
                 token.accountStatus=user.accountStatus || "inactive";
                 token.email = user.email;
             }

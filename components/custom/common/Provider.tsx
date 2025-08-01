@@ -10,7 +10,7 @@ interface ProviderProps{
 const Provider = ({children}: ProviderProps)=>{
     return(
         <SessionProvider>
-            <ThemeProvider attribute= "class" defaultTheme ="system" enableSystem>
+            <ThemeProvider attribute= "class" defaultTheme ="light" enableSystem>
             {children}
             </ThemeProvider>
         </SessionProvider>

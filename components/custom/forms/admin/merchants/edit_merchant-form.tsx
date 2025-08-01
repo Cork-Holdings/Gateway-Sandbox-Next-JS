@@ -87,11 +87,11 @@ const EditMerchantForm: React.FC<EditMerchantFormProps> = ({ merchant }) => {
 
 
     return (
-        <div className="w-full dark:bg-gray-900 lg:px-8 px-4 py-12 sm:px-6">
+        <div className="w-full dark:bg-[#272727] lg:px-8 px-4 py-12 sm:px-6">
         <Form {...form}>
             <form 
                 onSubmit={form.handleSubmit(onSubmit)} 
-                className="bg-white p-6 rounded-xl shadow-lg w-full dark:bg-gray-800 max-w-4xl space-y-8"
+                className="bg-white p-6 rounded-xl shadow-lg w-full dark:bg-inherit max-w-4xl space-y-8"
             >
                 <div className="text-center space-y-2">
                     <h1 className="text-2xl text-gray-900 dark:text-white font-bold">Create A User</h1>

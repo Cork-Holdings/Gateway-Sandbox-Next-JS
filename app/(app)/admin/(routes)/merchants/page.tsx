@@ -149,7 +149,7 @@ const MerchantsPage = () => {
       </div>
 
       <div className="grid gap-4 md:grid-cols-3 mb-6">
-        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50">
+        <Card className="bg-indigo-50 dark:bg-[#272727]">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Merchants</CardTitle>
             <div className="flex items-center justify-between">
@@ -159,7 +159,7 @@ const MerchantsPage = () => {
           </CardHeader>
         </Card>
         
-        <Card className="bg-gradient-to-br from-green-50 to-emerald-50">
+        <Card className="bg-emerald-50 dark:bg-[#272727]">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Active Merchants</CardTitle>
             <div className="flex items-center justify-between">
@@ -171,7 +171,7 @@ const MerchantsPage = () => {
           </CardHeader>
         </Card>
         
-        <Card className="bg-gradient-to-br from-amber-50 to-orange-50">
+        <Card className="bg-orange-50 dark:bg-[#272727]">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Inactive Merchants</CardTitle>
             <div className="flex items-center justify-between">
@@ -295,15 +295,15 @@ const MerchantsPage = () => {
               </DialogHeader>
               
               {deleteUser && (
-                <div className="bg-red-50 border border-red-100 rounded-md p-4 my-2">
+                <div className="bg-red-50 dark:bg-[#272727] border border-red-100 rounded-md p-4 my-2">
                   <p className="font-medium">You are about to delete:</p>
                   <p className="text-sm mt-1"><span className="font-medium">Name:</span> {deleteUser.fullname}</p>
                   <p className="text-sm"><span className="font-medium">Email:</span> {deleteUser.email}</p>
-                  <p className="text-sm"><span className="font-medium">ID:</span> {deleteUser.id}</p>
+                  {/* <p className="text-sm"><span className="font-medium">ID:</span> {deleteUser.id}</p> */}
                 </div>
               )}
               
-              <DialogFooter className="gap-2 sm:gap-0">
+              <DialogFooter className="flex gap-2 sm:gap-0">
                 <Button 
                   variant="outline" 
                   onClick={() => setDeleteUser(null)}

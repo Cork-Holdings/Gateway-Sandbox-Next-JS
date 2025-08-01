@@ -19,9 +19,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { 
-  UserPlus, 
-  DownloadIcon, 
+import {
+  UserPlus,
+  DownloadIcon,
   RefreshCcwIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -58,7 +58,7 @@ const UsersTab = () => {
       const responseBody = await response.json();
       if (responseBody.status === "success" && responseBody?.info) {
         setCardData(responseBody.info);
-      }   else if (responseBody["status"] == "failure") {
+      } else if (responseBody["status"] == "failure") {
         toast.error(responseBody["error"])
       }
     } catch (error) {
@@ -97,7 +97,7 @@ const UsersTab = () => {
         }));
         setUserData(users);
         setTotalPages(responseBody.users.totalPages || 0);
-      }   else if (responseBody["status"] == "failure") {
+      } else if (responseBody["status"] == "failure") {
         toast.error(responseBody["error"])
       }
     } catch (error) {
@@ -120,7 +120,7 @@ const UsersTab = () => {
         setIsLoading(false);
       }
     };
-    
+
     if (session?.accessToken) {
       loadData();
     }
@@ -146,33 +146,33 @@ const UsersTab = () => {
     <main className="flex flex-col gap-6">
       {/* Header Section */}
       <h2 className="text-2xl font-bold">User Management</h2>
-       
+
       <div className="flex items-center justify-between">
         <div></div>
         <div className='flex gap-5 items-center'>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={refreshData}
-          className="flex items-center gap-2"
-        >
-          <RefreshCcwIcon size={16} />
-          Refresh Data
-        </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={refreshData}
+            className="flex items-center gap-2"
+          >
+            <RefreshCcwIcon size={16} />
+            Refresh Data
+          </Button>
 
-        <Button className="flex items-center gap-2">
-              <UserPlus size={16} />
-              Add New User
-            </Button>
-     
-            <Button variant="outline" className="flex items-center gap-2">
-              <DownloadIcon size={16} />
-              Export User Data
-            </Button>
+          <Button className="flex items-center gap-2">
+            <UserPlus size={16} />
+            Add New User
+          </Button>
+
+          <Button variant="outline" className="flex items-center gap-2">
+            <DownloadIcon size={16} />
+            Export User Data
+          </Button>
         </div>
-       
+
       </div>
-      
+
       {/* Statistics Cards Section */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <Card className="shadow-sm">
@@ -186,8 +186,8 @@ const UsersTab = () => {
             </div>
           </CardContent>
         </Card>
-        
-        <Card className="shadow-sm bg-green-50">
+
+        <Card className="shadow-sm bg-green-50 dark:bg-[#171717]">
           <CardHeader className="pb-2">
             <CardDescription>Active Users</CardDescription>
             <CardTitle className="text-3xl font-bold text-green-600">{cardData?.active_users ?? 0}</CardTitle>
@@ -198,8 +198,8 @@ const UsersTab = () => {
             </div>
           </CardContent>
         </Card>
-        
-        <Card className="shadow-sm bg-red-50">
+
+        <Card className="shadow-sm bg-red-50 dark:bg-[#171717]">
           <CardHeader className="pb-2">
             <CardDescription>Inactive Users</CardDescription>
             <CardTitle className="text-3xl font-bold text-red-600">{cardData?.inactive_users ?? 0}</CardTitle>
@@ -210,8 +210,8 @@ const UsersTab = () => {
             </div>
           </CardContent>
         </Card>
-        
-        <Card className="shadow-sm bg-blue-50">
+
+        <Card className="shadow-sm bg-blue-50 dark:bg-[#171717]">
           <CardHeader className="pb-2">
             <CardDescription>Admin Users</CardDescription>
             <CardTitle className="text-3xl font-bold text-blue-600">{cardData?.adminUsers ?? 0}</CardTitle>
@@ -242,31 +242,33 @@ const UsersTab = () => {
                     </div>
                     <span className="font-medium">{Math.round((cardData.adminUsers / cardData.users) * 100)}%</span>
                   </div>
-                  <Progress 
-                    value={Math.round(((cardData.adminUsers ?? 0) / (cardData.users ?? 0)) * 100)} 
-                    className="h-2 bg-gray-100" 
-               
+                  <Progress
+                    indicatorColor="bg-blue-500"
+                    value={Math.round(((cardData.adminUsers ?? 0) / (cardData.users ?? 0)) * 100)}
+                    className="h-2 bg-gray-100 dark:bg-[#272727] [&>[role=progressbar]]:bg-blue-500"
+
                   />
                   <div className="text-xs text-muted-foreground">{cardData.adminUsers ?? 0} users</div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-green-500"></div>
                       <span>Merchant Users</span>
                     </div>
-                    <span className="font-medium">{Math.round(((cardData.merchantUsers ?? 0) / (cardData.users  ?? 0)) * 100)}%</span>
+                    <span className="font-medium">{Math.round(((cardData.merchantUsers ?? 0) / (cardData.users ?? 0)) * 100)}%</span>
                   </div>
-                  <Progress 
-                    value={Math.round(((cardData.merchantUsers ?? 0) / (cardData.users ?? 0)) * 100)} 
-                    className="h-2 bg-gray-100" 
-                 
+                  <Progress
+                    indicatorColor="bg-green-500"
+                    value={Math.round(((cardData.merchantUsers ?? 0) / (cardData.users ?? 0)) * 100)}
+                    className="h-2 bg-gray-100 dark:bg-[#272727]"
+
                   />
                   <div className="text-xs text-muted-foreground">{cardData.merchantUsers ?? 0} users</div>
                 </div>
-                
-                
+
+
               </div>
             ) : (
               <div className="flex justify-center items-center h-40">
@@ -276,7 +278,7 @@ const UsersTab = () => {
           </CardContent>
         </Card>
 
-     
+
       </div>
 
       {/* User List Table Section */}
@@ -286,7 +288,7 @@ const UsersTab = () => {
             <CardTitle>User List</CardTitle>
             <CardDescription>Manage system users and their details</CardDescription>
           </div>
-          
+
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -308,21 +310,21 @@ const UsersTab = () => {
                 <TableBody>
                   {userData.length > 0 ? (
                     userData.map((user) => (
-                      <TableRow key={user.id} className="hover:bg-gray-50">
+                      <TableRow key={user.id} className="hover:bg-gray-50 dark:hover:bg-[#272727]">
                         <TableCell className="font-medium">{user.fullname}</TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell>{user.phone || "—"}</TableCell>
                         <TableCell>
-                          <Badge variant="outline" className="bg-blue-50 text-blue-700 hover:bg-blue-100">
+                          <Badge variant="outline" className="bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-inherit">
                             {user.role}
                           </Badge>
                         </TableCell>
                         <TableCell>
-                          <Badge variant="outline" className={getStatusBadgeStyle(user.status)}>
+                          <Badge variant="outline" className={` capitalize ${getStatusBadgeStyle(user.status)}`}>
                             {user.status}
                           </Badge>
                         </TableCell>
-                 
+
                       </TableRow>
                     ))
                   ) : (

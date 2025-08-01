@@ -4,10 +4,6 @@ export interface HDetails {
     customer_name: string;
     customer_email: string;
     checkout_url: string;
-    redirect_urls: {
-      success: string;
-      failure: string;
-      cancel: string;
-    };
+    return_url: string;
   }
   

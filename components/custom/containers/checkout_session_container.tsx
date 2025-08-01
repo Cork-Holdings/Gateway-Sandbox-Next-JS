@@ -61,6 +61,10 @@ const CheckoutSessionContainer = () => {
 
       const data = await apiResponse.json()
 
+       await new Promise(resolve => setTimeout(resolve, 4000))
+
+
+
       if (apiResponse.ok) {
         setResponse(data)
       } else {

@@ -102,11 +102,11 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
 
 
     return (
-        <div className="w-full dark:bg-gray-900 lg:px-8 px-4 py-12 sm:px-6">
+        <div className="w-full dark:bg-inherit rounded-2xl lg:px-8 px-4 py-12 sm:px-6">
         <Form {...form}>
             <form 
                 onSubmit={form.handleSubmit(onSubmit)} 
-                className="bg-white p-6  w-full dark:bg-gray-800 max-w-4xl space-y-8"
+                className="bg-white p-6  w-full dark:bg-inherit max-w-4xl space-y-8"
             >
                 <div className="text-center space-y-2">
                     <h1 className="text-2xl text-gray-900 dark:text-white font-bold">Edit a user</h1>
@@ -123,7 +123,7 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
                                 <FormControl>
                                     <Input 
                                         placeholder="John Doe"
-                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                        className="border-gray-300 rounded-md w-full  dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
                                         {...field}
                                     />
                                 </FormControl>
@@ -142,7 +142,7 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
                                     <Input 
                                         type="email"
                                         placeholder="john.doe@example.com"
-                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                        className="border-gray-300 rounded-md w-full  dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
                                         {...field}
                                     />
                                 </FormControl>
@@ -161,7 +161,7 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
                                     <Input 
                                         type="tel"
                                         placeholder="260 968 72689"
-                                        className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                        className="border-gray-300 rounded-md w-full  dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500"
                                         {...field}
                                     />
                                 </FormControl>
@@ -181,7 +181,7 @@ const EditUserForm : React.FC<EditUserFormProps> = ({ user }) => {
                                                             defaultValue={field.value}
                                                         >
                                                             <FormControl>
-                                                                <SelectTrigger className="border-gray-300 rounded-md w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500">
+                                                                <SelectTrigger className="border-gray-300 rounded-md w-full  dark:border-gray-600 dark:text-white focus:ring-2 focus:ring-blue-500">
                                                                     <SelectValue placeholder="Select a status code" />
                                                                 </SelectTrigger>
                                                             </FormControl>

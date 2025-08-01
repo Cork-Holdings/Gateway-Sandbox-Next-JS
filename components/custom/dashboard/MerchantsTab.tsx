@@ -182,7 +182,9 @@ const MerchantsTab = () => {
                   <span className="text-sm font-medium">Total Merchants</span>
                   <span className="font-bold text-lg">{cardData?.merchants ?? 0}</span>
                 </div>
-                <Progress value={100} className="h-2 bg-indigo-100 [&>div]:bg-indigo-500" />
+                <Progress 
+                indicatorColor='bg-indigo-500'
+                value={100} className="h-2 bg-indigo-100 [&>div]:bg-indigo-500" />
               </div>
               
               <div>
@@ -191,6 +193,7 @@ const MerchantsTab = () => {
                   <span className="font-medium">{cardData?.active_merchants ?? 0} <span className="text-sm text-green-600">({Math.round((cardData?.active_merchants ?? 0) / (cardData?.merchants || 1) * 100)}%)</span></span>
                 </div>
                 <Progress 
+                                indicatorColor='bg-green-500'
                   value={calculateProgress(cardData?.active_merchants ?? 0, cardData?.merchants ?? 1)} 
                   className="h-2 bg-green-100" 
               
@@ -203,6 +206,7 @@ const MerchantsTab = () => {
                   <span className="font-medium">{cardData?.inactive_merchants ?? 0} <span className="text-sm text-red-600">({Math.round((cardData?.inactive_merchants ?? 0) / (cardData?.merchants || 1) * 100)}%)</span></span>
                 </div>
                 <Progress 
+                                indicatorColor='bg-red-500'
                   value={calculateProgress(cardData?.inactive_merchants ?? 0, cardData?.merchants ?? 1)} 
                   className="h-2 bg-red-100" 
                   
@@ -211,15 +215,15 @@ const MerchantsTab = () => {
 
               <div className="pt-2 border-t">
                 <div className="grid grid-cols-3 gap-4 pt-2">
-                  <div className="rounded-md bg-blue-50 p-3 text-center">
+                  <div className="rounded-md bg-blue-50 dark:bg-[#272727] border  p-3 text-center">
                     <p className="text-xs text-blue-700">New Today</p>
                     <p className="text-xl font-bold text-blue-700">{cardData?.newToday ?? 0}</p>
                   </div>
-                  <div className="rounded-md bg-purple-50 p-3 text-center">
+                  <div className="rounded-md bg-purple-50 dark:bg-[#272727] border p-3 text-center">
                     <p className="text-xs text-purple-700">This Week</p>
                     <p className="text-xl font-bold text-purple-700">{cardData?.newWeeek ?? 0}</p>
                   </div>
-                  <div className="rounded-md bg-emerald-50 p-3 text-center">
+                  <div className="rounded-md bg-emerald-50 dark:bg-[#272727] border p-3 text-center">
                     <p className="text-xs text-emerald-700">This Month</p>
                     <p className="text-xl font-bold text-emerald-700">{cardData?.newMonth ?? 0}</p>
                   </div>
@@ -252,7 +256,9 @@ const MerchantsTab = () => {
                       </div>
                       <div className="text-sm font-semibold">{topMerchantsData.merchant_one_count}</div>
                     </div>
-                    <Progress value={100} className="h-2 bg-amber-100" />
+                    <Progress
+                                    indicatorColor='bg-amber-500'
+                    value={100} className="h-2 bg-amber-100" />
                     <p className="text-xs text-gray-500 mt-1">Transactions</p>
                   </div>
                 )}
@@ -363,7 +369,7 @@ const MerchantsTab = () => {
                 </TableHeader>
                 <TableBody>
                   {userData.map((user) => (
-                    <TableRow key={user.id} className="hover:bg-gray-50">
+                    <TableRow key={user.id} className="hover:bg-gray-50 dark:hover:bg-[#272727]">
                       <TableCell className="font-medium">{user.fullname}</TableCell>
                       <TableCell>{user.email}</TableCell>
                       <TableCell>{user.phone || "—"}</TableCell>

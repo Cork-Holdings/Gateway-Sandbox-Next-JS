@@ -169,12 +169,13 @@ const TransactionsTab = () => {
 
   const getStatusBadgeStyle = (status: string) => {
     status = status.toLowerCase();
+
     if (status === "successful" || status === "completed") {
-      return "bg-green-100 text-green-700";
+      return "bg-green-100 text-green-700  capitalize ";
     } else if (status === "failed") {
-      return "bg-red-100 text-red-700";
+      return "bg-red-100 text-red-700  capitalize ";
     }
-    return "bg-amber-100 text-amber-700";
+    return "bg-amber-100 text-amber-700  capitalize";
   };
 
   const totalFailed = cardData
@@ -203,7 +204,7 @@ const TransactionsTab = () => {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="shadow-sm">
+        <Card className="shadow-sm dark:bg-[#272727]">
           <CardHeader className="pb-2">
             <CardDescription>Total Transactions</CardDescription>
             <CardTitle className="text-3xl font-bold">{cardData?.transactions ?? 0}</CardTitle>
@@ -215,7 +216,7 @@ const TransactionsTab = () => {
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm bg-green-50">
+        <Card className="shadow-sm bg-green-50 dark:bg-[#272727]">
           <CardHeader className="pb-2">
             <CardDescription>Successful</CardDescription>
             <CardTitle className="text-3xl font-bold text-green-600">{cardData?.successful ?? 0}</CardTitle>
@@ -227,7 +228,7 @@ const TransactionsTab = () => {
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm bg-red-50">
+        <Card className="shadow-sm bg-red-50 dark:bg-[#272727]">
           <CardHeader className="pb-2">
             <CardDescription>Failed</CardDescription>
             <CardTitle className="text-3xl font-bold text-red-600">{cardData?.failed ?? 0}</CardTitle>
@@ -239,7 +240,7 @@ const TransactionsTab = () => {
           </CardContent>
         </Card>
 
-        <Card className="shadow-sm bg-amber-50">
+        <Card className="shadow-sm bg-amber-50 dark:bg-[#272727]">
           <CardHeader className="pb-2">
             <CardDescription>Total Amount</CardDescription>
             <CardTitle className="text-3xl font-bold">K{cardData?.totalAmount?.toLocaleString() ?? 0}</CardTitle>
@@ -269,7 +270,9 @@ const TransactionsTab = () => {
                   </div>
                   <span className="font-medium">{channelPercentages.mtn.toFixed(1)}%</span>
                 </div>
-                <Progress value={channelPercentages.mtn} className="h-2 bg-gray-100" />
+                <Progress
+                     indicatorColor="bg-yellow-500"
+                value={channelPercentages.mtn} className="h-2 bg-gray-100" />
                 <div className="text-xs text-muted-foreground">{transactionChannelData?.mtn ?? 0} transactions</div>
               </div>
 
@@ -281,7 +284,9 @@ const TransactionsTab = () => {
                   </div>
                   <span className="font-medium">{channelPercentages.airtel.toFixed(1)}%</span>
                 </div>
-                <Progress value={channelPercentages.airtel} className="h-2 bg-gray-100" />
+                <Progress 
+                  indicatorColor="bg-red-500"
+                value={channelPercentages.airtel} className="h-2 bg-gray-100" />
                 <div className="text-xs text-muted-foreground">{transactionChannelData?.airtel ?? 0} transactions</div>
               </div>
 
@@ -293,7 +298,9 @@ const TransactionsTab = () => {
                   </div>
                   <span className="font-medium">{channelPercentages.zamtel.toFixed(1)}%</span>
                 </div>
-                <Progress value={channelPercentages.zamtel} className="h-2 bg-gray-100" />
+                <Progress
+                  indicatorColor="bg-green-500"
+                value={channelPercentages.zamtel} className="h-2 bg-gray-100" />
                 <div className="text-xs text-muted-foreground">{transactionChannelData?.zamtel ?? 0} transactions</div>
               </div>
             </div>
@@ -362,12 +369,12 @@ const TransactionsTab = () => {
                 <TableBody>
                   {transactionData.length > 0 ? (
                     transactionData.map((tx) => (
-                      <TableRow key={tx.id} className="hover:bg-gray-50">
+                      <TableRow key={tx.id} className="hover:bg-gray-50 dark:hover:bg-[#272727]">
                         <TableCell className="font-medium">{tx.reference}</TableCell>
                         <TableCell>K{tx.amount}</TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className={getStatusBadgeStyle(tx.status)}>
-                            {tx.status}
+                        <TableCell className=''>
+                          <Badge variant="outline"  className={`capitalize ${getStatusBadgeStyle(tx.status)}`}>
+                          {tx.status.charAt(0).toUpperCase() + tx.status.slice(1).toLowerCase()}
                           </Badge>
                         </TableCell>
                         <TableCell>{tx.customer}</TableCell>

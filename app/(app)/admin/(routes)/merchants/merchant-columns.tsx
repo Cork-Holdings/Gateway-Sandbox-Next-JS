@@ -37,7 +37,7 @@ const UserActions: React.FC<UserActionsProps> = ({ row, onView, onEdit, onDelete
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => onView(row)}>View</DropdownMenuItem>
         <DropdownMenuItem onClick={() => onEdit(row)}>Edit</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onDelete(row)}>Delete</DropdownMenuItem>
+        <DropdownMenuItem className="hidden" onClick={() => onDelete(row)}>Delete</DropdownMenuItem>
         <DropdownMenuItem onClick={() => resetPassword()}>Reset Password</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

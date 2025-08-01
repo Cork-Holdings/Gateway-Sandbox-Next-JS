@@ -8,7 +8,7 @@ const CreateMerchant = () => {
 
   const router = useRouter()
   return (
-    <main className='flex flex-col gap-3 m-8'>
+    <main className='flex flex-col gap-3 m-8 max-w-6xl mx-auto'>
       <div>
       <Button
       onClick={()=> router.back()}

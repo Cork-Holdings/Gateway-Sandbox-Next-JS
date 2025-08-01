@@ -164,7 +164,7 @@ const Users = () => {
             </div>
             
             <div className="grid gap-4 md:grid-cols-3 mt-4">
-              <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-100 hover:shadow-md transition-shadow">
+              <Card className="bg-indigo-50 dark:bg-[#272727]  dark:border-none border-blue-100 hover:shadow-md transition-shadow">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-medium text-blue-600 flex items-center gap-2">
                     <Users2 className="h-4 w-4" />
@@ -179,7 +179,7 @@ const Users = () => {
                 </CardHeader>
               </Card>
 
-              <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-100 hover:shadow-md transition-shadow">
+              <Card className="bg-emerald-50 border-green-100 dark:border-none dark:bg-[#272727] hover:shadow-md transition-shadow">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-medium text-green-600 flex items-center gap-2">
                     <Activity className="h-4 w-4" />
@@ -194,7 +194,7 @@ const Users = () => {
                 </CardHeader>
               </Card>
 
-              <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-100 hover:shadow-md transition-shadow">
+              <Card className="bg-orange-50 dark:bg-[#272727]  dark:border-none border-amber-100 hover:shadow-md transition-shadow">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-medium text-amber-600 flex items-center gap-2">
                     <ShieldAlert className="h-4 w-4" />
