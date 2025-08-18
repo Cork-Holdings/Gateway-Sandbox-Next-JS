@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import { api_endpoints } from "@/utils/api_constants";
+import { api_endpoints, base_url, sandbox_url } from "@/utils/api_constants";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 
@@ -26,6 +26,8 @@ const hostedSchema = z.object({
     customer_name: z.string().optional(),
     customer_email: z.string().email().optional(),
     amount: z.string().email().optional(),
+    reciept_redirect: z.boolean(),
+
 });
 
 
@@ -52,9 +54,15 @@ const HostedCheckoutUrlForm =(
 
     const handleSubmit = async (values: z.infer<typeof hostedSchema>) => {
 
-
         const body = {
-            amount: values.amount
+            amount: Number(values.amount),
+            order_id: values.order_id,
+            customer: {
+                name: values.customer_name,
+                email:values.customer_email
+            },
+            reciept_redirect: values.reciept_redirect,
+            checkout_base_url: sandbox_url
         }
 
         try {
@@ -68,6 +76,9 @@ const HostedCheckoutUrlForm =(
             });
 
             const data = await response.json();
+
+            console.log('body', body)
+            console.log('response', response)
 
             setLoading(false);
 

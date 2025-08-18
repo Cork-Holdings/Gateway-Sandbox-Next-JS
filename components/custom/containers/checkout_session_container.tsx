@@ -37,14 +37,12 @@ const CheckoutSessionContainer = () => {
       const body = {
         checkout_base_url: `https://${next_url}/merchant/hosted-checkout/`,
         order_id: orderId || "",
-        amount: amount || "",
+        amount: Number(amount) || "",
         customer: {
           name: customerName || "",
           email: customerEmail || ""
         },
           return: returnUrl || "",
-
-        
       }
 
       const apiResponse = await fetch(api_endpoints.merchant.makeAddCheckoutRequest, {
@@ -63,6 +61,8 @@ const CheckoutSessionContainer = () => {
 
        await new Promise(resolve => setTimeout(resolve, 4000))
 
+       console.log('data', data)
+       console.log('body', body)
 
 
       if (apiResponse.ok) {
@@ -382,7 +382,7 @@ const CheckoutSessionContainer = () => {
                 {JSON.stringify(
                   {
                     "order_id": orderId || '[order_id]',
-                    "amount": amount || '[amount]',
+                    "amount": Number(amount) || '[amount]',
                     "customer_name": customerName || '[customer_name]',
                     "customer_email": customerEmail || '[customer_email]',
                     "return_url": returnUrl || '[return_url]',
