@@ -4,7 +4,7 @@ import { ArrowRight, BadgeXIcon, CheckCircle, Code, FileJson, Globe, SendHorizon
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-const CheckoutSessionDocumentationContainer = () => {
+const CardDocumentationContainer = () => {
     return (
         <div className="max-w-4xl w-full mx-auto p-6 bg-white dark:bg-inherit rounded-lg shadow-md dark:shadow-2xl rounded-3xl">
             {/* Header Section */}
@@ -172,4 +172,4 @@ const CheckoutSessionDocumentationContainer = () => {
     );
 };
 
-export default CheckoutSessionDocumentationContainer;
+export default CardDocumentationContainer;

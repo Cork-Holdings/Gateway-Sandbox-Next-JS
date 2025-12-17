@@ -49,7 +49,7 @@ const HostedCheckoutPage = () => {
     <main className="min-h-screen ">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-lg mx-auto">
-          <div className="bg-white rounded-xl shadow-lg border border-purple-100 overflow-hidden">
+          <div className="bg-white rounded-xl shadow-lg border border-purple-100 overflow-hidden dark:bg-gray-800 dark:text-white">
             <div className="bg-gradient-to-r from-blue-500 to-purple-600 py-4">
               <h1 className="text-2xl font-bold text-white text-center">Secure Checkout</h1>
             </div>

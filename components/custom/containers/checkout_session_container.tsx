@@ -61,10 +61,6 @@ const CheckoutSessionContainer = () => {
 
        await new Promise(resolve => setTimeout(resolve, 4000))
 
-       console.log('data', data)
-       console.log('body', body)
-
-
       if (apiResponse.ok) {
         setResponse(data)
       } else {
@@ -90,12 +86,12 @@ const CheckoutSessionContainer = () => {
   }
 
   return (
-    <main className='flex flex-col lg:flex-row gap-8  bg-gray-100 p-6'>
+    <main className='flex flex-col lg:flex-row gap-8  bg-gray-100 dark:bg-inherit p-6'>
       <div className="max-w-4xl w-full">
         <Card className="max-w-2xl mx-auto">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold">API Execution Sandbox</CardTitle>
-            <p className="text-sm text-gray-500">Create Hosted Checkout URL Endpoint</p>
+            <CardTitle className="text-2xl font-bold dark:text-white">API Execution Sandbox</CardTitle>
+            <p className="text-sm text-gray-500 dark:text-white">Create Hosted Checkout URL Endpoint</p>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className='space-y-2'>

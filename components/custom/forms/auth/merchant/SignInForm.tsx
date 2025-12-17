@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { EyeIcon, Loader2 } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import Link from "next/link";
@@ -29,6 +29,7 @@ const MerchantSignInForm = () => {
   const router = useRouter();
   const { status, data: session } = useSession();
   const [loading, setLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const form = useForm<z.infer<typeof SigninSchema>>({
     resolver: zodResolver(SigninSchema),
@@ -53,15 +54,15 @@ const MerchantSignInForm = () => {
 
         console.log('signInResponse', signInResponse)
 
-        if (signInResponse?.error  && signInResponse?.status === 403) {
+        if (signInResponse?.error && signInResponse?.status === 403) {
           toast.error("Access to the Merchant Portal is not allowed for your account.");
           return;
-      } else if (signInResponse?.error) {
+        } else if (signInResponse?.error) {
           toast.error("Invalid Credentials");
           return;
-      }
+        }
         toast.success("Sign in successful");
-      } 
+      }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       catch (error) {
         toast.error("An unexpected error occurred");
@@ -77,6 +78,8 @@ const MerchantSignInForm = () => {
       router.push("/merchant/apis");
     }
   }, [status, session, router]);
+
+
 
   return (
     <div className="w-full max-w-md mx-auto space-y-6">
@@ -114,13 +117,23 @@ const MerchantSignInForm = () => {
               <FormItem>
                 <FormLabel className="">Password</FormLabel>
                 <FormControl>
-                  <Input
-                    {...field}
-                    type="password"
-                    placeholder="Enter your password"
-                    autoComplete="current-password"
-                    className="bg-white/10 w-full focus:border-transparent focus:ring-2 focus:ring-amber-500 placeholder-gray-400"
-                  />
+                  <div className="flex">
+                    <Input
+                      {...field}
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter your password"
+                      autoComplete="current-password"
+                      className="bg-white/10 w-full focus:border-transparent focus:ring-2 focus:ring-amber-500 placeholder-gray-400"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="cursor-pointer"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeIcon /> : <EyeIcon />}
+                    </Button>
+                  </div>
                 </FormControl>
                 <FormMessage className="text-red-400" />
               </FormItem>
@@ -147,12 +160,12 @@ const MerchantSignInForm = () => {
       <p className="text-center text-gray-700 text-sm">
         Forgot password?{" "}
         <Link href="/common/reset" className="text-[#1383ec] hover:underline">
-           Reset it
-         </Link>
+          Reset it
+        </Link>
       </p>
       <p className="text-center text-gray-700 text-sm">
-      Don&apos;t Have an account?{" "}
-        <a href="/auth/signup" onClick={()=>router.push("/auth/signup")} className="text-[#1383ec] hover:underline">
+        Don&apos;t Have an account?{" "}
+        <a href="/auth/signup" onClick={() => router.push("/auth/signup")} className="text-[#1383ec] hover:underline">
           Create An account
         </a>
       </p>

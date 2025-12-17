@@ -17,6 +17,7 @@ const CollectionContainer = () => {
   const [response, setResponse] = useState(null)
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isFailedLoading, setIsFailedLoading] = useState(false)
   const [copied, setCopied] = useState(false)
   const [token, setToken] = useState('')
   const [contentType, setContentType] = useState('')
@@ -25,16 +26,23 @@ const CollectionContainer = () => {
   const [clientID, setClientID] = useState('')
   const [callbackUrl, setCallbackUrl] = useState('')
 
-  const makeRequest = async () => {
+  const makeRequest = async (isFailed: boolean) => {
     try {
-      setIsLoading(true)
+
+      if (isFailed) {
+        setIsFailedLoading(true)
+      } else if (!isFailed) {
+        setIsLoading(true)
+      }
+
+
       setError(null)
       setResponse(null)
 
       const body = {
         phone_number: phone,
         amount: amount,
-        
+        isFailed: isFailed
       }
 
       const apiResponse = await fetch(api_endpoints.merchant.makeCollectionRequest, {
@@ -67,7 +75,11 @@ const CollectionContainer = () => {
     catch (err) {
 
     } finally {
-      setIsLoading(false)
+      if (isFailed) {
+        setIsFailedLoading(false)
+      } else if (!isFailed) {
+        setIsLoading(false)
+      }
     }
   }
 
@@ -255,7 +267,7 @@ const CollectionContainer = () => {
             </div>
 
             <Button
-              onClick={makeRequest}
+              onClick={() => makeRequest(false)}
               disabled={isLoading}
               className="w-full"
             >
@@ -266,6 +278,20 @@ const CollectionContainer = () => {
                 </>
               ) : (
                 'Execute Request'
+              )}
+            </Button>
+            <Button
+              onClick={() => makeRequest(true)}
+              disabled={isFailedLoading}
+              className="w-full bg-red-500"
+            >
+              {isFailedLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Executing...
+                </>
+              ) : (
+                'Execute Failed Request'
               )}
             </Button>
 

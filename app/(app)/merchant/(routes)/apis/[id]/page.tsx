@@ -16,7 +16,8 @@ import {
   User,
   RefreshCcw,
   Settings2,
-  ScreenShare
+  ScreenShare,
+  Smartphone
 } from 'lucide-react';
 import TransactionStatusContainer from '@/components/custom/containers/transaction-status-container';
 import NameLookupContainer from '@/components/custom/containers/name-lookup-container';
@@ -32,6 +33,7 @@ import {
 import toast from 'react-hot-toast';
 import { api_endpoints } from '@/utils/api_constants';
 import { signOut, useSession } from 'next-auth/react';
+import CardContainer from '@/components/custom/containers/card-container';
 
 const ExecuteAPI = () => {
   const { id } = useParams();
@@ -41,11 +43,12 @@ const ExecuteAPI = () => {
   const endpoints = [
     { id: "1", name: "Authorization", icon: Key, component: AuthorizeContainer, },
 
-    { id: "2", name: "Collection", icon: CreditCard, component: CollectionContainer, },
+    { id: "2", name: "Collection", icon: Smartphone, component: CollectionContainer, },
     { id: "3", name: "Disbursement", icon: Send, component: DisbursementContainer, },
     { id: "4", name: "Transaction Status", icon: RefreshCcw, component: TransactionStatusContainer, },
     { id: "5", name: "Name Look Up", icon: User, component: NameLookupContainer, },
     { id: "6", name: "Hosted Checkout", icon: ScreenShare, component: CheckoutSessionContainer, },
+    { id: "7", name: "Card Simulation", icon: CreditCard, component: CardContainer, },
   ];
 
   const selectedEndpoint = endpoints.find(endpoint => endpoint.id === id);

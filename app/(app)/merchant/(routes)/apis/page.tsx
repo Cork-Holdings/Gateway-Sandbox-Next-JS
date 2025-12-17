@@ -11,7 +11,8 @@ import {
   RefreshCcw,
   User,
   Code,
-  ScreenShare
+  ScreenShare,
+  WalletCards
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 const apis = [
@@ -36,7 +37,7 @@ const apis = [
     icon: Send,
     color: "bg-emerald-100 text-emerald-700"
   },
-  
+
   {
     id: "4",
     name: "Transaction Status",
@@ -58,6 +59,13 @@ const apis = [
     icon: ScreenShare,
     color: "bg-rose-100 text-rose-700"
   },
+  {
+    id: "7",
+    name: "Card Simulation",
+    description: "Test card simulation",
+    icon: WalletCards,
+    color: "bg-purple-100 text-purple-700"
+  },
 ];
 
 
@@ -78,7 +86,7 @@ const APIPage = () => {
 
         <a href="/files/GEEPAY API DOCUMENTATION.pdf" download>
           <Button variant="outline" className="flex items-center gap-2">
-        View   Documentation
+            View   Documentation
             <Code className="h-4 w-4" />
           </Button>
         </a>
