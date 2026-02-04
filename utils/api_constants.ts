@@ -13,8 +13,8 @@
 
 //prod
 
-export const base_ip = "pgsandbox.mygeepay.com";
-export const next_url = "pgsandbox.mygeepay.com";
+export const base_ip = "pgsandbox.privatedns.org";
+export const next_url = "pgsandbox.privatedns.org";
 export const base_url = `https://${base_ip}/v1`;
 
 export const sandbox_url = `https://${base_ip}`;
