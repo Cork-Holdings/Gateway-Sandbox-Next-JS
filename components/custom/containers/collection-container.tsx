@@ -379,7 +379,8 @@ const CollectionContainer = () => {
                 {JSON.stringify(
                   {
                     "phone_number": phone || '[phone_number]',
-                    "amount": Number(amount) || '[amount]'
+                    "amount": Number(amount) || '[amount]',
+                    "isFailed": isFailedLoading
                   },
                   null,
                   2
