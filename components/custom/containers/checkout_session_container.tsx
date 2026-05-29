@@ -35,14 +35,14 @@ const CheckoutSessionContainer = () => {
       setResponse(null)
 
       const body = {
-        checkout_base_url: `https://${next_url}/merchant/hosted-checkout/`,
+        // checkout_base_url: `https://${next_url}/merchant/hosted-checkout/`,
         order_id: orderId || "",
         amount: Number(amount) || "",
         customer: {
           name: customerName || "",
           email: customerEmail || ""
         },
-          return: returnUrl || "",
+        return: returnUrl || "",
       }
 
       const apiResponse = await fetch(api_endpoints.merchant.makeAddCheckoutRequest, {
@@ -52,14 +52,14 @@ const CheckoutSessionContainer = () => {
           'Accept': accepted,
           'Authorization': `Bearer ${token}`,
           "X-Client-Id": clientId,
-          "X-Transaction-Ref":transactionReference
+          "X-Transaction-Ref": transactionReference
         },
         body: JSON.stringify(body)
       })
 
       const data = await apiResponse.json()
 
-       await new Promise(resolve => setTimeout(resolve, 4000))
+      await new Promise(resolve => setTimeout(resolve, 4000))
 
       if (apiResponse.ok) {
         setResponse(data)
@@ -67,7 +67,7 @@ const CheckoutSessionContainer = () => {
         setResponse(data)
         throw new Error(data.message || 'Request failed')
       }
-    } 
+    }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     catch (err) {
 
@@ -276,7 +276,7 @@ const CheckoutSessionContainer = () => {
                   />
                 </div>
 
-                
+
               </div>
 
               <Button
@@ -382,7 +382,7 @@ const CheckoutSessionContainer = () => {
                     "customer_name": customerName || '[customer_name]',
                     "customer_email": customerEmail || '[customer_email]',
                     "return_url": returnUrl || '[return_url]',
-                    
+
                   },
                   null,
                   2

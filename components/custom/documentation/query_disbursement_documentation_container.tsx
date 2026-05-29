@@ -115,16 +115,7 @@ const QueryDisbursementDocumentationContainer = () => {
                     <FileJson className="text-indigo-600" size={20} />
                     <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Example Request Body</h2>
                 </div>
-
-                <div className="bg-gray-900 text-white rounded-md p-4 font-mono text-sm">
-                    <pre
-                        className='overflow-auto whitespace-pre-wrap break-words'
-                    >{JSON.stringify({
-                        phone_number: "260961234567",
-                        amount: 10,
-                        narration: "test narration"
-                    }, null, 2)}</pre>
-                </div>
+                <p className="text-gray-600 dark:text-gray-300 font-mono text-sm">No Request Body</p>
             </div>
 
 
@@ -154,24 +145,20 @@ const QueryDisbursementDocumentationContainer = () => {
                     >
                         {JSON.stringify({
                             "code": 200,
+                            "status": "success",
+                            "message": "Transaction fetched successfully.",
                             "data": {
-                                "amount": "200",
-                                "transaction_reference": "278bedc0-d292-42e1-8dd3-ca91d63fa302",
-                                "external_reference": "000799895807",
-                                "narration": "Testing narration",
                                 "status": "successful"
-                            },
-                            "message": "Disbursement Status Retrieved",
-                            "status": "success"
+                            }
                         }, null, 2)}
                     </SyntaxHighlighter>
                 </div>
 
-                {/* 202 Pending Response */}
+                {/* 404 Response */}
                 <div>
                     <div className="flex items-center gap-2 mb-2">
                         <BadgeXIcon className="text-red-500" size={16} />
-                        <h3 className="text-md font-semibold text-gray-800 dark:text-white">404 - Invalid Transaction Reference</h3>
+                        <h3 className="text-md font-semibold text-gray-800 dark:text-white">404 - Transaction Not Found</h3>
                     </div>
 
                     <SyntaxHighlighter
@@ -185,15 +172,14 @@ const QueryDisbursementDocumentationContainer = () => {
                         }}
                     >
                         {JSON.stringify({
-                            "code": 200,
-                            "data": {
-                                "amount": "1",
-                                "transaction_reference": "278bedc0-d292-42e1-8dd3-ca91d63fa302",
-                                "external_reference": "000799895807",
-                                "status": "pending"
-                            },
-                            "message": "Transaction Status Retrieved",
-                            "status": "success"
+                            "code": 404,
+                            "status": "failed",
+                            "message": "Transaction Not Found",
+                            "error": {
+                                "Transaction Reference": [
+                                    "Transaction Reference is invalid"
+                                ]
+                            }
                         }, null, 2)}
                     </SyntaxHighlighter>
                 </div>

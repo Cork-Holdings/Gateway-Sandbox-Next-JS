@@ -128,12 +128,12 @@ const DisbursementAPIDocumentationContainer = () => {
                     >
                         {JSON.stringify({
                             "code": 200,
+                            "status": "successful",
+                            "message": "Disbursement has been successfully processed and settled.",
                             "data": {
                                 "transaction_id": "8c404fd1-6c2e-46b4-a6ed-8210e78fc9cc",
                                 "external_reference": "000799902816"
-                            },
-                            "message": "Disbursement was processed successfully",
-                            "status": "successful"
+                            }
                         }, null, 2)}
                     </SyntaxHighlighter>
                 </div>

@@ -28,7 +28,7 @@ const QueryDocumentationContainer = () => {
                 <div className="bg-gray-50 dark:bg-gray-800 rounded-md p-4 mb-6 overflow-auto whitespace-pre-wrap break-words">
                     <div className="flex items-center gap-2 mb-2">
                         <span className="bg-green-600 text-white text-xs font-medium px-2 py-1 rounded">GET</span>
-                        <code className="text-sm font-mono bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded">{`${api_endpoints.merchant.makeNameLookupRequest}/{transaction-ref}`}</code>
+                        <code className="text-sm font-mono bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded">{`${api_endpoints.merchant.makeTransactionQueryRequest}/{transactionRef}`}</code>
                     </div>
                 </div>
             </div>
@@ -136,15 +136,14 @@ const QueryDocumentationContainer = () => {
                     >
                         {JSON.stringify({
                             "code": 200,
+                            "status": "success",
+                            "message": "Transaction fetched successfully.",
                             "data": {
-                                "amount": "1",
-                                "status": "pending",
+                                "status": "successful",
+                                "message": "Transaction was processed successfully.",
                                 "transaction_reference": "278bedc0-d292-42e1-8dd3-ca91d63fa302",
-                                "external_reference": "000799895807",
-                            },
-
-                            "message": "Transaction Status Retrieved",
-                            "status": "success"
+                                "external_reference": "000799895807"
+                            }
                         }, null, 2)}
                     </SyntaxHighlighter>
                 </div>

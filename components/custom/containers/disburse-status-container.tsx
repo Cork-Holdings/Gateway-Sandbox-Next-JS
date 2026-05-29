@@ -93,7 +93,7 @@ const DisbursementStatusContainer = () => {
         <Card className="max-w-4xl w-full mx-auto">
           <CardHeader>
             <CardTitle className="text-2xl font-bold">API Execution Sandbox</CardTitle>
-            <p className="text-sm text-gray-500">Make A disbursement</p>
+            <p className="text-sm text-gray-500">Query disbursement status</p>
           </CardHeader>
           <CardContent className="space-y-6">
 
@@ -288,7 +288,7 @@ const DisbursementStatusContainer = () => {
           <CardContent>
             <div className="space-y-2 text-sm">
               <p><strong>Endpoint:</strong> {url}</p>
-              <p><strong>Method:</strong>GET</p>
+              <p><strong>Method:</strong> GET</p>
 
               <p><strong>Headers:</strong></p>
               <SyntaxHighlighter language="json" style={vscDarkPlus} customStyle={{ padding: '1rem', borderRadius: '0.375rem' }}>

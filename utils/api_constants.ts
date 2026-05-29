@@ -4,7 +4,7 @@
 
 
 // //local
-// export const base_ip = "localhost:2000";
+export const base_ip = "localhost:2000";
 // export const next_url = "localhost:3000";
 // export const base_url = `http://${base_ip}/v1`;
 
@@ -12,10 +12,9 @@
 
 
 //prod
-
-export const base_ip = "api.sandbox.mygeepay.com";
+// export const base_ip = "api.sandbox.mygeepay.com";
 export const next_url = "api.sandbox.mygeepay.com";
-export const base_url = `https://${base_ip}/v1`;
+export const base_url = `http://${base_ip}/v1`;
 
 export const sandbox_url = `https://${base_ip}`;
 
@@ -51,14 +50,14 @@ export const api_endpoints = {
     merchant: {
         makeAuthorizationRequest: `${base_url}/oauth/token`,
         makeCollectionRequest: `${base_url}/mobile-money/collect`,
-        makeTransactionQueryRequest: `${base_url}/mobile-money/check-status`,
-        makeNameLookupRequest: `${base_url}/mobile-money/name-lookup`,
-        makeDisburseRequest: `${base_url}/mobile-money/disburse`,
-        makeQueryDisbursementRequest: `${base_url}/mobile-money/disburse/status`,
+        makeTransactionQueryRequest: `${sandbox_url}/api/v1/mobile-money/check-status`,
+        makeNameLookupRequest: `${sandbox_url}/api/v1/mobile-money/name-lookup`,
+        makeDisburseRequest: `${sandbox_url}/api/v1/mobile-money/disburse`,
+        makeQueryDisbursementRequest: `${sandbox_url}/api/v1/mobile-money/disburse/status`,
         makeCheckoutRequest: `${base_url}/checkout/respond`,
         makeGetCheckoutDetailsRequest: `${base_url}/checkout/get`,
-        makeAddCheckoutRequest: `${base_url}/checkout/session`,
-        makeQueryDisbursementBalanceRequest: `${base_url}/mobile-money/disburse/balance`,
+        makeAddCheckoutRequest: `${sandbox_url}/api/v1/checkout/session`,
+        makeQueryDisbursementBalanceRequest: `${sandbox_url}/api/v1/mobile-money/disburse/balance`,
         makeCardPayment: `${base_url}/card/payment`,
         make3DsCodeRequest: `${base_url}/card/request-code`,
         make3DsVerifyCodeRequest: `${base_url}/card/verify-code`,
