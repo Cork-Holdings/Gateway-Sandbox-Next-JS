@@ -120,7 +120,7 @@ const AuthorizationDocumentation = () => {
           >
             {JSON.stringify({
               "token_type": "Bearer",
-              "expires_in": 31536000,
+              "expires_in": 3600,
               "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9..."
             }, null, 2)}
           </SyntaxHighlighter>

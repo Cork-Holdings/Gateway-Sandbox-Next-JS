@@ -16,7 +16,7 @@ const AuthorizeContainer = () => {
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [copied, setCopied] = useState(false)
-  const [grantType, setGrantType] = useState('')
+  const [grantType, setGrantType] = useState('client_credentials')
 
   const makeRequest = async () => {
     try {
@@ -33,10 +33,10 @@ const AuthorizeContainer = () => {
       const apiResponse = await fetch(api_endpoints.merchant.makeAuthorizationRequest, {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
           'Accept': 'application/json'
         },
-        body: JSON.stringify(body)
+        body: body.toString()
       })
 
       const data = await apiResponse.json()
