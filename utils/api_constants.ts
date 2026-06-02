@@ -4,7 +4,7 @@
 
 
 // //local
-export const base_ip = "localhost:2000";
+// export const base_ip = "localhost:2000";
 // export const next_url = "localhost:3000";
 // export const base_url = `http://${base_ip}/v1`;
 
@@ -12,7 +12,7 @@ export const base_ip = "localhost:2000";
 
 
 //prod
-// export const base_ip = "api.sandbox.mygeepay.com";
+export const base_ip = "api.sandbox.mygeepay.com";
 export const next_url = "api.sandbox.mygeepay.com";
 export const base_url = `http://${base_ip}/v1`;
 
