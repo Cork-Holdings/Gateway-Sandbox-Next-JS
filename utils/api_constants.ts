@@ -12,7 +12,7 @@
 
 
 //prod
-export const base_ip = "api.sandbox.mygeepay.com";
+export const base_ip = "api.sandbox.mygeepay.com"; 
 export const next_url = "api.sandbox.mygeepay.com";
 export const base_url = `https://${base_ip}/v1`;
 
