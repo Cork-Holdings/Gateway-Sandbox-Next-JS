@@ -24,11 +24,11 @@ const AuthorizeContainer = () => {
       setError(null)
       setResponse(null)
 
-      const body = {
-        client_id: clientId,
-        client_secret: clientSecret,
-        grant_type: grantType
-      }
+      const body = new URLSearchParams({
+  client_id: clientId,
+  client_secret: clientSecret,
+  grant_type: grantType
+})
 
       const apiResponse = await fetch(api_endpoints.merchant.makeAuthorizationRequest, {
         method: "POST",
