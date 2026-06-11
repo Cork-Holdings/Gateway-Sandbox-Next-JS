@@ -59,13 +59,13 @@ const apis = [
     icon: ScreenShare,
     color: "bg-rose-100 text-rose-700"
   },
-  {
-    id: "7",
-    name: "Card Simulation",
-    description: "Test card simulation",
-    icon: WalletCards,
-    color: "bg-purple-100 text-purple-700"
-  },
+  // {
+  //   id: "7",
+  //   name: "Card Simulation",
+  //   description: "Test card simulation",
+  //   icon: WalletCards,
+  //   color: "bg-purple-100 text-purple-700"
+  // },
 ];
 
 

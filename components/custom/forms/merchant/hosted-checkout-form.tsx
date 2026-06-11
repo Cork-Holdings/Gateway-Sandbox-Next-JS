@@ -1,351 +1,12 @@
-// "use client";
-// import React, { useState } from "react";
-// import { z } from "zod";
-// import { useForm } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { Button } from "@/components/ui/button";
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-// import {
-//     Form,
-//     FormControl,
-//     FormField,
-//     FormItem,
-//     FormLabel,
-//     FormMessage,
-// } from "@/components/ui/form";
-// import { Input } from "@/components/ui/input";
-// import { Loader2, CreditCard, Smartphone } from "lucide-react";
-// import { useSession } from "next-auth/react";
-// import toast from "react-hot-toast";
-// import { api_endpoints } from "@/utils/api_constants";
-// import { CardContent, CardHeader, CardDescription } from "@/components/ui/card";
-// import { useRouter } from "next/navigation";
-// import { HDetails } from "@/utils/types/HostedCheckout";
-// import {
-//     Dialog,
-//     DialogContent,
-//     DialogHeader,
-//     DialogTitle,
-// } from "@/components/ui/dialog"
-
-// const hostedSchema = z.object({
-//     order_id: z.string().optional(),
-//     customer_name: z.string().optional(),
-//     customer_email: z.string().email().optional(),
-//     amount: z.string().optional(),
-// });
-
-// interface hostedCheckoutFormProps {
-//     details: HDetails | null
-// }
-
-// const HostedCheckoutForm: React.FC<hostedCheckoutFormProps> = ({ details }) => {
-//     const { data: session } = useSession();
-//     const [loading, setLoading] = React.useState(false);
-//     const router = useRouter();
-
-//     const [dialog, setDialog] = useState<boolean>(false);
-//     const [phoneNumber, setPhoneNumber] = useState<string>("");
-//     const form = useForm<z.infer<typeof hostedSchema>>({
-//         resolver: zodResolver(hostedSchema),
-//         defaultValues: {
-//             order_id: details?.order_id || "",
-//             customer_email: details?.customer_email || "",
-//             customer_name: details?.customer_name || "",
-//             amount: details?.amount || "",
-//         },
-//     });
-
-//     const handleSubmit = async (values: z.infer<typeof hostedSchema>, statusCode: number) => {
-//         const body = {
-//             checkout_id: details?.checkout_url?.split("/").pop() || "",
-//             amount: values.amount,
-//             phone_number: `260${phoneNumber}`,
-//             customer_email: values.customer_email,
-//             customer_name: values.customer_name
-//         }
- 
-//         try {
-//             setLoading(true);
-//             const response = await fetch(`${api_endpoints.merchant.makeCheckoutRequest}/${statusCode}`, {
-//                 method: "POST",
-//                 headers: {
-//                     "Content-Type": "application/json",
-//                     "Authorization": `Bearer ${session?.accessToken}`
-//                 },
-//                 body: JSON.stringify(body)
-//             });
-
-//             const data = await response.json();
-//             setLoading(false);
-
-//             console.log('data', data)
-
-//             if (data.status == "success" || data.code == 200) {
-//                 toast.success(data.message || "Payment processed");
-
-//                 await new Promise(resolve => setTimeout(resolve, 3000))
-//                 setDialog(true);
-
-//                 const txId = data.data?.transaction_id || "";
-//                 const returnUrl = details?.return_url || "";
-//                 const redirectUrl = txId ? `${returnUrl}${returnUrl.includes("?") ? "&" : "?"}transaction_id=${txId}` : returnUrl;
-
-//                 if (redirectUrl.startsWith("http://") || redirectUrl.startsWith("https://")) {
-//                     window.location.href = redirectUrl;
-//                 } else {
-//                     router.push(redirectUrl);
-//                 }
-//             } else if (data.status == "failure") {
-//                 toast.error(`${data.error}`);
-//                 router.push(details?.return_url || "");
-//             }
-
-//             else if (data.status == "cancelled") {
-//                 toast.error(`${data.message}`);
-//                 router.push(details?.return_url || "");
-//             }
-//         } catch (error) {
-//             console.log('error', error);
-//             toast.error("An unexpected error occurred");
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     return (
-//         <div className="w-full max-w-md mx-auto">
-//             <CardHeader className="pb-2">
-
-//                 <CardDescription className="text-center text-gray-500">
-//                     Complete your payment securely
-//                 </CardDescription>
-//             </CardHeader>
-
-//             <CardContent className="space-y-6">
-
-
-
-
-//                 <Form {...form}>
-//                     <form className="space-y-5">
-//                         <div className="grid grid-cols-1  gap-4">
-//                             <FormField
-//                                 control={form.control}
-//                                 name="order_id"
-//                                 render={({ field }) => (
-//                                     <FormItem>
-//                                         <FormLabel className="font-medium text-gray-700">Order ID</FormLabel>
-//                                         <FormControl>
-//                                             <Input
-//                                                 disabled={!!details?.order_id}
-//                                                 {...field}
-//                                                 type="text"
-//                                                 placeholder="Order ID"
-//                                                 className="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md"
-//                                             />
-//                                         </FormControl>
-//                                         <FormMessage className="text-red-500" />
-//                                     </FormItem>
-//                                 )}
-//                             />
-//                             <FormField
-//                                 control={form.control}
-//                                 name="amount"
-//                                 render={({ field }) => (
-//                                     <FormItem>
-//                                         <FormLabel className="font-medium text-gray-700">Amount</FormLabel>
-//                                         <FormControl>
-//                                             <Input
-//                                                 disabled={!!details?.amount}
-//                                                 {...field}
-//                                                 type="text"
-//                                                 placeholder="0.00"
-//                                                 className="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md"
-//                                             />
-//                                         </FormControl>
-//                                         <FormMessage className="text-red-500" />
-//                                     </FormItem>
-//                                 )}
-//                             />
-//                         </div>
-
-//                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//                             <FormField
-//                                 control={form.control}
-//                                 name="customer_email"
-//                                 render={({ field }) => (
-//                                     <FormItem>
-//                                         <FormLabel className="font-medium text-gray-700">Email</FormLabel>
-//                                         <FormControl>
-//                                             <Input
-//                                                 disabled={!!details?.customer_email}
-//                                                 {...field}
-//                                                 type="email"
-//                                                 placeholder="your@email.com"
-//                                                 className="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md"
-//                                             />
-//                                         </FormControl>
-//                                         <FormMessage className="text-red-500" />
-//                                     </FormItem>
-//                                 )}
-//                             />
-//                             <FormField
-//                                 control={form.control}
-//                                 name="customer_name"
-//                                 render={({ field }) => (
-//                                     <FormItem>
-//                                         <FormLabel className="font-medium text-gray-700">Name</FormLabel>
-//                                         <FormControl>
-//                                             <Input
-//                                                 disabled={!!details?.customer_name}
-//                                                 {...field}
-//                                                 type="text"
-//                                                 placeholder="Full Name"
-//                                                 className="border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded-md"
-//                                             />
-//                                         </FormControl>
-//                                         <FormMessage className="text-red-500" />
-//                                     </FormItem>
-//                                 )}
-//                             />
-//                         </div>
-
-//                         <div className="mt-6">
-//                             <h3 className="text-lg font-medium text-gray-800 mb-3">Payment Method</h3>
-//                             <Tabs defaultValue="momo" className="w-full">
-//                                 <TabsList className="grid grid-cols-2 mb-4">
-//                                     <TabsTrigger value="momo" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white">
-//                                         <Smartphone className="w-4 h-4 mr-2" />
-//                                         Mobile Money
-//                                     </TabsTrigger>
-//                                     <TabsTrigger value="bank" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white">
-//                                         <CreditCard className="w-4 h-4 mr-2" />
-//                                         Bank
-//                                     </TabsTrigger>
-//                                 </TabsList>
-//                                 <TabsContent value="momo" className="p-4 rounded-md">
-//                                     <FormLabel className="font-medium text-gray-700 mb-2 block">
-//                                         Phone Number
-//                                     </FormLabel>
-//                                     <div className="flex items-center border border-gray-300 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 rounded-md overflow-hidden">
-//                                         <span className="px-3 text-gray-700  border-r border-gray-300 text-sm select-none">
-//                                             +260
-//                                         </span>
-//                                         <Input
-//                                             type="number"
-//                                             maxLength={9}
-//                                             placeholder="Enter 9-digit number"
-//                                             className="border-0 focus:ring-0 focus:outline-none"
-//                                             value={phoneNumber}
-//                                             onChange={(e) => setPhoneNumber(e.target.value)}
-//                                         />
-//                                     </div>
-//                                 </TabsContent>
-
-//                                 <TabsContent value="bank" className="p-4 border rounded-md bg-gray-50">
-//                                     <p className="text-gray-600">Bank payment options coming soon.</p>
-//                                 </TabsContent>
-//                             </Tabs>
-//                         </div>
-
-//                         <div className="mt-8 grid grid-cols-1  gap-3">
-//                             <Button
-//                                 type="submit"
-//                                 className="w-full py-3 bg-blue-500  text-white font-medium rounded-md shadow transition-all"
-//                                 disabled={loading}
-//                                 onClick={() => form.handleSubmit((values) => handleSubmit(values, 1))()}
-
-//                             >
-//                                 {loading ? (
-//                                     <>
-//                                         <Loader2 className="h-5 w-5 animate-spin mr-2" />
-//                                         Processing...
-//                                     </>
-//                                 ) : (
-//                                     "Submit"
-//                                 )}
-//                             </Button>
-//                             {/* <Button
-//                                 type="submit"
-//                                 className="w-full py-3 bg-red-500 hover:bg-red-700 text-white font-medium rounded-md shadow transition-all"
-//                                 disabled={loading}
-//                                 onClick={() => form.handleSubmit((values) => handleSubmit(values, 3))()}
-//                             >
-//                                 {loading ? (
-//                                     <>
-//                                         <Loader2 className="h-5 w-5 animate-spin mr-2" />
-//                                         Processing...
-//                                     </>
-//                                 ) : (
-//                                     "Simulate Failed"
-//                                 )}
-//                             </Button>
-//                             <Button
-//                                 type="submit"
-//                                 className="w-full py-3 bg-orange-500 hover:bg-orange-700 text-white font-medium rounded-md shadow transition-all"
-//                                 disabled={loading}
-//                                 onClick={() => form.handleSubmit((values) => handleSubmit(values, 2))()}
-//                             >
-//                                 {loading ? (
-//                                     <>
-//                                         <Loader2 className="h-5 w-5 animate-spin mr-2" />
-//                                         Processing...
-//                                     </>
-//                                 ) : (
-//                                     "Simulate cancelled"
-//                                 )}
-//                             </Button> */}
-//                         </div>
-
-//                         <div className="flex items-center justify-center space-x-2 mt-4">
-//                             <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-//                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-600">
-//                                     <rect width="20" height="14" x="2" y="5" rx="2" />
-//                                     <line x1="2" x2="22" y1="10" y2="10" />
-//                                 </svg>
-//                             </div>
-//                             <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-//                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-600">
-//                                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-//                                     <polyline points="22 4 12 14.01 9 11.01" />
-//                                 </svg>
-//                             </div>
-//                             <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-//                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-600">
-//                                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-//                                 </svg>
-//                             </div>
-//                         </div>
-//                     </form>
-//                 </Form>
-//             </CardContent>
-
-//             {dialog && <Dialog open={dialog} onOpenChange={setDialog}>
-//                 <DialogContent>
-//                     <DialogHeader>
-//                         <DialogTitle className="flex items-center gap-2">
-//                             <Loader2 className="animate-spin h-5 w-5 text-blue-600" />
-//                             <p>  Redirecting...</p>
-//                         </DialogTitle>
-//                     </DialogHeader>
-//                     <p className="text-gray-600 text-sm">Please wait while we redirect you to the return URL.</p>
-//                 </DialogContent>
-//             </Dialog>
-
-
-//             }
-//         </div>
-//     );
-// };
-
-// export default HostedCheckoutForm;
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -358,26 +19,32 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Loader2, CreditCard, Smartphone, Clock } from "lucide-react";
-import { useSession } from "next-auth/react";
-import toast from "react-hot-toast";
-import { api_endpoints } from "@/utils/api_constants";
-import { CardContent, CardHeader, CardDescription } from "@/components/ui/card";
-import { useRouter } from "next/navigation";
-import { HDetails } from "@/utils/types/HostedCheckout";
-
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import {
+    Loader2,
+    CreditCard,
+    Smartphone,
+    Mail,
+    User,
+    Hash,
+    CheckCircle2,
+    Lock
+} from "lucide-react";
+
+import { api_endpoints } from "@/utils/api_constants";
+import { HDetails } from "@/utils/types/HostedCheckout";
 
 const hostedSchema = z.object({
     order_id: z.string().optional(),
-    customer_name: z.string().optional(),
-    customer_email: z.string().email().optional(),
-    amount: z.string().optional(),
+    customer_name: z.string().min(2, "Name is required").optional(),
+    customer_email: z.string().email("Invalid email address").optional(),
+    amount: z.string().min(1, "Amount is required").optional(),
 });
 
 interface Props {
@@ -390,16 +57,9 @@ const HostedCheckoutForm: React.FC<Props> = ({ details }) => {
 
     const [loading, setLoading] = useState(false);
     const [dialog, setDialog] = useState(false);
-
     const [phoneNumber, setPhoneNumber] = useState("");
-
     const [txRef, setTxRef] = useState("");
-    const [txStatus, setTxStatus] = useState<
-        "pending" | "success" | "failed" | null
-    >(null);
-
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const [txStatus, setTxStatus] = useState<"pending" | "successful" | "failed" | null>(null);
 
     const form = useForm<z.infer<typeof hostedSchema>>({
         resolver: zodResolver(hostedSchema),
@@ -411,57 +71,13 @@ const HostedCheckoutForm: React.FC<Props> = ({ details }) => {
         },
     });
 
-    const stopPolling = () => {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
+    const onSubmit = async (values: z.infer<typeof hostedSchema>) => {
+        // Enforcing phone number check if mobile money is selected layout-wise
+        if (!phoneNumber || phoneNumber.length < 9) {
+            toast.error("Please enter a valid mobile number");
+            return;
+        }
 
-    // const pollTransactionStatus = (reference: string) => {
-    //     stopPolling();
-
-    //     intervalRef.current = setInterval(async () => {
-    //         try {
-    //             const res = await fetch(
-    //                 `${api_endpoints.merchant.getTransactionStatus}/${reference}`,
-    //                 {
-    //                     headers: {
-    //                         Authorization: `Bearer ${session?.accessToken}`,
-    //                     },
-    //                 }
-    //             );
-
-    //             const data = await res.json();
-    //             const status = data?.data?.status;
-
-    //             setTxStatus(status);
-
-    //             if (status === "success" || status === "successful") {
-    //                 stopPolling();
-    //                 toast.success("Payment successful");
-    //                 setDialog(false);
-    //                 router.push(details?.return_url || "");
-    //             }
-
-    //             if (status === "failed" || status === "cancelled") {
-    //                 stopPolling();
-    //                 toast.error("Payment failed");
-    //                 setDialog(false);
-    //                 router.push(details?.return_url || "");
-    //             }
-    //         } catch (err) {
-    //             console.log("poll error", err);
-    //         }
-    //     }, 3000);
-
-    //     timeoutRef.current = setTimeout(() => {
-    //         stopPolling();
-    //     }, 120000);
-    // };
-
-    const handleSubmit = async (
-        values: z.infer<typeof hostedSchema>,
-        statusCode: number
-    ) => {
         try {
             setLoading(true);
 
@@ -474,7 +90,7 @@ const HostedCheckoutForm: React.FC<Props> = ({ details }) => {
             };
 
             const response = await fetch(
-                `${api_endpoints.merchant.makeCheckoutRequest}/${statusCode}`,
+                `${api_endpoints.merchant.makeCheckoutRequest}/1`, // default status code passing
                 {
                     method: "POST",
                     headers: {
@@ -488,195 +104,218 @@ const HostedCheckoutForm: React.FC<Props> = ({ details }) => {
             const data = await response.json();
 
             if (data.status === "success" || data.code === 200) {
-                const reference =
-                    data.data?.transaction_reference || "";
+                const reference = data.data?.transaction_reference || "";
 
                 setTxRef(reference);
                 setTxStatus(data.data?.status || "pending");
                 setDialog(true);
 
                 toast.success(data.message || "Payment initiated");
+                await new Promise(resolve => setTimeout(resolve, 5000));
 
-                // pollTransactionStatus(reference);
+                const return_url = data.data.return_url;
+                router.push(return_url);
             } else {
                 setTxStatus("failed");
                 toast.error(data.error || "Payment failed");
             }
         } catch (error) {
-            console.log(error);
-            toast.error("Unexpected error occurred");
+            console.error(error);
+            toast.error("An unexpected error occurred");
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="w-full max-w-md mx-auto">
+        <div className="w-full max-w-lg mx-auto p-4">
+            <Card className="shadow-lg border-slate-200 dark:border-slate-800">
+                <CardHeader className="space-y-1 text-center bg-slate-50/50 dark:bg-slate-900/50 border-b pb-6 rounded-t-xl">
+                    <CardTitle className="text-xl font-bold tracking-tight flex items-center justify-center gap-2">
+                        <Lock className="w-5 h-5 text-emerald-600" /> Secure Checkout
+                    </CardTitle>
+                    <CardDescription className="text-sm text-muted-foreground">
+                        Review details and complete your payment safely.
+                    </CardDescription>
+                </CardHeader>
 
-            <CardHeader className="pb-2">
-                <CardDescription className="text-center text-gray-500">
-                    Complete your payment securely
-                </CardDescription>
-            </CardHeader>
+                <CardContent className="pt-6">
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
-            <CardContent className="space-y-6">
+                            {/* ORDER + AMOUNT */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <FormField
+                                    control={form.control}
+                                    name="order_id"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Order ID</FormLabel>
+                                            <FormControl>
+                                                <div className="relative">
+                                                    <Hash className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                                                    <Input
+                                                        {...field}
+                                                        className="pl-9 bg-slate-50/50 disabled:opacity-80 font-mono text-sm"
+                                                        disabled={!!details?.order_id}
+                                                    />
+                                                </div>
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
 
-                <Form {...form}>
-                    <form className="space-y-5">
+                                <FormField
+                                    control={form.control}
+                                    name="amount"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Amount (ZMW)</FormLabel>
+                                            <FormControl>
+                                                <div className="relative">
+                                                    <span className="absolute left-3 top-2 text-sm font-semibold text-muted-foreground">ZK</span>
+                                                    <Input
+                                                        {...field}
+                                                        className="pl-9 bg-slate-50/50 font-semibold disabled:opacity-80"
+                                                        disabled={!!details?.amount}
+                                                    />
+                                                </div>
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
 
-                        {/* ORDER + AMOUNT */}
-                        <div className="grid grid-cols-1 gap-4">
-                            <FormField
-                                control={form.control}
-                                name="order_id"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Order ID</FormLabel>
-                                        <FormControl>
+                            {/* CUSTOMER INFO */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t pt-4">
+                                <FormField
+                                    control={form.control}
+                                    name="customer_name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Billing Name</FormLabel>
+                                            <FormControl>
+                                                <div className="relative">
+                                                    <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                                                    <Input {...field} placeholder="John Doe" className="pl-9" />
+                                                </div>
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <FormField
+                                    control={form.control}
+                                    name="customer_email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Email Address</FormLabel>
+                                            <FormControl>
+                                                <div className="relative">
+                                                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                                                    <Input {...field} placeholder="john@example.com" type="email" className="pl-9" />
+                                                </div>
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+
+                            {/* PAYMENT METHOD */}
+                            <div className="border-t pt-4">
+                                <FormLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground block mb-3">
+                                    Select Payment Method
+                                </FormLabel>
+
+                                <Tabs defaultValue="momo" className="w-full">
+                                    <TabsList className="grid grid-cols-2 w-full p-1 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                                        <TabsTrigger value="momo" className="py-2.5 rounded-md data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                                            <Smartphone className="w-4 h-4 mr-2 text-indigo-600" />
+                                            Mobile Money
+                                        </TabsTrigger>
+                                        <TabsTrigger value="bank" className="py-2.5 rounded-md data-[state=active]:bg-white data-[state=active]:shadow-sm">
+                                            <CreditCard className="w-4 h-4 mr-2 text-indigo-600" />
+                                            Bank Card
+                                        </TabsTrigger>
+                                    </TabsList>
+
+                                    <TabsContent value="momo" className="mt-4 space-y-2 animate-in fade-in-50 duration-200">
+                                        <div className="relative flex items-center">
+                                            <div className="absolute left-3 flex items-center pointer-events-none text-sm font-medium text-slate-400 border-r pr-2 h-5">
+                                                +260
+                                            </div>
                                             <Input
-                                                {...field}
-                                                disabled={!!details?.order_id}
+                                                type="tel"
+                                                maxLength={9}
+                                                placeholder="977XXXXXX"
+                                                className="pl-16 tracking-wide font-medium"
+                                                value={phoneNumber}
+                                                onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ""))}
                                             />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
+                                        </div>
+                                        <p className="text-xs text-muted-foreground px-1">Enter your Mobile Wallet registration number.</p>
+                                    </TabsContent>
+
+                                    <TabsContent value="bank" className="mt-4 animate-in fade-in-50 duration-200">
+                                        <div className="rounded-lg border border-dashed p-6 text-center bg-slate-50/50 dark:bg-slate-900/50">
+                                            <p className="text-sm text-muted-foreground font-medium">
+                                                Bank payments coming soon
+                                            </p>
+                                        </div>
+                                    </TabsContent>
+                                </Tabs>
+                            </div>
+
+                            {/* SUBMIT BUTTON */}
+                            <Button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full py-6 text-base font-semibold shadow-md transition-all duration-150 hover:opacity-95 bg-emerald-600 hover:bg-emerald-700 text-white"
+                            >
+                                {loading ? (
+                                    <span className="flex items-center justify-center gap-2">
+                                        <Loader2 className="animate-spin h-5 w-5" />
+                                        Processing Securely...
+                                    </span>
+                                ) : (
+                                    `Pay ${form.watch("amount") ? `ZK ${form.watch("amount")}` : ""}`
                                 )}
-                            />
+                            </Button>
+                        </form>
+                    </Form>
+                </CardContent>
+            </Card>
 
-                            <FormField
-                                control={form.control}
-                                name="amount"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Amount</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                disabled={!!details?.amount}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-
-                        {/* CUSTOMER INFO */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <FormField
-                                control={form.control}
-                                name="customer_email"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl>
-                                            <Input {...field} />
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-
-                            <FormField
-                                control={form.control}
-                                name="customer_name"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Name</FormLabel>
-                                        <FormControl>
-                                            <Input {...field} />
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-
-                        {/* PAYMENT METHOD */}
-                        <div>
-                            <h3 className="text-lg font-medium mb-3">
-                                Payment Method
-                            </h3>
-
-                            <Tabs defaultValue="momo">
-                                <TabsList className="grid grid-cols-2">
-                                    <TabsTrigger value="momo">
-                                        <Smartphone className="w-4 h-4 mr-2" />
-                                        Mobile Money
-                                    </TabsTrigger>
-
-                                    <TabsTrigger value="bank">
-                                        <CreditCard className="w-4 h-4 mr-2" />
-                                        Bank
-                                    </TabsTrigger>
-                                </TabsList>
-
-                                <TabsContent value="momo" className="mt-4">
-                                    <Input
-                                    type="number"
-                                    maxLength={9}
-                                        placeholder="Phone number"
-                                        value={phoneNumber}
-                                        onChange={(e) =>
-                                            setPhoneNumber(e.target.value)
-                                        }
-                                    />
-                                </TabsContent>
-
-                                <TabsContent value="bank">
-                                    <p className="text-sm text-gray-500">
-                                        Bank payments coming soon
-                                    </p>
-                                </TabsContent>
-                            </Tabs>
-                        </div>
-
-                        {/* SUBMIT */}
-                        <Button
-                            type="button"
-                            disabled={loading}
-                            onClick={() =>
-                                form.handleSubmit((v) =>
-                                    handleSubmit(v, 1)
-                                )()
-                            }
-                            className="w-full"
-                        >
-                            {loading ? (
-                                <>
-                                    <Loader2 className="animate-spin mr-2" />
-                                    Processing...
-                                </>
-                            ) : (
-                                "Submit Payment"
-                            )}
-                        </Button>
-                    </form>
-                </Form>
-            </CardContent>
-
-            {/* STATUS DIALOG */}
+            {/* SUCCESS / REDIRECT DIALOG */}
             <Dialog open={dialog} onOpenChange={setDialog}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle className="flex items-center justify-center gap-2">
-                            {txStatus === "pending" && (
-                                <Clock className=" text-orange-600" />
-                            )}
-                            {txStatus === "success" && "Payment Successful"}
-                            {txStatus === "failed" && "Payment Failed"}
+                <DialogContent className="sm:max-w-md text-center p-6">
+                    <DialogHeader className="flex flex-col items-center justify-center pt-4">
+                        <CheckCircle2 className="w-14 h-14 text-emerald-500 animate-bounce" />
+                        <DialogTitle className="text-xl font-bold mt-4">
+                            Payment Successful
                         </DialogTitle>
                     </DialogHeader>
 
-                    <div className="text-sm space-y-2">
-                        <p>Status: <span className="font-medium capitalize">{txStatus}</span></p>
-                        <p className="break-all">
-                            Reference: {txRef}
-                        </p>
+                    <div className="mt-2 space-y-3 bg-slate-50 dark:bg-slate-900 p-4 rounded-lg text-sm border">
+                        <div className="flex justify-between items-center border-b pb-2">
+                            <span className="text-muted-foreground">Status</span>
+                            <span className="font-bold text-emerald-600 capitalize">{txStatus}</span>
+                        </div>
+                        <div className="flex flex-col items-start gap-1 text-left">
+                            <span className="text-xs text-muted-foreground">Transaction Reference</span>
+                            <span className="font-mono text-xs select-all break-all bg-slate-200/60 dark:bg-slate-800 p-1.5 rounded w-full">
+                                {txRef}
+                            </span>
+                        </div>
+                    </div>
 
-                        {/* {txStatus === "pending" && (
-                            <p className="text-gray-500">
-                                Waiting for confirmation...
-                            </p>
-                        )} */}
+                    <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                        <Loader2 className="animate-spin h-3.5 w-3.5 text-emerald-600" />
+                        <span>Redirecting back to Merchant platform...</span>
                     </div>
                 </DialogContent>
             </Dialog>
