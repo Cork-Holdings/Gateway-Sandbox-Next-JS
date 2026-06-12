@@ -114,7 +114,7 @@ const HostedCheckoutForm: React.FC<Props> = ({ details }) => {
                 await new Promise(resolve => setTimeout(resolve, 5000));
 
                 const return_url = data.data.return_url;
-                router.push(return_url);
+                window.location.href = return_url;
             } else {
                 setTxStatus("failed");
                 toast.error(data.error || "Payment failed");
