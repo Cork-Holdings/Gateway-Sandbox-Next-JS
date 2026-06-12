@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 const MerchantResetSchema = z.object({
-  email: z.string()
+  email: z.string().email("Please enter a valid email address")
 });
 
 const MerchantResetForm = () => {
@@ -29,7 +29,7 @@ const MerchantResetForm = () => {
 
   const onSubmit = async (values: z.infer<typeof MerchantResetSchema>) => {
     const body = {
-      "to": session?.email,
+      "to": values.email || session?.email,
       "code": "It shall be generated",
       "subject": "Password Reset Request",
       "body": "Password Reset Code",
@@ -40,15 +40,13 @@ const MerchantResetForm = () => {
       setLoading(true);
       const response = await fetch(api_endpoints.common.requestCode, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
 
       const data = await response.json();
 
-      if (data["status"] == "success") {
+      if (data["status"] === "success") {
         toast.success("Reset code sent successfully!");
         router.push(`/merchant/reset/${values.email}`);
       } else {
@@ -65,37 +63,35 @@ const MerchantResetForm = () => {
   return (
     <div className="w-full">
       <div className="mb-6">
-        <div className="flex items-center p-4 bg-blue-50 rounded-lg border border-blue-100">
-          <Mail className="h-5 w-5 text-blue-600 mr-3 flex-shrink-0" />
-          <p className="text-sm text-blue-700">
-            A reset code will be sent to <strong>{session?.email || "your email"}</strong>
+        <div className="flex items-start p-4 bg-slate-50 rounded-xl border border-slate-100">
+          <Mail className="h-5 w-5 text-[#3977BF] mr-3 mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-slate-600 leading-relaxed">
+            A reset verification code will be dispatched securely to <strong>{session?.email || "your primary account email"}</strong>
           </p>
         </div>
       </div>
-      
+
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-6 rounded-lg transition-all transform hover:scale-[1.02] flex items-center justify-center"
+            className="w-full bg-[#3977BF] hover:bg-[#3B3C8C] text-white py-5 h-auto rounded-xl font-medium transition-all shadow-sm shadow-[#3977BF]/20 flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                Sending Reset Code...
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Sending Security Code...
               </>
             ) : (
               <>
-                Send Reset Code
-                <ArrowRight className="ml-2 h-5 w-5" />
+                Send Verification Code
+                <ArrowRight className="h-4 w-4" />
               </>
             )}
           </Button>
         </form>
       </Form>
-      
-      
     </div>
   );
 };

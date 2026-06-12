@@ -14,41 +14,37 @@ import {
 } from "@/components/ui/form"
 import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
-import { Loader2, } from 'lucide-react'
+import { Loader2, Eye, EyeOff, Save } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { api_endpoints } from '@/utils/api_constants'
 
-
 const MerchantNewPasswordSchema = z.object({
-    confirmPassword: z.string().min(8, { message: "Password must be at least 8 characters" }),
-    password: z.string().min(8, { message: "Password must be at least 8 characters" })
-})
-
+    password: z.string().min(8, { message: "Password must be at least 8 characters" }),
+    confirmPassword: z.string().min(8, { message: "Password must be at least 8 characters" })
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"]
+});
 
 interface MerchantNewPasswordFormProps {
     email: string
 }
 
-
 const MerchantNewPasswordForm: React.FC<MerchantNewPasswordFormProps> = ({ email }) => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
-
-    const [toggleHidePassword, setToggleHidePassword] = useState<boolean>(false);
-    const [toggleHidePasswordC, setToggleHidePasswordC] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
     const form = useForm<z.infer<typeof MerchantNewPasswordSchema>>({
         resolver: zodResolver(MerchantNewPasswordSchema),
         defaultValues: {
-            confirmPassword: '',
             password: '',
-
+            confirmPassword: '',
         }
     })
 
     const onSubmit = async (values: z.infer<typeof MerchantNewPasswordSchema>) => {
-
         const body = {
             email: email,
             password: values.password,
@@ -57,87 +53,59 @@ const MerchantNewPasswordForm: React.FC<MerchantNewPasswordFormProps> = ({ email
             user_id: "",
         }
 
-        if (values.password != values.confirmPassword) {
-            toast.error("Password do not match")
-            return
-        }
         try {
             setLoading(true)
             const response = await fetch(api_endpoints.common.resetPassword, {
                 method: "POST",
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
-
             });
 
-
             const data = await response.json()
-            setLoading(false)
 
-            if (data.status == "success") {
-                toast.success("Password Reset");
+            if (data.status === "success") {
+                toast.success("Password Updated Successfully!");
                 router.push("/merchant/dashboard")
+            } else {
+                toast.error(`Failed to reset password: ${data.error}`);
             }
-
-            else if (data.status == "failure") {
-                toast.error(`Failed to reset password\n ${data.error}`);
-            }
-
-        }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars                                          
-        catch (error) {
-            setLoading(false);
-            toast.error(`An Unexpected error Happened! Try Again`);
+        } catch (error) {
+            toast.error(`An unexpected error occurred. Please try again.`);
         } finally {
             setLoading(false);
         }
-
-    }
-
-
-    const handleVisibility = async () => {
-        setToggleHidePassword(!toggleHidePassword)
-    }
-    const handleVisibilityC = async () => {
-        setToggleHidePasswordC(!toggleHidePasswordC)
     }
 
     return (
-
-
         <div className="w-full">
             <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-6"
-                >
-                    <div className="text-center mb-6">
-                        <h1 className="text-2xl font-bold ">Reset Password</h1>
-                        <p className="text-gray-700">Enter your new password</p>
-                    </div>
-
-
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                     <FormField
                         control={form.control}
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="">Password</FormLabel>
+                                <FormLabel className="text-slate-700 font-medium">New Password</FormLabel>
                                 <FormControl>
-                                    <div className='flex'>
+                                    <div className="relative flex items-center">
                                         <Input
-                                            type={toggleHidePassword ? "password" : "text"}
-                                            placeholder="Enter your password"
+                                            type={showPassword ? "text" : "password"}
+                                            placeholder="••••••••"
                                             {...field}
-                                            className="  placeholder-gray-400 focus:border-amber-500"
+                                            className="pr-12 rounded-xl border-slate-200 focus-visible:ring-[#3977BF] focus-visible:border-[#3977BF]"
                                         />
                                         <Button
-                                            type='reset'
-                                            variant="ghost" onClick={handleVisibility}>{toggleHidePassword ? <FaEye /> : <FaEyeSlash />}</Button>
+                                            type="button"
+                                            variant="ghost"
+                                            size="icon"
+                                            className="absolute right-1 text-slate-400 hover:text-slate-600 h-9 w-9 rounded-lg"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                        >
+                                            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                        </Button>
                                     </div>
-
-
                                 </FormControl>
-                                <FormMessage className="text-red-400" />
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -147,42 +115,46 @@ const MerchantNewPasswordForm: React.FC<MerchantNewPasswordFormProps> = ({ email
                         name="confirmPassword"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="">Confirm Password</FormLabel>
+                                <FormLabel className="text-slate-700 font-medium">Confirm New Password</FormLabel>
                                 <FormControl>
-                                    <div className='flex'>
+                                    <div className="relative flex items-center">
                                         <Input
-                                            type={toggleHidePasswordC ? "password" : "text"}
-                                            placeholder="Enter your password"
+                                            type={showConfirmPassword ? "text" : "password"}
+                                            placeholder="••••••••"
                                             {...field}
-                                            className="  placeholder-gray-400 focus:border-amber-500"
+                                            className="pr-12 rounded-xl border-slate-200 focus-visible:ring-[#3977BF] focus-visible:border-[#3977BF]"
                                         />
                                         <Button
-                                            type='reset'
-                                            variant="ghost" onClick={handleVisibilityC}>{toggleHidePasswordC ? <FaEye /> : <FaEyeSlash />}</Button>
+                                            type="button"
+                                            variant="ghost"
+                                            size="icon"
+                                            className="absolute right-1 text-slate-400 hover:text-slate-600 h-9 w-9 rounded-lg"
+                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        >
+                                            {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                        </Button>
                                     </div>
                                 </FormControl>
-                                <FormMessage className="text-red-400" />
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
 
                     <Button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-orange-500 to-indigo-600 hover:from-orange-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg  text-black hover:text-white"
+                        className="w-full bg-[#3977BF] hover:bg-[#3B3C8C] text-white h-12 rounded-xl font-medium transition-all shadow-sm shadow-[#3977BF]/10 flex items-center justify-center gap-2 mt-2"
                         disabled={loading}
                     >
                         {loading ? (
-                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing In...</>
+                            <><Loader2 className="h-4 w-4 animate-spin" /> Saving Password...</>
                         ) : (
-                            "Reset"
+                            <><Save className="h-4 w-4" /> Save & Reset Password</>
                         )}
                     </Button>
                 </form>
             </Form>
-
         </div>
-
     )
 }
 
-export default MerchantNewPasswordForm
+export default MerchantNewPasswordForm;

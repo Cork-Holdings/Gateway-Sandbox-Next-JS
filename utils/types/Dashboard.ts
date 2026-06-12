@@ -15,18 +15,6 @@ export interface UserStatistics{
     merchantUsers :number,  
 }
 
-export interface Transaction{
-    reference: string,
-    amount:string,
-    customer:string
-    channel:string
-    type:string
-    id:string
-    status:string
-    narration:string
-    date:string
-}
-
 export interface APIResponseTimes{
     endpoint1 :string,
     endpoint2 :string,

@@ -2,108 +2,94 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { api_endpoints } from "@/utils/api_constants";
-import { Mail } from "lucide-react";
+import { Mail, CheckCircle2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-
 interface OtpCodeProps {
-    email:string
+  email: string
 }
-
 
 const MerchantOTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
   const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const router = useRouter()
-
-  // Handle OTP input
-  const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setOtp(e.target.value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[^0-9]/g, ""); // Keep numeric only
+    setOtp(value);
   };
 
-
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (otp.length !== 6) {
-      alert("OTP must be 6 digits!");
+      toast.error("OTP must be exactly 6 digits!");
       return;
     }
 
-    const body ={
-        code: otp,
-        email: email
-    }
-
+    const body = { code: otp, email: email };
 
     try {
+      setLoading(true);
+      const response = await fetch(api_endpoints.common.verifyCode, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
 
-        
-    const response = await fetch(api_endpoints.common.verifyCode, {
-        method:"POST",
-        body:JSON.stringify(body)
+      const data = await response.json();
 
-    })
-
-
-    const data = await response.json()
-
-    if(data.status == "success"){
-        toast.success("Code Verified!")
-        router.push(`/merchant/reset/password?email=${email}`)
+      if (data.status === "success") {
+        toast.success("Code Verified Successfully!");
+        router.push(`/merchant/reset/password?email=${email}`);
+      } else {
+        toast.error(`${data.error || 'Verification failed'}`);
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    else if (data.status == "failure"){
-      toast.error(`${data.error}\n${data.detail}`)
-        window.location.reload()
-    }
-        
-    } 
-     // eslint-disable-next-line @typescript-eslint/no-unused-vars                                     
-    catch (error) {
-        toast.error(`Something went wrong. Please try again`)
-        window.location.reload()
-    }
-
-}
+  };
 
   return (
-  
     <div className="w-full">
-      <h2 className="text-xl font-semibold text-center mb-4">Enter OTP Code</h2>
-        
+      <div className="mb-6">
+        <div className="flex items-start p-4 bg-slate-50 rounded-xl border border-slate-100">
+          <Mail className="h-5 w-5 text-[#3977BF] mr-3 mt-0.5 flex-shrink-0" />
+          <p className="text-sm text-slate-600 leading-relaxed">
+            We have sent a verification security code to <strong>{email || "your registered email"}</strong>
+          </p>
+        </div>
+      </div>
 
-          <div className="mb-6">
-            <div className="flex items-center p-4 bg-blue-50 rounded-lg border border-blue-100">
-              <Mail className="h-5 w-5 text-blue-600 mr-3 flex-shrink-0" />
-              <p className="text-sm text-blue-700">
-                A code has been sent to <strong>{email || "your email"}</strong>
-              </p>
-            </div>
-          </div>
-          
-          <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div>
+          <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 text-center">
+            Secure 6-Digit One-Time Password
+          </label>
           <Input
             type="text"
             maxLength={6}
             value={otp}
             onChange={handleChange}
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter 6-digit OTP"
+            className="w-full text-center tracking-[0.5em] text-xl font-bold h-12 rounded-xl border-slate-200 focus-visible:ring-[#3977BF] focus-visible:border-[#3977BF]"
+            placeholder="000000"
           />
-
-          <Button
-            type="submit"
-            className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-indigo-600 text-white p-2  hover:bg-blue-600 transition"
-          >
-            Submit OTP
-          </Button>
-        </form>
-        
-          
-          
         </div>
+
+        <Button
+          type="submit"
+          disabled={loading || otp.length !== 6}
+          className="w-full h-12 rounded-xl bg-[#3977BF] hover:bg-[#3B3C8C] text-white font-medium transition-all shadow-sm shadow-[#3977BF]/10 flex items-center justify-center gap-2"
+        >
+          <CheckCircle2 className="h-4 w-4" />
+          {loading ? "Verifying..." : "Verify & Continue"}
+        </Button>
+      </form>
+    </div>
   );
 };
 

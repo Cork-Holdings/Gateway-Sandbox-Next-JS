@@ -29,9 +29,10 @@ import {
 } from "lucide-react";
 import { api_endpoints } from '@/utils/api_constants';
 import { useSession } from 'next-auth/react';
-import { Transaction, TransactionChannels, TransactionStatistics } from '@/utils/types/Dashboard';
+import { TransactionChannels, TransactionStatistics } from '@/utils/types/Dashboard';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
+import { Transaction } from '@/utils/types/Filters';
 
 const TransactionsTab = () => {
   const [cardData, setCardData] = useState<TransactionStatistics | null>(null);
@@ -103,8 +104,8 @@ const TransactionsTab = () => {
 
       const responseBody = await response.json();
 
-      if (responseBody.status === "success" && responseBody?.transactions?.transaction) {
-        const transactions = responseBody.transactions.transaction.map((transaction: Transaction) => ({
+      if (responseBody.status === "success" && responseBody?.data?.transactions) {
+        const transactions = responseBody.data.transactions.map((transaction: Transaction) => ({
           id: transaction.id,
           reference: transaction.reference,
           amount: transaction.amount,
@@ -116,7 +117,7 @@ const TransactionsTab = () => {
           customer: transaction.customer,
         }));
         setTransactionData(transactions);
-        setTotalPages(responseBody.transactions.totalPages || 0);
+        setTotalPages(responseBody.data.total_pages || responseBody.data.totalPages || 0);
       }
       else if (responseBody["status"] == "failure") {
         toast.error(responseBody["error"])
@@ -271,8 +272,8 @@ const TransactionsTab = () => {
                   <span className="font-medium">{channelPercentages.mtn.toFixed(1)}%</span>
                 </div>
                 <Progress
-                     indicatorColor="bg-yellow-500"
-                value={channelPercentages.mtn} className="h-2 bg-gray-100" />
+                  indicatorColor="bg-yellow-500"
+                  value={channelPercentages.mtn} className="h-2 bg-gray-100" />
                 <div className="text-xs text-muted-foreground">{transactionChannelData?.mtn ?? 0} transactions</div>
               </div>
 
@@ -284,9 +285,9 @@ const TransactionsTab = () => {
                   </div>
                   <span className="font-medium">{channelPercentages.airtel.toFixed(1)}%</span>
                 </div>
-                <Progress 
+                <Progress
                   indicatorColor="bg-red-500"
-                value={channelPercentages.airtel} className="h-2 bg-gray-100" />
+                  value={channelPercentages.airtel} className="h-2 bg-gray-100" />
                 <div className="text-xs text-muted-foreground">{transactionChannelData?.airtel ?? 0} transactions</div>
               </div>
 
@@ -300,7 +301,7 @@ const TransactionsTab = () => {
                 </div>
                 <Progress
                   indicatorColor="bg-green-500"
-                value={channelPercentages.zamtel} className="h-2 bg-gray-100" />
+                  value={channelPercentages.zamtel} className="h-2 bg-gray-100" />
                 <div className="text-xs text-muted-foreground">{transactionChannelData?.zamtel ?? 0} transactions</div>
               </div>
             </div>
@@ -373,8 +374,8 @@ const TransactionsTab = () => {
                         <TableCell className="font-medium">{tx.reference}</TableCell>
                         <TableCell>K{tx.amount}</TableCell>
                         <TableCell className=''>
-                          <Badge variant="outline"  className={`capitalize ${getStatusBadgeStyle(tx.status)}`}>
-                          {tx.status.charAt(0).toUpperCase() + tx.status.slice(1).toLowerCase()}
+                          <Badge variant="outline" className={`capitalize ${getStatusBadgeStyle(tx.status)}`}>
+                            {tx.status.charAt(0).toUpperCase() + tx.status.slice(1).toLowerCase()}
                           </Badge>
                         </TableCell>
                         <TableCell>{tx.customer}</TableCell>

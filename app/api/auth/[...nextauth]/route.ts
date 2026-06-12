@@ -101,8 +101,8 @@ const authOptions: AuthOptions = {
                             accessToken: user.token,
                             role: user.role,
                             permissions: user.permissions,
-                            emailVerified:user.emailVerified || false,
-                            accountStatus:user.accountStatus || "inactive",
+                            emailVerified:user.email_verified || false,
+                            accountStatus:user.account_status || "inactive",
                             email: user.email,
                         };
                     } 
