@@ -116,10 +116,10 @@ const HostedCheckoutForm: React.FC<Props> = ({ details }) => {
                 toast.success(data.message || "Payment initiated");
                 await new Promise(resolve => setTimeout(resolve, 5000));
 
-                // const return_url = data.data.return_url;
+                const return_url = data.data.return_url;
                 // console.log('return_url', return_url)
                 // window.open(return_url, '_blank');
-                // window.location.href = return_url;
+                window.location.href = return_url;
                 // target="_blank"
 
             } else {
