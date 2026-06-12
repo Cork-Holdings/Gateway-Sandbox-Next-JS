@@ -48,7 +48,7 @@ const ExecuteAPI = () => {
     { id: "4", name: "Transaction Status", icon: RefreshCcw, component: TransactionStatusContainer, },
     { id: "5", name: "Name Look Up", icon: User, component: NameLookupContainer, },
     { id: "6", name: "Hosted Checkout", icon: ScreenShare, component: CheckoutSessionContainer, },
-    { id: "7", name: "Card Simulation", icon: CreditCard, component: CardContainer, },
+    // { id: "7", name: "Card Simulation", icon: CreditCard, component: CardContainer, },
   ];
 
   const selectedEndpoint = endpoints.find(endpoint => endpoint.id === id);
