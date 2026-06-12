@@ -42,7 +42,8 @@ const CheckoutSessionContainer = () => {
           name: customerName || "",
           email: customerEmail || ""
         },
-        return: returnUrl || "",
+        return_url: returnUrl || "",
+        receipt_redirect: true
       }
 
       const apiResponse = await fetch(api_endpoints.merchant.makeAddCheckoutRequest, {

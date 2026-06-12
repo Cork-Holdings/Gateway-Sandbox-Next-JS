@@ -87,6 +87,7 @@ const HostedCheckoutForm: React.FC<Props> = ({ details }) => {
                 phone_number: `260${phoneNumber}`,
                 customer_email: values.customer_email,
                 customer_name: values.customer_name,
+
             };
 
             const response = await fetch(
@@ -103,6 +104,8 @@ const HostedCheckoutForm: React.FC<Props> = ({ details }) => {
 
             const data = await response.json();
 
+            console.log('data', data)
+
             if (data.status === "success" || data.code === 200) {
                 const reference = data.data?.transaction_reference || "";
 
@@ -113,8 +116,12 @@ const HostedCheckoutForm: React.FC<Props> = ({ details }) => {
                 toast.success(data.message || "Payment initiated");
                 await new Promise(resolve => setTimeout(resolve, 5000));
 
-                const return_url = data.data.return_url;
-                window.location.href = return_url;
+                // const return_url = data.data.return_url;
+                // console.log('return_url', return_url)
+                // window.open(return_url, '_blank');
+                // window.location.href = return_url;
+                // target="_blank"
+
             } else {
                 setTxStatus("failed");
                 toast.error(data.error || "Payment failed");
