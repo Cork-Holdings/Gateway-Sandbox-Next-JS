@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { signInPathForRole } from '@/utils/auth';
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { api_endpoints } from "@/utils/api_constants";
@@ -73,7 +74,7 @@ const SignUpForm = () => {
             const responseBody = await res.json()
             if (responseBody.status === "success") {
                 toast.success("You have successfully created an account")
-                router.push("/auth/signin/merchant")
+                router.push(signInPathForRole("merchant"))
             } else if(responseBody.status === "failure") {
                 toast.error(responseBody.error)
             }
@@ -190,7 +191,7 @@ const SignUpForm = () => {
 
                 <div className="text-center text-gray-600 text-sm dark:text-gray-400">
                     Already have an account?{' '}
-                    <Link href="/auth/signin/merchant" className="text-blue-600 font-medium hover:text-blue-700">
+                    <Link href={signInPathForRole("merchant")} className="text-blue-600 font-medium hover:text-blue-700">
                         Sign In
                     </Link>
                 </div>

@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { api_endpoints } from '@/utils/api_constants';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const SubmitTestimonySchema = z.object({
     email: z.string()
@@ -27,6 +27,8 @@ const ResetForm = () => {
     const [loading, setLoading] = useState(false);
 
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const portal = searchParams.get("portal")
 
     const form = useForm<z.infer<typeof SubmitTestimonySchema>>({
         resolver: zodResolver(SubmitTestimonySchema),
@@ -61,7 +63,10 @@ const ResetForm = () => {
             console.log('data', data)
             if (data["status"] == "success") {
                 toast.success("Code sent successfully!");
-                router.push(`/common/reset/${values.email}`)
+                const nextPath = portal
+                    ? `/common/reset/${values.email}?portal=${encodeURIComponent(portal)}`
+                    : `/common/reset/${values.email}`
+                router.push(nextPath)
             } else {
                 toast.error(data.error || "Failed to send code");
             }

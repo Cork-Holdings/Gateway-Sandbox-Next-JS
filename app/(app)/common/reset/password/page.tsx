@@ -8,11 +8,12 @@ import React, { Suspense } from "react";
 const SearchParamsWrapper = () => {
   const searchParams = useSearchParams();
   const email = searchParams.get("email") ?? "";
+  const portal = searchParams.get("portal");
 
   return (
     <div>
       <Header />
-        <NewPasswordForm email={email} />
+        <NewPasswordForm email={email} portal={portal} />
      
     </div>)
 

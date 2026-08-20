@@ -18,6 +18,7 @@ import { Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { api_endpoints } from '@/utils/api_constants'
+import { signInPathForRole } from '@/utils/auth'
 
 
 const NewPasswordSchema = z.object({
@@ -28,10 +29,11 @@ const NewPasswordSchema = z.object({
 
 interface NewPasswordFormProps {
     email: string
+    portal?: string | null
 }
 
 
-const NewPasswordForm: React.FC<NewPasswordFormProps> = ({ email }) => {
+const NewPasswordForm: React.FC<NewPasswordFormProps> = ({ email, portal }) => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
 
@@ -53,7 +55,7 @@ const NewPasswordForm: React.FC<NewPasswordFormProps> = ({ email }) => {
             email: email,
             password: values.password,
             confirm_password: values.confirmPassword,
-            logged_in: false,
+            loggedIn: false,
             user_id: "",
         }
 
@@ -65,6 +67,7 @@ const NewPasswordForm: React.FC<NewPasswordFormProps> = ({ email }) => {
             setLoading(true)
             const response = await fetch(api_endpoints.common.resetPassword, {
                 method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
 
             });
@@ -75,7 +78,7 @@ const NewPasswordForm: React.FC<NewPasswordFormProps> = ({ email }) => {
 
             if (data.status == "success") {
                 toast.success("Password Reset");
-                router.push("/")
+                router.push(signInPathForRole(portal))
             }
 
             else if (data.status == "failure") {

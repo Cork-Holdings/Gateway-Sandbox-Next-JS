@@ -6,6 +6,7 @@ import UpdateFloatForm from '@/components/custom/forms/merchant/update-float-for
 import { api_endpoints } from '@/utils/api_constants'
 import { Loader2 } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react'
+import { signInPathForRole } from '@/utils/auth'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -38,7 +39,7 @@ const Configure = () => {
       const data = await response.json()
 
       if (response.status  ==  401){
-        signOut({ callbackUrl: "/auth/signin/admin" })
+        signOut({ callbackUrl: signInPathForRole("merchant") })
       }
 
       if (data.status == "success") {

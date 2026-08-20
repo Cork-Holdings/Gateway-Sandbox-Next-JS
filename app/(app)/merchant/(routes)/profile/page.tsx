@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
+import { signInPathForRole } from '@/utils/auth'
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button'
@@ -36,7 +37,7 @@ const MerchantProfile = () => {
       const data = await response.json()
 
       if (response.status == 401) {
-        signOut({ callbackUrl: "/auth/signin/admin" })
+        signOut({ callbackUrl: signInPathForRole("merchant") })
       }
 
       if (data.status === "success") {

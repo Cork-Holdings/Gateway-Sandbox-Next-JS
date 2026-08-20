@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { api_endpoints } from "@/utils/api_constants";
 import {  CheckCircle, FileDigit,  Loader2 } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { signInPathForRole } from "@/utils/auth";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -16,6 +17,7 @@ interface OtpCodeProps {
 const VerifyEmailOTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
   const [otp, setOtp] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const { data: session } = useSession();
 
   // Handle OTP input
   const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -44,6 +46,7 @@ const VerifyEmailOTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
 
       const response = await fetch(api_endpoints.common.verifyCode, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
 
       })
@@ -55,7 +58,7 @@ const VerifyEmailOTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
 
       if (data.status == "success") {
         toast.success("Code Verified!")
-       signOut({ callbackUrl: "/auth/signin/merchant" })
+       signOut({ callbackUrl: signInPathForRole(session?.role) })
       }
       else if (data.status == "failure") {
         toast.error(`${data.error}\n${data.detail}`)

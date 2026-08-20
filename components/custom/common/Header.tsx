@@ -88,7 +88,7 @@ const Header = () => {
                     </Button>
 
                     <Button 
-                    onClick={()=>router.push("/auth/signin")}
+                    onClick={()=>router.push("/auth/signin/merchant")}
                     variant="secondary" 
                     className='hidden lg:block rounded-full'>
                         Login
@@ -118,7 +118,7 @@ const Header = () => {
                             </Link>
                         ))}
                         <Button
-                         onClick={()=>router.push("/auth/signin")}
+                         onClick={()=>router.push("/auth/signin/merchant")}
                         variant="secondary"
                         className='mt-6 rounded-full'>
                             Login

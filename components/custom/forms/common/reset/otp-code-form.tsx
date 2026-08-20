@@ -9,10 +9,11 @@ import toast from "react-hot-toast";
 
 interface OtpCodeProps {
     email:string
+    portal?: string | null
 }
 
 
-const OTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
+const OTPCodeForm: React.FC<OtpCodeProps> = ({ email, portal }) => {
   const [otp, setOtp] = useState("");
 
 
@@ -43,6 +44,7 @@ const OTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
         
     const response = await fetch(api_endpoints.common.verifyCode, {
         method:"POST",
+        headers: { "Content-Type": "application/json" },
         body:JSON.stringify(body)
 
     })
@@ -52,7 +54,11 @@ const OTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
 
     if(data.status == "success"){
         toast.success("Code Verified!")
-        router.push(`/common/reset/password?email=${email}`)
+        const params = new URLSearchParams({ email })
+        if (portal) {
+          params.set("portal", portal)
+        }
+        router.push(`/common/reset/password?${params.toString()}`)
     }
     else if (data.status == "failure"){
       toast.error(`${data.error}\n${data.detail}`)

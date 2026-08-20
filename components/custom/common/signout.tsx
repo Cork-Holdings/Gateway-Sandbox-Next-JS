@@ -1,20 +1,24 @@
 "use client";
 
-import { signOut } from "next-auth/react";
+import { getSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
+import { signInPathForRole } from "@/utils/auth";
 
 const SignOut = () => {
 
     useEffect(() => {
-        // Allow NextAuth to handle redirection after signOut
-        signOut({
-            callbackUrl: "/auth/signin/merchant", // where you want to redirect after sign out
-            redirect: true, // this lets NextAuth manage the redirect itself
-        });
+        const redirectToSignIn = async () => {
+            const session = await getSession();
+            signOut({
+                callbackUrl: signInPathForRole(session?.role),
+                redirect: true,
+            });
+        };
+
+        redirectToSignIn();
     }, []);
 
     return null;
 };
 
 export default SignOut;
-

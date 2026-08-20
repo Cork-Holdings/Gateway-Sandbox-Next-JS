@@ -41,6 +41,7 @@ const AdminOTPCodeForm: React.FC<OtpCodeProps> = ({ email }) => {
         
     const response = await fetch(api_endpoints.common.verifyCode, {
         method:"POST",
+        headers: { "Content-Type": "application/json" },
         body:JSON.stringify(body)
 
     })

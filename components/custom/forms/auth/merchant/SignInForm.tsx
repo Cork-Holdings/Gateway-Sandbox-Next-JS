@@ -159,7 +159,7 @@ const MerchantSignInForm = () => {
 
       <p className="text-center text-gray-700 text-sm">
         Forgot password?{" "}
-        <Link href="/common/reset" className="text-[#1383ec] hover:underline">
+        <Link href="/common/reset?portal=merchant" className="text-[#1383ec] hover:underline">
           Reset it
         </Link>
       </p>

@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { api_endpoints } from '@/utils/api_constants';
 import {  BadgeAlertIcon, Loader2, LogOut, CheckCircle } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react';
+import { signInPathForRole } from '@/utils/auth';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
@@ -99,7 +100,7 @@ const VerifyEmailForm = () => {
                         </Button>
                         
                         <Button
-                            onClick={() => signOut()}
+                            onClick={() => signOut({ callbackUrl: signInPathForRole(session?.role) })}
                             className="flex-none px-6 py-4 bg-gray-100 text-gray-700 text-lg rounded-lg hover:bg-gray-200 transition-all flex items-center justify-center">
                             <LogOut className="h-5 w-5 mr-3" /> Sign out
                         </Button>

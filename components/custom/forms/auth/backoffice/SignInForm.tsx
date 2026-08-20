@@ -1,6 +1,6 @@
 // SignInForm.tsx
 "use client";
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,9 +31,6 @@ const AdminSignInForm = () => {
   const [loading, setLoading] = React.useState(false);
 
   const [showPassword, setShowPassword] = React.useState(false);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [getEmail, setGetEmail] = useState<string>('')
 
   const form = useForm<z.infer<typeof SigninSchema>>({
     resolver: zodResolver(SigninSchema),
@@ -77,15 +74,7 @@ const AdminSignInForm = () => {
 
   useEffect(() => {
     if (status === "authenticated" && session) {
-
-      const emailverified = session.emailVerified
-
-      if (emailverified) {
-        router.push("/admin/dashboard");
-      } else {
-        router.push(`/common/email-verify/${getEmail}`);
-      }
-
+      router.push("/admin/dashboard");
     }
   }, [status, session, router]);
 
@@ -168,7 +157,7 @@ const AdminSignInForm = () => {
 
       <p className="text-center text-gray-700 text-sm">
         Forgot password?{" "}
-        <Link href="/common/reset" className="text-[#1383ec] hover:underline">
+        <Link href="/common/reset?portal=admin" className="text-[#1383ec] hover:underline">
           Reset it
         </Link>
       </p>

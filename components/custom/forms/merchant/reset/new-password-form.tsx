@@ -49,7 +49,7 @@ const MerchantNewPasswordForm: React.FC<MerchantNewPasswordFormProps> = ({ email
             email: email,
             password: values.password,
             confirm_password: values.confirmPassword,
-            logged_in: false,
+            loggedIn: false,
             user_id: "",
         }
 

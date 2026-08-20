@@ -17,6 +17,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
 import { signOut, useSession } from "next-auth/react"
 import { usePathname, useRouter } from "next/navigation"
+import { signInPathForRole } from "@/utils/auth"
 
 
 const items = [
@@ -165,7 +166,7 @@ export function AppSidebar() {
                                 className="w-[200px] mb-2 bg-[#3B3C8C] text-white border border-white/10 shadow-xl rounded-xl p-1"
                             >
                                 <DropdownMenuItem
-                                    onClick={() => signOut({ callbackUrl: "/auth/signin/admin" })}
+                                    onClick={() => signOut({ callbackUrl: signInPathForRole("admin") })}
                                     className="cursor-pointer font-medium p-2.5 rounded-lg text-rose-200 hover:bg-rose-500/20 hover:text-rose-100 transition-colors focus:bg-rose-500/20"
                                 >
                                     <span>Sign out</span>

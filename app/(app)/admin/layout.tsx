@@ -6,6 +6,7 @@ import { AppSidebar } from "@/components/custom/app-sidebar";
 import { Button } from "@/components/ui/button";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useTheme } from 'next-themes';
+import VerifyEmailForm from "@/components/custom/forms/merchant/email-verification/verify-email-form";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode; }) {
   const { data: session } = useSession();
@@ -23,6 +24,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   // Only block rendering, NOT hook execution
   if (!session) {
     return null; // safe return for SSR fallback
+  }
+
+  if (session.emailVerified === false) {
+    return <VerifyEmailForm />;
   }
 
   return (

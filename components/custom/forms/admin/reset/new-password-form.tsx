@@ -54,7 +54,7 @@ const AdminNewPasswordForm: React.FC<AdminNewPasswordFormProps> = ({ email }) =>
              email : email,
              password :values.password,
              confirm_password : values.confirmPassword,
-             logged_in :false,
+             loggedIn :false,
              user_id : "",
         }
 
@@ -66,6 +66,7 @@ const AdminNewPasswordForm: React.FC<AdminNewPasswordFormProps> = ({ email }) =>
             setLoading(true)
             const response = await fetch(api_endpoints.common.resetPassword, {
                 method:"POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
           
             });

@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import { api_endpoints, base_url, sandbox_url } from "@/utils/api_constants";
+import { api_endpoints, sandbox_url } from "@/utils/api_constants";
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 
@@ -25,9 +25,8 @@ const hostedSchema = z.object({
     order_id: z.string().optional(),
     customer_name: z.string().optional(),
     customer_email: z.string().email().optional(),
-    amount: z.string().email().optional(),
-    reciept_redirect: z.boolean(),
-
+    amount: z.string().optional(),
+    receipt_redirect: z.boolean().optional(),
 });
 
 
@@ -48,6 +47,7 @@ const HostedCheckoutUrlForm =(
             customer_email:   "",
             customer_name:  "",
             amount: "",
+            receipt_redirect: true,
         },
     });
 
@@ -61,15 +61,17 @@ const HostedCheckoutUrlForm =(
                 name: values.customer_name,
                 email:values.customer_email
             },
-            reciept_redirect: values.reciept_redirect,
+            receipt_redirect: values.receipt_redirect ?? true,
             checkout_base_url: sandbox_url
         }
 
         try {
             setLoading(true);
-            const response = await fetch(api_endpoints.merchant.makeCheckoutRequest, {
+            const response = await fetch(api_endpoints.merchant.makeAddCheckoutRequest, {
                 method: "POST",
                 headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
                     "Authorization": `Bearer ${session?.accessToken}`
                 },
                 body: JSON.stringify(body)
@@ -91,6 +93,8 @@ const HostedCheckoutUrlForm =(
 
             } else if (data.status == "failure") {
                 toast.error(`${data.error}\n${data.detail}`);
+            } else {
+                toast.error(data.message || data.error || "Failed to create checkout session");
             }
         } catch (error) {
             console.log('error', error);
